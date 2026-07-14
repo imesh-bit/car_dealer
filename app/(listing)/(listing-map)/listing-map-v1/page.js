@@ -9,11 +9,9 @@ import Pagination from "@/app/components/common/Pagination";
 import CarItems from "@/app/components/listing/listing-map/listing-map-v1/CarItems";
 import ListGridFilter from "@/app/components/listing/ListGridFilter";
 import Map from "@/app/components/common/Map";
-
 export const metadata = {
   title: "Listing Map V1 || Voiture - Automotive & Car Dealer NextJS Template",
 };
-
 const ListingMapV1 = () => {
   return (
     <div className="wrapper">
