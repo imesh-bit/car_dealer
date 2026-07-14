@@ -29,7 +29,7 @@ const HeaderTop = () => {
     },
     {
       icon: "flaticon-clock",
-      text: "Mon - Fri 8:00 - 18:00",
+      text: "Mon - Fri 8:00 - 19:00",
     },
   ];
 
