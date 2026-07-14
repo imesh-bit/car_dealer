@@ -12,7 +12,6 @@ import Map from "@/app/components/common/Map";
 export const metadata = {
   title: "Listing Map V1 || Voiture - Automotive & Car Dealer NextJS Template",
 };
-
 const ListingMapV1 = () => {
   return (
     <div className="wrapper">
