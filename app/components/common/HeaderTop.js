@@ -25,7 +25,7 @@ const HeaderTop = () => {
     },
     {
       icon: "flaticon-map",
-      text: "924-1 Tenma,Fuji,Shizuoka 419-0205,Japan",
+      text: "924-1 Tenma,Fuji,Shizuoka 419-0205,Jaan",
     },
     {
       icon: "flaticon-clock",
