@@ -1,32 +1,75 @@
-const MainFilter = () => {
-  const filterOptions = [
+// 
+
+"use client";
+import { useMemo } from "react";
+import listingsData from "@/data/listingCar";
+
+const MainFilter = ({ filters, updateFilter }) => {
+  const makeOptions = useMemo(() => {
+    const makes = [
+      ...new Set(listingsData.map((car) => car.make).filter(Boolean)),
+    ].sort();
+    return makes;
+  }, []);
+
+  const modelOptions = useMemo(() => {
+    const relevantCars =
+      filters.make === "Select Makes"
+        ? listingsData
+        : listingsData.filter((car) => car.make === filters.make);
+    return [
+      ...new Set(relevantCars.map((car) => car.model).filter(Boolean)),
+    ].sort();
+  }, [filters.make]);
+
+  const bodyTypeOptions = useMemo(() => {
+    return [
+      ...new Set(listingsData.map((car) => car.bodyType).filter(Boolean)),
+    ].sort();
+  }, []);
+
+  // NOTE: this dropdown was originally labeled "Condition" but its values
+  // ("Most Recent", "Best Selling", "Old Review"...) are sort options, not
+  // a car condition (New/Used/Certified). Treating it as "Sort By" here —
+  // flag if that's not what was intended.
+  const filterConfigs = [
     {
-      label: "Condition",
-      values: ["Most Recent", "Recent", "Best Selling", "Old Review"],
+      key: "sort",
+      label: "Sort By",
+      options: ["Most Recent", "Recent", "Best Selling", "Old Review"],
     },
     {
+      key: "make",
       label: "Select Makes",
-      values: ["Audi", "Bentley", "BMW", "Ford", "Honda", "Mercedes"],
+      options: makeOptions,
     },
     {
+      key: "model",
       label: "Select Models",
-      values: ["A3 Sportback", "A4", "A6", "Q5"],
+      options: modelOptions,
     },
     {
+      key: "bodyType",
       label: "Select Type",
-      values: ["Convertible", "Coupe", "Hatchback", "Sedan", "SUV"],
+      options: bodyTypeOptions,
     },
   ];
 
   return (
     <>
-      {filterOptions.map((option, index) => (
-        <div key={index} className="col-12 col-sm-4 col-lg-2">
+      {filterConfigs.map((config) => (
+        <div key={config.key} className="col-12 col-sm-4 col-lg-2">
           <div className="advance_search_style">
-            <select className="form-select show-tick">
-              <option>{option.label}</option>
-              {option.values.map((value, valueIndex) => (
-                <option key={valueIndex}>{value}</option>
+            <select
+              className="form-select show-tick"
+              value={filters[config.key]}
+              onChange={(e) => updateFilter(config.key, e.target.value)}
+            >
+              <option value={config.label}>{config.label}</option>
+              {config.options.map((value) => (
+                <option key={value} value={value}>
+                  {value}
+                </option>
               ))}
             </select>
           </div>

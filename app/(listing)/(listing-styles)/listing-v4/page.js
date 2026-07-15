@@ -161,10 +161,29 @@ export const metadata = {
 };
 
 const ListingV4 = async ({ searchParams }) => {
-  // searchParams carries whatever HeroFilter put in the URL,
-  // e.g. /listing-v4?status=Used+Cars&make=Audi&model=A8+L+55&price=%C2%A5478
+  // searchParams carries whatever HeroFilter or AdvanceFilter put in the URL
   const resolvedSearchParams = await searchParams;
-  const { status, make, model, price } = resolvedSearchParams || {};
+  const {
+    status,
+    make,
+    model,
+    price, // legacy single "max price" value from HeroFilter
+    sort,
+    type,
+    year,
+    fuelType,
+    transmission,
+    doors,
+    interiorColor,
+    exteriorColor,
+    cylinders,
+    minMileage,
+    maxMileage,
+    vin,
+    features,
+    minPrice,
+    maxPrice,
+  } = resolvedSearchParams || {};
 
   return (
     <div className="wrapper">
@@ -253,6 +272,21 @@ const ListingV4 = async ({ searchParams }) => {
                   make={make}
                   model={model}
                   price={price}
+                  sort={sort}
+                  bodyType={type}
+                  year={year}
+                  fuelType={fuelType}
+                  transmission={transmission}
+                  doors={doors}
+                  interiorColor={interiorColor}
+                  exteriorColor={exteriorColor}
+                  cylinders={cylinders}
+                  minMileage={minMileage}
+                  maxMileage={maxMileage}
+                  vin={vin}
+                  features={features}
+                  minPrice={minPrice}
+                  maxPrice={maxPrice}
                 />
               </div>
               {/* End .row */}
