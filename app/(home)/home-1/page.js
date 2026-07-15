@@ -158,7 +158,7 @@ const Home_1 = () => {
       {/* <!-- End Funfact --> */}
 
       {/* Testimonials  */}
-      <section className="our-testimonials-home1 pt120 pb120">
+      {/* <section className="our-testimonials-home1 pt120 pb120">
         <div className="container">
           <div className="row justify-content-center">
             <div className="col-lg-8">
@@ -175,7 +175,7 @@ const Home_1 = () => {
             </div>
           </div>
         </div>
-      </section>
+      </section> */}
       {/* End Testimonials  */}
 
       {/* Our Blog */}
