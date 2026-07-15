@@ -121,7 +121,7 @@ const AboutUs = () => {
       {/* End Our Team */}
 
       {/* Testimonials  */}
-      <section className="our-testimonials-home1 pt120 pb120">
+      {/* <section className="our-testimonials-home1 pt120 pb120">
         <div className="container">
           <div className="row justify-content-center">
             <div className="col-lg-8">
@@ -138,7 +138,7 @@ const AboutUs = () => {
             </div>
           </div>
         </div>
-      </section>
+      </section> */}
       {/* End Testimonials  */}
 
       {/* Our Partners */}

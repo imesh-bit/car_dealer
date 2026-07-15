@@ -7,8 +7,8 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 
 const CustomMenuItem = ({ item, path }) => {
-    const [isOpen, setIsOpen] = useState(item.subMenu ? isParentActive(item.subMenu, path) : false);
-
+    // const [isOpen, setIsOpen] = useState(item.subMenu ? isParentActive(item.subMenu, path) : false);
+    const [isOpen, setIsOpen] = useState(item.subMenu ? true : false);
     if (item.subMenu) {
         return (
             <li className={`nav-item custom-submenu ${isOpen ? "open" : ""}`}>
