@@ -126,7 +126,7 @@ const ListingSingleV1 = async ({ params }) => {
                   <div className="price mt60 mb10 mt10-md">
                     <h3>
                       <small className="mr15">
-                        <del>RS{car.originalPrice}</del>
+                        <del>¥{car.originalPrice}</del>
                       </small>
                       RS{car.price}
                     </h3>
