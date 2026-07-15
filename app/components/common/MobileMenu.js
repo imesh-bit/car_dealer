@@ -83,11 +83,11 @@ const MobileMenu = () => {
     const contactInfo = [
         {
             icon: "flaticon-map",
-            text: "47 Bakery Street, London, UK",
+            text: "924-1 Tenma,Fuji,Shizuoka 419-0205,Japan",
         },
         {
             icon: "flaticon-phone-call",
-            text: "1-800-458-56987",
+            text: "+81 90-6360-9950",
         },
         {
             icon: "flaticon-clock",
