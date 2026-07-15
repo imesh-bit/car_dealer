@@ -15,11 +15,11 @@ const SellerDetail = () => {
 
       <div className="flex-grow-1 ms-3">
         <h5 className="mt0 mb5 fz16 heading-color fw600">
-          Volvo Cars Istanbul
+          Damith Harshana
         </h5>
         <p className="mb0 tdu">
           <span className="flaticon-phone-call pr5 vam" />
-          (302) 555-0107
+          +81 90-6360-9950
         </p>
       </div>
     </div>

@@ -9,11 +9,11 @@ const CopyRight = () => {
           <div className="copyright-widget mt5 text-start mb20-sm">
             <p>
               <a
-                href="https://themeforest.net/user/ib-themes"
+                href=""
                 target="_blank"
                 rel="noopener noreferrer"
               >
-                ib-themes
+                RAICO GROUP
               </a>{" "}
               © {new Date().getFullYear()}. All Rights Reserved.
             </p>

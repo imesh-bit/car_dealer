@@ -5,10 +5,10 @@ const FooterItems = () => {
         <div className="footer_about_widget">
           <h5 className="title">OFFICE</h5>
           <p>
-            Germany —<br />
-            329 Queensberry Street,
+            JAPAN —<br />
+            924-1 Tenma,Fuji,
             <br />
-            North Melbourne VIC 3051
+           Shizuoka,Japan 419-0205
           </p>
         </div>
       </div>
@@ -17,7 +17,7 @@ const FooterItems = () => {
       <div className="col-sm-6 col-md-4 col-lg-3 col-xl-3">
         <div className="footer_contact_widget">
           <h5 className="title">NEED HELP</h5>
-          <div className="footer_phone">+1 670 936 46 70</div>
+          <div className="footer_phone">+81 90-63609950</div>
           <p>hello@voiture.com</p>
         </div>
       </div>

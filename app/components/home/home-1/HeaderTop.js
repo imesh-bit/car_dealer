@@ -53,7 +53,7 @@ const HeaderTop = () => {
           </div>
           {/* End .col */}
 
-          <div className="col-lg-4 col-xl-5">
+          {/* <div className="col-lg-4 col-xl-5">
             <div className="header_top_social_widgets text-center text-md-end">
               <ul className="m0">
                 {socialData.map((social, index) => (
@@ -83,7 +83,7 @@ const HeaderTop = () => {
                 </li>
               </ul>
             </div>
-          </div>
+          </div> */}
           {/* End .col */}
         </div>
         {/* End .row */}

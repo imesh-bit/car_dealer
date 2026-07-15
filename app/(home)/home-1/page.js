@@ -178,25 +178,7 @@ const Home_1 = () => {
       </section> */}
       {/* End Testimonials  */}
 
-      {/* Our Blog */}
-      <section className="our-blog pb90">
-        <div className="container">
-          <div className="row">
-            <div className="col-lg-6 offset-lg-3">
-              <div className="main-title text-center">
-                <h2>Recent Articles</h2>
-              </div>
-            </div>
-          </div>
-          {/* End .row */}
-
-          <div className="row">
-            <Blog />
-          </div>
-          {/* End .row */}
-        </div>
-      </section>
-      {/* End Our Blog */}
+      
 
       {/* Our Partners */}
       <section className="our-partner pt0 pb100">
