@@ -35,7 +35,7 @@ const PopularListings = () => {
           },
         }}
       >
-        {listingCar.map((listing) => (
+        {listingCar.map((listing, index) => (
           <SwiperSlide key={listing.id}>
             <div className="item">
               <div className="car-listing">
@@ -59,7 +59,9 @@ const PopularListings = () => {
                       height: "100%",
                       objectFit: "cover",
                     }}
-                    priority
+                    sizes="(max-width: 640px) 100vw, (max-width: 1024px) 33vw, 25vw"
+                    quality={80}
+                    priority={index < 4}
                     src={listing.image}
                     alt={listing.title}
                   />
@@ -96,9 +98,13 @@ const PopularListings = () => {
                 </div>
                 <div className="details">
                   <div className="wrapper">
-                    <h5 className="price">${listing.price}</h5>
+                    <h5 className="price">
+                      ¥{Number(listing.price).toLocaleString()}
+                    </h5>
                     <h6 className="title">
-                      <Link href="/listing-single-v1">{listing.title}</Link>
+                      <Link href={`/listing-single-v1/${listing.id}`}>
+                        {listing.title}
+                      </Link>
                     </h6>
                     <div className="listign_review">
                       <ul className="mb0">

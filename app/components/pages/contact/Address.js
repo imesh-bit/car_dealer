@@ -3,12 +3,12 @@ const Address = () => {
     title: "Contact Details",
     address: (
       <>
-        Germany — <br /> 329 Queensberry Street,
-        <br /> North Melbourne VIC 3051
+        Japan — <br /> 924-1 Tenma, Fuji
+        <br /> Shizuoka 419-0205
       </>
     ),
-    subtitle: "+1 670 936 46 70",
-    email: "hello@voiture.com",
+    subtitle: "+ +81 90-6360-9950",
+    email: "raikogroupjpn@gmail.com",
     socialIcons: [
       { iconClass: "fab fa-facebook-f", link: "#" },
       { iconClass: "fab fa-twitter", link: "#" },

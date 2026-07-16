@@ -3,9 +3,9 @@ import Link from "next/link";
 
 const categories = [
   {
-    imgSrc: "/images/category-item/1.png",
+    imgSrc: "/images/category-item/1.jpg",
     title: "Compact",
-    delay: 100,
+    delay: 50,
   },
   {
     imgSrc: "/images/category-item/2.png",
