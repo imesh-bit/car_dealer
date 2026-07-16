@@ -38,15 +38,15 @@ const Header = () => {
               width={140}
               height={45}
               className="logo1 img-fluid"
-              src="/images/header-logo2.svg"
-              alt="header-logo.svg"
+              src="/images/header-logo2.png"
+              alt="header-logo2.png"
             />
             <Image
               width={140}
               height={45}
               className="logo2 img-fluid"
-              src="/images/header-logo2.svg"
-              alt="header-logo2.svg"
+              src="/images/header-logo2.png"
+              alt="header-logo2.png"
             />
           </Link>
           {/* End logo*/}
