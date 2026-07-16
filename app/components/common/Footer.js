@@ -15,7 +15,7 @@ const Footer = () => {
                   width={140}
                   height={45}
                   className="logo2 img-fluid"
-                  src="/images/header-logo.svg"
+                  src="/images/header-logo.png"
                   alt="header-logo.png"
                 />
               </div>
