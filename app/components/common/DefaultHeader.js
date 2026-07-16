@@ -21,15 +21,15 @@ const DefaultHeader = () => {
               width={140}
               height={45}
               className="logo1 img-fluid"
-              src="/images/header-logo2.svg"
+              src="/images/header-logo3.svg"
               alt="header-logo.svg"
             />
             <Image
               width={140}
               height={45}
               className="logo2 img-fluid"
-              src="/images/header-logo2.svg"
-              alt="header-logo2.svg"
+              src="/images/header-logo"
+              alt="header-logo3.svg"
             />
           </Link>
           {/* Responsive Menu Structure*/}

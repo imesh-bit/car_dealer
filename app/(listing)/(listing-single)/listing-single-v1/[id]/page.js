@@ -192,10 +192,10 @@ const ListingSingleV1 = async ({ params }) => {
               </div>
               {/* End Location */}
 
-              <ConsumerReviews />
+              {/* <ConsumerReviews /> */}
               {/* End ConsumerReviews */}
 
-              <ReviewBox />
+              {/* <ReviewBox /> */}
               {/* End ReviewBox */}
             </div>
             {/* End .col-xl-8 */}

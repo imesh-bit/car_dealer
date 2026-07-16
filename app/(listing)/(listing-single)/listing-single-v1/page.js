@@ -20,7 +20,7 @@ import ReleatedCar from "@/app/components/listing/listing-single/ReleatedCar";
 
 export const metadata = {
   title:
-    "Listing Single V1 || Voiture - Automotive & Car Dealer NextJS Template",
+    "RAICO GROUP - Automotive & Car Dealer | Listing Single V1",
 };
 
 const ListingSingleV1 = () => {
@@ -70,7 +70,7 @@ const ListingSingleV1 = () => {
                     </li>
                     <li className="list-inline-item">
                       <a href="#">
-                        <span className="flaticon-clock-1 vam" />1 years ago
+                        <span className="flaticon-clock-1 vam" />1 day ago
                       </a>
                     </li>
                     <li className="list-inline-item">
@@ -155,17 +155,17 @@ const ListingSingleV1 = () => {
                 <div className="upl_content d-block d-md-flex">
                   <p className="float-start fn-sm mb20-sm">
                     <span className="fas fa-map-marker-alt pr10 vam" />
-                    3891 Ranchview Dr. Richardson, California 62639
+                    924-1 Tenma, Fuji, Shizuoka 419-0205, Japan
                   </p>
                   <button className="btn location_btn">Get Direction</button>
                 </div>
               </div>
               {/* End Location */}
 
-              <ConsumerReviews />
+              {/* <ConsumerReviews /> */}
               {/* End ConsumerReviews */}
 
-              <ReviewBox />
+              {/* <ReviewBox /> */}
               {/* End ReviewBox */}
             </div>
             {/* End .col-xl-8 */}

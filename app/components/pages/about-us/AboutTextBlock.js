@@ -28,18 +28,32 @@ const AboutTextBlock = () => {
       {/* End .col */}
       <div className="col-lg-5 offset-lg-1">
         <div className="about_content">
-          <h2 className="title">Welcome To The RAICO GROUP</h2>
+          <h2 className="title">Welcome To The RAIKO GROUP 株式会社</h2>
           <p className="mb30">
-            Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean
-            commodo ligula eget dolor. Aenean massa. Cum sociis Theme natoque
-            penatibus et magnis dis parturient montes, nascetur.
+            Welcome to Raiko Group Co., Ltd. – your trusted partner for sourcing and exporting quality products from Japan to customers worldwide.
+
+We specialize in exporting a wide range of products including vehicles, machinery, machinery parts, vehicle spare parts, industrial equipment, and many other Japanese products based on your requirements.
+
+Our mission is to provide high-quality Japanese products at reasonable prices while ensuring fast, reliable, and efficient service. With strong sourcing networks in Japan and a commitment to customer satisfaction, we make international purchasing simple and hassle-free.
+
+Whether you are looking for construction machinery, commercial vehicles, automotive parts, or specialized equipment, Raiko Group Co., Ltd. is ready to deliver the right products to your doorstep anywhere in the world.
+
+Why Choose Us?
+* Export from Japan to worldwide destinations
+* Competitive and reasonable pricing
+* Fast and reliable service
+* Genuine Japanese products
+* Professional customer support
+* Secure and efficient shipping solutions
+
+Exporting quality from Japan to the world.
           </p>
           <p className="mb50">
-            Vel illum dolore eu feugiat nulla facilisis at vero eros et accu qui
-            blandit praesent luptatum zzril delenit.
+           Address: 924-1 Tenma, Fuji, Shizuoka 419-0205, Japan
+           Phone: +81 90-6360-9950
           </p>
           <a className="btn btn-thm about-btn" href="#">
-            Learn More
+           COntact Us
           </a>
         </div>
       </div>

@@ -133,31 +133,31 @@ module.exports = [
   //     },
   //   ],
   // },
-  // {
-  //   label: "Shop",
-  //   subMenu: [
-  //     {
-  //       label: "Shop",
-  //       path: "/shop",
-  //     },
-  //     {
-  //       label: "Shop Single",
-  //       path: "/shop-single",
-  //     },
-  //     {
-  //       label: "Cart",
-  //       path: "/cart",
-  //     },
-  //     {
-  //       label: "Checkout",
-  //       path: "/checkout",
-  //     },
-  //     {
-  //       label: "Complete Order",
-  //       path: "/complete-order",
-  //     },
-  //   ],
-  // },
+  {
+    label: "Shop",
+    subMenu: [
+      {
+        label: "Shop",
+        path: "/shop",
+      },
+      {
+        label: "Shop Single",
+        path: "/shop-single",
+      },
+      {
+        label: "Cart",
+        path: "/cart",
+      },
+      {
+        label: "Checkout",
+        path: "/checkout",
+      },
+      {
+        label: "Complete Order",
+        path: "/complete-order",
+      },
+    ],
+  },
   {
     label: "Pages",
     subMenu: [
@@ -169,34 +169,34 @@ module.exports = [
         label: "Loan Calculator",
         path: "/loan-calculator",
       },
-      {
-        label: "Compare",
-        path: "/compare",
-      },
+      // {
+      //   label: "Compare",
+      //   path: "/compare",
+      // },
       {
         label: "Contact",
         path: "/contact",
       },
-      {
-        label: "Error",
-        path: "/error",
-      },
+      // {
+      //   label: "Error",
+      //   path: "/error",
+      // },
       {
         label: "Faq",
         path: "/faq",
       },
-      {
-        label: "Login",
-        path: "/login",
-      },
-      {
-        label: "Signup",
-        path: "/signup",
-      },
-      {
-        label: "Pricing Table",
-        path: "/pricing",
-      },
+      // {
+      //   label: "Login",
+      //   path: "/login",
+      // },
+      // {
+      //   label: "Signup",
+      //   path: "/signup",
+      // },
+      // {
+      //   label: "Pricing Table",
+      //   path: "/pricing",
+      // },
 
       {
         label: "Service",
