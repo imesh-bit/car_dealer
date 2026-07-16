@@ -157,7 +157,7 @@ import RecentlyViewed from "@/app/components/listing/sidebar/RecentlyViewed";
 import BannerWidget from "@/app/components/common/BannerWidget";
 
 export const metadata = {
-  title: "Listing V4 || Voiture - Automotive & Car Dealer NextJS Template",
+title: "RAIN - Automotive & Car Dealer",
 };
 
 const ListingV4 = async ({ searchParams }) => {

@@ -203,7 +203,7 @@ const HeroFilter = () => {
     if (selectedPrice !== "All Price") params.set("price", selectedPrice);
 
     const queryString = params.toString();
-    router.push(queryString ? `/listing-v4?${queryString}` : "/listing-v4");
+    router.push(queryString ? `/listing-v1?${queryString}` : "/listing-v1");
   };
 
   return (
