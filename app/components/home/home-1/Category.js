@@ -51,7 +51,7 @@ const Category = () => {
             </div>
             <div className="details">
               <p className="title">
-                <Link href="/listing-v4">{category.title}</Link>
+                <Link href="/listing-v1">{category.title}</Link>
               </p>
             </div>
           </div>

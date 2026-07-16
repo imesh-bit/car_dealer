@@ -13,7 +13,30 @@ export const metadata = {
     title: "Listing V1 || Voiture - Automotive & Car Dealer NextJS Template",
 };
 
-const ListingV1 = () => {
+const ListingV1 = async ({ searchParams }) => {
+    const resolvedSearchParams = await searchParams;
+    const {
+        status,
+        make,
+        model,
+        price,
+        sort,
+        type,
+        year,
+        fuelType,
+        transmission,
+        doors,
+        interiorColor,
+        exteriorColor,
+        cylinders,
+        minMileage,
+        maxMileage,
+        vin,
+        features,
+        minPrice,
+        maxPrice,
+    } = resolvedSearchParams || {};
+
     return (
         <div className="wrapper">
             <div
@@ -83,7 +106,27 @@ const ListingV1 = () => {
                     {/* End .row */}
 
                     <div className="row">
-                        <CarItems />
+                        <CarItems
+                            status={status}
+                            make={make}
+                            model={model}
+                            price={price}
+                            sort={sort}
+                            bodyType={type}
+                            year={year}
+                            fuelType={fuelType}
+                            transmission={transmission}
+                            doors={doors}
+                            interiorColor={interiorColor}
+                            exteriorColor={exteriorColor}
+                            cylinders={cylinders}
+                            minMileage={minMileage}
+                            maxMileage={maxMileage}
+                            vin={vin}
+                            features={features}
+                            minPrice={minPrice}
+                            maxPrice={maxPrice}
+                        />
                     </div>
                     {/* End .row */}
 

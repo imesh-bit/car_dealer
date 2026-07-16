@@ -2,10 +2,138 @@ import listingCar from "@/data/listingCar";
 import Image from "next/image";
 import Link from "next/link";
 
-const CarItems = () => {
+const CarItems = ({
+  status,
+  make,
+  model,
+  price,
+  sort,
+  bodyType,
+  year,
+  fuelType,
+  transmission,
+  doors,
+  interiorColor,
+  exteriorColor,
+  cylinders,
+  minMileage,
+  maxMileage,
+  vin,
+  features,
+  minPrice,
+  maxPrice,
+}) => {
+  const selectedFeatures = features ? features.split(",") : [];
+
+  let filteredListings = listingCar.filter((listing) => {
+    if (status === "Used Cars" && !listing.tags.includes("used")) return false;
+    if (status === "New Cars" && !listing.tags.includes("new")) return false;
+
+    if (make && make !== "Select Makes" && listing.make !== make) return false;
+    if (model && model !== "Select Models" && listing.model !== model)
+      return false;
+
+    if (bodyType && bodyType !== "Select Type" && listing.bodyType !== bodyType)
+      return false;
+
+    if (year && year !== "Year" && String(listing.year) !== String(year))
+      return false;
+
+    if (
+      fuelType &&
+      fuelType !== "Fuel Type" &&
+      listing.fuelType !== fuelType
+    )
+      return false;
+
+    if (
+      transmission &&
+      transmission !== "Transmission" &&
+      listing.transmission !== transmission
+    )
+      return false;
+
+    if (doors && doors !== "Doors") {
+      const doorsCount = Number(String(doors).replace(/[^0-9]/g, ""));
+      if (Number(listing.doors) !== doorsCount) return false;
+    }
+
+    if (
+      interiorColor &&
+      interiorColor !== "Interior Color" &&
+      listing.interiorColor !== interiorColor
+    )
+      return false;
+
+    if (
+      exteriorColor &&
+      exteriorColor !== "Exterior Color" &&
+      listing.color !== exteriorColor
+    )
+      return false;
+
+    if (cylinders && cylinders !== "Cylinders") {
+      if (String(listing.cylinders) !== String(cylinders)) return false;
+    }
+
+    if (minMileage && Number(listing.mileage) < Number(minMileage))
+      return false;
+
+    if (maxMileage && Number(listing.mileage) > Number(maxMileage))
+      return false;
+
+    if (vin && !listing.vin.toLowerCase().includes(vin.toLowerCase()))
+      return false;
+
+    if (price && price !== "All Price" && price !== "No max Price") {
+      const maxPriceValue = Number(price.replace(/[^0-9]/g, ""));
+      if (!Number.isNaN(maxPriceValue) && listing.price > maxPriceValue)
+        return false;
+    }
+
+    if (minPrice && listing.price < Number(minPrice)) return false;
+    if (maxPrice && listing.price > Number(maxPrice)) return false;
+
+    if (
+      selectedFeatures.length > 0 &&
+      !selectedFeatures.every((feature) =>
+        (listing.features || []).some((category) =>
+          category.items.includes(feature)
+        )
+      )
+    )
+      return false;
+
+    return true;
+  });
+
+  if (sort === "Most Recent") {
+    filteredListings = [...filteredListings].sort((a, b) => b.id - a.id);
+  } else if (sort === "Recent") {
+    filteredListings = [...filteredListings].sort((a, b) => b.views - a.views);
+  } else if (sort === "Best Selling") {
+    filteredListings = [...filteredListings].sort(
+      (a, b) => b.reviewsCount - a.reviewsCount
+    );
+  } else if (sort === "Old Review") {
+    filteredListings = [...filteredListings].sort(
+      (a, b) => a.reviewsCount - b.reviewsCount
+    );
+  }
+
+  if (filteredListings.length === 0) {
+    return (
+      <div className="col-md-12 col-xl-12">
+        <p className="mt20 mb20">
+          No cars match your filters. Try adjusting your search.
+        </p>
+      </div>
+    );
+  }
+
   return (
     <>
-      {listingCar.map((listing) => (
+      {filteredListings.map((listing) => (
         <div className="col-sm-6 col-lg-4 col-xl-3" key={listing.id}>
           <div className="car-listing">
             <div className="thumb">
@@ -65,9 +193,13 @@ const CarItems = () => {
             </div>
             <div className="details">
               <div className="wrapper">
-                <h5 className="price">${listing.price}</h5>
+                <h5 className="price">
+                  ¥{Number(listing.price).toLocaleString()}
+                </h5>
                 <h6 className="title">
-                  <Link href="/listing-single-v1">{listing.title}</Link>
+                  <Link href={`/listing-single-v1/${listing.id}`}>
+                    {listing.title}
+                  </Link>
                 </h6>
                 <div className="listign_review">
                   <ul className="mb0">

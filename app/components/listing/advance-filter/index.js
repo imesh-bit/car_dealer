@@ -167,7 +167,9 @@ const AdvanceFilter = () => {
       params.set("maxPrice", priceRange.max);
 
     const queryString = params.toString();
-    router.push(queryString ? `/listing-v4?${queryString}` : "/listing-v4");
+    const currentPath =
+      typeof window !== "undefined" ? window.location.pathname : "/listing-v4";
+    router.push(queryString ? `${currentPath}?${queryString}` : currentPath);
   };
 
   return (
