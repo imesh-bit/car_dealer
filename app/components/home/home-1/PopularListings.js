@@ -60,8 +60,7 @@ const PopularListings = () => {
                       objectFit: "cover",
                     }}
                     sizes="(max-width: 640px) 100vw, (max-width: 1024px) 33vw, 25vw"
-                    quality={100}
-                    priority={index < 4}
+                    quality={80}
                     src={listing.image}
                     alt={listing.title}
                   />

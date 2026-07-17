@@ -44,12 +44,11 @@ const PopularVehicles = () => {
                   height={420}
                   style={{
                     width: "100%",
-                    height: "auto",
+                    height: "100%",
                     objectFit: "cover",
                   }}
                   sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
-                  quality={100}
-                  priority={index < 4}
+                  quality={80}
                   src={listing.image}
                   alt={listing.title}
                 />
