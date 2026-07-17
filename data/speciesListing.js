@@ -1,9 +1,16 @@
 module.exports = [
   {
     id: 8,
-    featured: false,
+    featured: true,
     category: "species",
     image: "/images/listing/7.jpg",
+    gallery: [
+      { imageSrc: "/images/listing/7.jpg", videoId: "VWrJkx6O0L8" },
+      { imageSrc: "/images/listing/lsp1-v5.jpg", videoId: "TLEyLGWvjII" },
+      { imageSrc: "/images/listing/lsp1-v5.jpg", videoId: "BS2jGGYC60c" },
+      { imageSrc: "/images/listing/lsp1-v5.jpg", videoId: "8PiZNUCexrA" },
+      { imageSrc: "/images/listing/lsp1-v5.jpg", videoId: "m4ZGuAbUMg8" },
+    ],
     photosCount: 9,
     videosCount: 0,
     title: "Jackfruit in Brine - 2024",
@@ -18,7 +25,7 @@ module.exports = [
     make: "Jackfruit",
     model: "Brine Pack",
     year: 2024,
-    color: "Golden",
+    color: "N/A",
     drivetrain: "N/A",
     condition: "Available",
     engineSize: "N/A",
@@ -46,7 +53,7 @@ module.exports = [
   },
   {
     id: 9,
-    featured: false,
+    featured: true,
     category: "species",
     image: "/images/listing/8.jpg",
     photosCount: 7,
