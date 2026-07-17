@@ -27,6 +27,12 @@ const categories = [
     title: "Coupe",
     type: "Coupe",
   },
+  {
+    icon: "flaticon-gear",
+    title: "Backhoe Loader",
+    type: "Backhoe Loader",
+}
+
 ];
 
 const Category = () => {
