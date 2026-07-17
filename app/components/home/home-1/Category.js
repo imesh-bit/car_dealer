@@ -5,26 +5,31 @@ const categories = [
   {
     imgSrc: "/images/category-item/1.jpg",
     title: "Compact",
+    type: "Compact",
     delay: 50,
   },
   {
     imgSrc: "/images/category-item/2.png",
     title: "Sedan",
+    type: "Sedan",
     delay: 200,
   },
   {
     imgSrc: "/images/category-item/3.png",
     title: "SUV",
+    type: "SUV",
     delay: 300,
   },
   {
     imgSrc: "/images/category-item/4.png",
     title: "Convertible",
+    type: "Convertible",
     delay: 400,
   },
   {
     imgSrc: "/images/category-item/5.png",
     title: "Coupe",
+    type: "Coupe",
     delay: 500,
   },
 ];
@@ -51,7 +56,9 @@ const Category = () => {
             </div>
             <div className="details">
               <p className="title">
-                <Link href="/listing-v1">{category.title}</Link>
+                <Link href={`/listing-v1?type=${encodeURIComponent(category.type)}`}>
+                  {category.title}
+                </Link>
               </p>
             </div>
           </div>

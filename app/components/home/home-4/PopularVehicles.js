@@ -2,81 +2,9 @@
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation, Pagination } from "swiper";
 import "swiper/swiper-bundle.css";
+import listingCar from "@/data/listingCar";
 import Image from "next/image";
 import Link from "next/link";
-
-const listingCar = [
-  {
-    id: 1,
-    image: "/images/item/1.png",
-    photosCount: 12,
-    videosCount: 3,
-    title: "Ferrari 488 Spider Base - 2019",
-    price: 478,
-    rating: 4.7,
-    reviewsCount: 345,
-    mileage: "5436",
-    fuelType: "Diesel",
-    transmission: "Automatic",
-    tags: ["new", "used"],
-  },
-  {
-    id: 2,
-    image: "/images/item/2.png",
-    photosCount: 12,
-    videosCount: 3,
-    title: "Ferrari 488 Spider Base - 2019",
-    price: 478,
-    rating: 4.7,
-    reviewsCount: 345,
-    mileage: "5436",
-    fuelType: "Diesel",
-    transmission: "Automatic",
-    tags: ["new", "used"],
-  },
-  {
-    id: 3,
-    image: "/images/item/1.png",
-    photosCount: 12,
-    videosCount: 3,
-    title: "Ferrari 488 Spider Base - 2019",
-    price: 478,
-    rating: 4.7,
-    reviewsCount: 345,
-    mileage: "5436",
-    fuelType: "Diesel",
-    transmission: "Automatic",
-    tags: ["new", "used"],
-  },
-  {
-    id: 4,
-    image: "/images/item/1.png",
-    photosCount: 12,
-    videosCount: 3,
-    title: "Ferrari 488 Spider Base - 2019",
-    price: 478,
-    rating: 4.7,
-    reviewsCount: 345,
-    mileage: "5436",
-    fuelType: "Diesel",
-    transmission: "Automatic",
-    tags: ["new", "used"],
-  },
-  {
-    id: 5,
-    image: "/images/item/2.png",
-    photosCount: 12,
-    videosCount: 3,
-    title: "Ferrari 488 Spider Base - 2019",
-    price: 478,
-    rating: 4.7,
-    reviewsCount: 345,
-    mileage: "5436",
-    fuelType: "Diesel",
-    transmission: "Automatic",
-    tags: ["new", "used"],
-  },
-];
 
 const PopularVehicles = () => {
   return (
@@ -112,18 +40,22 @@ const PopularVehicles = () => {
           },
         }}
       >
-        {listingCar.map((listing) => (
+        {listingCar.slice(0, 6).map((listing, index) => (
           <SwiperSlide key={listing.id}>
             <div className="item">
               <div className="carlisting-popular-vehicles">
                 <div className="details text-center">
                   <div className="wrapper">
-                    <h5 className="price text-thm4">${listing.price}</h5>
+                    <h5 className="price text-thm4">
+                      ${Number(listing.price).toLocaleString()}
+                    </h5>
                     <h6 className="title">
-                      <Link href="/listing-single-v1">{listing.title}</Link>
+                      <Link href={`/listing-single-v1/${listing.id}`}>
+                        {listing.title}
+                      </Link>
                     </h6>
                     <div className="listign_review">
-                      <ul>
+                      <ul className="mb0">
                         {[...Array(5)].map((_, index) => (
                           <li key={index} className="list-inline-item">
                             <a href="#">
@@ -131,9 +63,6 @@ const PopularVehicles = () => {
                             </a>
                           </li>
                         ))}
-                        <li className="list-inline-item">
-                          <a href="#">{listing.reviews}</a>
-                        </li>
                         <li className="list-inline-item">
                           <a href="#">{listing.rating}</a>
                         </li>
@@ -144,7 +73,7 @@ const PopularVehicles = () => {
                     </div>
                   </div>
                   <div className="listing_footer">
-                    <ul>
+                    <ul className="mb0">
                       <li className="list-inline-item">
                         <span className="flaticon-road-perspective me-2" />
                         {listing.mileage}
@@ -171,7 +100,9 @@ const PopularVehicles = () => {
                       height: "100%",
                       objectFit: "cover",
                     }}
-                    priority
+                    sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+                    quality={80}
+                    priority={index < 4}
                     src={listing.image}
                     alt={listing.title}
                   />

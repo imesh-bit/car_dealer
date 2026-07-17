@@ -1,6 +1,6 @@
 import Blog from "@/app/components/home/home-1/Blog";
 import CarIntro from "@/app/components/home/home-1/CarIntro";
-import Category from "@/app/components/home/home-1/Category";
+// import Category from "@/app/components/home/home-1/Category";
 import PopularListings from "@/app/components/home/home-1/PopularListings";
 import WhyChoose from "@/app/components/common/WhyChoose";
 import LoginSignupModal from "@/app/components/common/login-signup";
@@ -15,6 +15,8 @@ import Footer from "@/app/components/common/Footer";
 import Testimonial from "@/app/components/common/Testimonial";
 import Partner from "@/app/components/common/Partner";
 import Counter from "@/app/components/home/home-1/Counter";
+import PopularVehicles from "@/app/components/home/home-4/PopularVehicles";
+import Category from "@/app/components/home/home-6/Category";
 
 export const metadata = {
   title: "RAICO GROUP - Automotive & Car Dealer",
@@ -146,6 +148,32 @@ const Home_1 = () => {
         </div>
       </section>
       {/* End Our Popular Listing */}
+
+      {/* Popular Vehicles */}
+      <section className="popular-listing pt0 pb110">
+        <div className="container-fluid">
+          <div className="row">
+            <div className="col-lg-6 offset-lg-3">
+              <div className="main-title text-center">
+                <h2>Popular Vehicles</h2>
+              </div>
+            </div>
+          </div>
+
+          <div className="col-lg-12">
+            <div
+              className="home1_popular_listing home4_style"
+              data-aos="fade"
+              data-aos-delay="100"
+            >
+              <div className="listing_item_car_grid_slider ">
+                <PopularVehicles />
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+      {/* End Popular Vehicles */}
 
       {/* <!-- Funfact --> */}
       <section className="our-funfact pt50 pb30">

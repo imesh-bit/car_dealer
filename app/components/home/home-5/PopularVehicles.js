@@ -108,18 +108,22 @@ const PopularVehicles = () => {
           },
         }}
       >
-        {listingCar.map((listing) => (
+        {listingCar.slice(0, 6).map((listing, index) => (
           <SwiperSlide key={listing.id}>
             <div className="item">
               <div className="carlisting-popular-vehicles">
                 <div className="details text-center">
                   <div className="wrapper">
-                    <h5 className="price text-thm4">${listing.price}</h5>
+                    <h5 className="price text-thm4">
+                      ${Number(listing.price).toLocaleString()}
+                    </h5>
                     <h6 className="title">
-                      <Link href="/listing-single-v1">{listing.title}</Link>
+                      <Link href={`/listing-single-v1/${listing.id}`}>
+                        {listing.title}
+                      </Link>
                     </h6>
                     <div className="listign_review">
-                      <ul>
+                      <ul className="mb0">
                         {[...Array(5)].map((_, index) => (
                           <li key={index} className="list-inline-item">
                             <a href="#">
@@ -127,9 +131,6 @@ const PopularVehicles = () => {
                             </a>
                           </li>
                         ))}
-                        <li className="list-inline-item">
-                          <a href="#">{listing.reviews}</a>
-                        </li>
                         <li className="list-inline-item">
                           <a href="#">{listing.rating}</a>
                         </li>
@@ -140,7 +141,7 @@ const PopularVehicles = () => {
                     </div>
                   </div>
                   <div className="listing_footer">
-                    <ul>
+                    <ul className="mb0">
                       <li className="list-inline-item">
                         <span className="flaticon-road-perspective me-2" />
                         {listing.mileage}
@@ -167,7 +168,9 @@ const PopularVehicles = () => {
                       height: "100%",
                       objectFit: "cover",
                     }}
-                    priority
+                    sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+                    quality={80}
+                    priority={index < 4}
                     src={listing.image}
                     alt={listing.title}
                   />
