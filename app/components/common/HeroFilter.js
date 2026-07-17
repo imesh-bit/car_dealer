@@ -436,12 +436,9 @@ const HeroFilter = () => {
       {/* filter tabs */}
       <div className="adss_bg_stylehome1">
         <div className="home1_advance_search_wrapper">
-          <ul className="mb0 text-center row g-2 justify-content-center align-items-end">
+          <ul className="mb0 text-center">
             {tabsConfig.map((filter) => (
-              <li
-                className="list-inline-item col-12 col-md-6 col-lg-auto"
-                key={filter.label}
-              >
+              <li className="list-inline-item" key={filter.label}>
                 <div className="select-boxes">
                   <div className="car_brand">
                     <h6 className="title">{filter.label}</h6>
@@ -462,11 +459,11 @@ const HeroFilter = () => {
             ))}
 
             {/* Search button */}
-            <li className="list-inline-item col-12 col-md-6 col-lg-auto">
-              <div className="d-block w-100">
+            <li className="list-inline-item">
+              <div className="d-block">
                 <button
                   onClick={handleSearch}
-                  className="btn btn-thm advnc_search_form_btn w-100"
+                  className="btn btn-thm advnc_search_form_btn"
                 >
                   <span className="flaticon-magnifiying-glass" />
                   Search
