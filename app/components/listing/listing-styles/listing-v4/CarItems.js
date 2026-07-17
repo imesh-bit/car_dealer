@@ -547,21 +547,12 @@ const CarItems = ({
               </div>
               {/* End wrapper */}
 
-              <div className="listing_footer">
+              <div className={listing.category === "species" ? "listing_footer merchandise-meta" : "listing_footer"}>
                 {listing.category === "species" ? (
                   <ul className="mb0">
-                    <li className="list-inline-item">
-                      <span className="flaticon-clipboard me-2" />
-                      {listing.productCategory}
-                    </li>
-                    <li className="list-inline-item">
-                      <span className="flaticon-box me-2" />
-                      {listing.packagingType}
-                    </li>
-                    <li className="list-inline-item">
-                      <span className="flaticon-layers me-2" />
-                      {listing.orderScale}
-                    </li>
+                    <li className="list-inline-item">{listing.productCategory}</li>
+                    <li className="list-inline-item">{listing.packagingType}</li>
+                    <li className="list-inline-item">{listing.orderScale}</li>
                   </ul>
                 ) : (
                   <ul className="mb0">

@@ -274,21 +274,29 @@ const FeaturedFilterListing = ({ category = "automobile" }) => {
                     </ul>
                   </div>
                 </div>{" "}
-                <div className="listing_footer">
-                  <ul className="mb0">
-                    <li className="list-inline-item">
-                      <span className="flaticon-road-perspective me-2" />
-                      {listing.mileage}
-                    </li>
-                    <li className="list-inline-item">
-                      <span className="flaticon-gas-station me-2" />
-                      {listing.fuelType}
-                    </li>
-                    <li className="list-inline-item">
-                      <span className="flaticon-gear me-2" />
-                      {listing.transmission}
-                    </li>
-                  </ul>
+                <div className={listing.category === "species" ? "listing_footer merchandise-meta" : "listing_footer"}>
+                  {listing.category === "species" ? (
+                    <ul className="mb0">
+                      <li className="list-inline-item">{listing.productCategory}</li>
+                      <li className="list-inline-item">{listing.packagingType}</li>
+                      <li className="list-inline-item">{listing.orderScale}</li>
+                    </ul>
+                  ) : (
+                    <ul className="mb0">
+                      <li className="list-inline-item">
+                        <span className="flaticon-road-perspective me-2" />
+                        {listing.mileage}
+                      </li>
+                      <li className="list-inline-item">
+                        <span className="flaticon-gas-station me-2" />
+                        {listing.fuelType}
+                      </li>
+                      <li className="list-inline-item">
+                        <span className="flaticon-gear me-2" />
+                        {listing.transmission}
+                      </li>
+                    </ul>
+                  )}
                 </div>
               </div>
             </div>
