@@ -83,8 +83,9 @@ const emptyFilters = {
   bodyType: "Select Type",
   partCategory: "All Categories",
   brand: "Select Brand",
-  speciesType: "Select Species Type",
-  breed: "Select Breed",
+  productCategory: "Select Product Category",
+  packagingType: "Select Packaging Type",
+  orderScale: "Select Order Scale (MOQ)",
   year: "Year",
   fuelType: "Fuel Type",
   transmission: "Transmission",
@@ -147,9 +148,12 @@ const AdvanceFilter = ({ category = "automobile" }) => {
       if (filters.brand !== emptyFilters.brand) params.set("brand", filters.brand);
     }
     if (category === "species") {
-      if (filters.speciesType !== emptyFilters.speciesType)
-        params.set("speciesType", filters.speciesType);
-      if (filters.breed !== emptyFilters.breed) params.set("breed", filters.breed);
+      if (filters.productCategory !== emptyFilters.productCategory)
+        params.set("productCategory", filters.productCategory);
+      if (filters.packagingType !== emptyFilters.packagingType)
+        params.set("packagingType", filters.packagingType);
+      if (filters.orderScale !== emptyFilters.orderScale)
+        params.set("orderScale", filters.orderScale);
     }
     if (category === "automobile") {
       if (filters.make !== emptyFilters.make) params.set("make", filters.make);

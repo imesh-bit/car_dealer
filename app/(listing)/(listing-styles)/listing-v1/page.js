@@ -39,15 +39,16 @@ const ListingV1 = async ({ searchParams }) => {
         maxPrice,
         partCategory,
         brand,
-        speciesType,
-        breed,
+        productCategory,
+        packagingType,
+        orderScale,
     } = resolvedSearchParams || {};
 
     const activeCategory = category || "automobile";
     const categoryTitleMap = {
         automobile: "Automobiles",
         "auto-part": "Auto Parts",
-        species: "Species",
+        species: "General Merchandise",
     };
 
     const visibleListings = listingCar.filter(
@@ -148,8 +149,9 @@ const ListingV1 = async ({ searchParams }) => {
                             maxPrice={maxPrice}
                             partCategory={partCategory}
                             brand={brand}
-                            speciesType={speciesType}
-                            breed={breed}
+                            productCategory={productCategory}
+                            packagingType={packagingType}
+                            orderScale={orderScale}
                         />
                     </div>
                     {/* End .row */}

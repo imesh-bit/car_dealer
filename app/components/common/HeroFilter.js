@@ -119,12 +119,12 @@ import { useRouter } from "next/navigation";
 import { useMemo, useState } from "react";
 import listingsData from "@/data/listingCar";
 
-const tabs = ["Automobiles", "Auto Parts", "Species"];
+const tabs = ["Automobiles", "Auto Parts", "General Merchandise"];
 
 const tabCategoryMap = {
   Automobiles: "automobile",
   "Auto Parts": "auto-part",
-  Species: "species",
+  "General Merchandise": "species",
 };
 
 const buildPriceOptions = (sourceListings) => {
@@ -154,10 +154,15 @@ const HeroFilter = () => {
     "All Categories"
   );
   const [selectedBrand, setSelectedBrand] = useState("Select Brand");
-  const [selectedSpeciesType, setSelectedSpeciesType] = useState(
-    "Select Species Type"
+  const [selectedProductCategory, setSelectedProductCategory] = useState(
+    "Select Product Category"
   );
-  const [selectedBreed, setSelectedBreed] = useState("Select Breed");
+  const [selectedPackagingType, setSelectedPackagingType] = useState(
+    "Select Packaging Type"
+  );
+  const [selectedOrderScale, setSelectedOrderScale] = useState(
+    "Select Order Scale (MOQ)"
+  );
 
   const automobileListings = useMemo(
     () =>
@@ -185,7 +190,7 @@ const HeroFilter = () => {
 
   const activeListings = useMemo(() => {
     if (selectedTab === "Auto Parts") return autoPartListings;
-    if (selectedTab === "Species") return speciesListings;
+    if (selectedTab === "General Merchandise") return speciesListings;
     return automobileListings;
   }, [selectedTab, autoPartListings, speciesListings, automobileListings]);
 
@@ -225,26 +230,33 @@ const HeroFilter = () => {
     return ["Select Brand", ...brands];
   }, [autoPartListings]);
 
-  const speciesTypeOptions = useMemo(() => {
-    const speciesTypes = [
-      ...new Set(speciesListings.map((item) => item.speciesType).filter(Boolean)),
+  const productCategoryOptions = useMemo(() => {
+    const productCategories = [
+      ...new Set(
+        speciesListings.map((item) => item.productCategory).filter(Boolean)
+      ),
     ].sort();
 
-    return ["Select Species Type", ...speciesTypes];
+    return ["Select Product Category", ...productCategories];
   }, [speciesListings]);
 
-  const breedOptions = useMemo(() => {
-    const relevantSpecies =
-      selectedSpeciesType === "Select Species Type"
-        ? speciesListings
-        : speciesListings.filter((item) => item.speciesType === selectedSpeciesType);
-
-    const breeds = [
-      ...new Set(relevantSpecies.map((item) => item.breed).filter(Boolean)),
+  const packagingTypeOptions = useMemo(() => {
+    const packagingTypes = [
+      ...new Set(
+        speciesListings.map((item) => item.packagingType).filter(Boolean)
+      ),
     ].sort();
 
-    return ["Select Breed", ...breeds];
-  }, [selectedSpeciesType, speciesListings]);
+    return ["Select Packaging Type", ...packagingTypes];
+  }, [speciesListings]);
+
+  const orderScaleOptions = useMemo(() => {
+    const orderScales = [
+      ...new Set(speciesListings.map((item) => item.orderScale).filter(Boolean)),
+    ].sort();
+
+    return ["Select Order Scale (MOQ)", ...orderScales];
+  }, [speciesListings]);
 
   const priceOptions = useMemo(
     () => buildPriceOptions(activeListings),
@@ -256,9 +268,16 @@ const HeroFilter = () => {
     setSelectedModel("Select Models");
   };
 
-  const handleSpeciesTypeChange = (value) => {
-    setSelectedSpeciesType(value);
-    setSelectedBreed("Select Breed");
+  const handleProductCategoryChange = (value) => {
+    setSelectedProductCategory(value);
+  };
+
+  const handlePackagingTypeChange = (value) => {
+    setSelectedPackagingType(value);
+  };
+
+  const handleOrderScaleChange = (value) => {
+    setSelectedOrderScale(value);
   };
 
   const tabsConfig = useMemo(() => {
@@ -285,25 +304,25 @@ const HeroFilter = () => {
       ];
     }
 
-    if (selectedTab === "Species") {
+    if (selectedTab === "General Merchandise") {
       return [
         {
-          label: "Species Type",
-          options: speciesTypeOptions,
-          value: selectedSpeciesType,
-          onChange: handleSpeciesTypeChange,
+          label: "Product Category",
+          options: productCategoryOptions,
+          value: selectedProductCategory,
+          onChange: handleProductCategoryChange,
         },
         {
-          label: "Breed",
-          options: breedOptions,
-          value: selectedBreed,
-          onChange: setSelectedBreed,
+          label: "Packaging Type",
+          options: packagingTypeOptions,
+          value: selectedPackagingType,
+          onChange: handlePackagingTypeChange,
         },
         {
-          label: "Price",
-          options: priceOptions,
-          value: selectedPrice,
-          onChange: setSelectedPrice,
+          label: "Order Scale (MOQ)",
+          options: orderScaleOptions,
+          value: selectedOrderScale,
+          onChange: handleOrderScaleChange,
         },
       ];
     }
@@ -336,10 +355,12 @@ const HeroFilter = () => {
     selectedBrand,
     priceOptions,
     selectedPrice,
-    speciesTypeOptions,
-    selectedSpeciesType,
-    breedOptions,
-    selectedBreed,
+    productCategoryOptions,
+    selectedProductCategory,
+    packagingTypeOptions,
+    selectedPackagingType,
+    orderScaleOptions,
+    selectedOrderScale,
     makeOptions,
     selectedMake,
     modelOptions,
@@ -357,8 +378,9 @@ const HeroFilter = () => {
     setSelectedPrice("All Price");
     setSelectedPartCategory("All Categories");
     setSelectedBrand("Select Brand");
-    setSelectedSpeciesType("Select Species Type");
-    setSelectedBreed("Select Breed");
+    setSelectedProductCategory("Select Product Category");
+    setSelectedPackagingType("Select Packaging Type");
+    setSelectedOrderScale("Select Order Scale (MOQ)");
 
     router.push(`/?category=${encodeURIComponent(nextCategory)}`);
   };
@@ -381,10 +403,13 @@ const HeroFilter = () => {
       if (selectedBrand !== "Select Brand") params.set("brand", selectedBrand);
     }
 
-    if (selectedTab === "Species") {
-      if (selectedSpeciesType !== "Select Species Type")
-        params.set("speciesType", selectedSpeciesType);
-      if (selectedBreed !== "Select Breed") params.set("breed", selectedBreed);
+    if (selectedTab === "General Merchandise") {
+      if (selectedProductCategory !== "Select Product Category")
+        params.set("productCategory", selectedProductCategory);
+      if (selectedPackagingType !== "Select Packaging Type")
+        params.set("packagingType", selectedPackagingType);
+      if (selectedOrderScale !== "Select Order Scale (MOQ)")
+        params.set("orderScale", selectedOrderScale);
     }
 
     if (selectedPrice !== "All Price") params.set("price", selectedPrice);

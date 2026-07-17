@@ -61,23 +61,34 @@ const MainFilter = ({ filters, updateFilter, category = "automobile" }) => {
     ].sort();
   }, []);
 
-  const speciesTypeOptions = useMemo(() => {
+  const productCategoryOptions = useMemo(() => {
     return [
       ...new Set(
         listingsData
           .filter((item) => (item.category || "automobile") === "species")
-          .map((item) => item.speciesType)
+          .map((item) => item.productCategory)
           .filter(Boolean)
       ),
     ].sort();
   }, []);
 
-  const breedOptions = useMemo(() => {
+  const packagingTypeOptions = useMemo(() => {
     return [
       ...new Set(
         listingsData
           .filter((item) => (item.category || "automobile") === "species")
-          .map((item) => item.breed)
+          .map((item) => item.packagingType)
+          .filter(Boolean)
+      ),
+    ].sort();
+  }, []);
+
+  const orderScaleOptions = useMemo(() => {
+    return [
+      ...new Set(
+        listingsData
+          .filter((item) => (item.category || "automobile") === "species")
+          .map((item) => item.orderScale)
           .filter(Boolean)
       ),
     ].sort();
@@ -111,14 +122,19 @@ const MainFilter = ({ filters, updateFilter, category = "automobile" }) => {
   } else if (activeCategory === "species") {
     filterConfigs.push(
       {
-        key: "speciesType",
-        label: "Select Species Type",
-        options: ["Select Species Type", ...speciesTypeOptions],
+        key: "productCategory",
+        label: "Select Product Category",
+        options: ["Select Product Category", ...productCategoryOptions],
       },
       {
-        key: "breed",
-        label: "Select Breed",
-        options: ["Select Breed", ...breedOptions],
+        key: "packagingType",
+        label: "Select Packaging Type",
+        options: ["Select Packaging Type", ...packagingTypeOptions],
+      },
+      {
+        key: "orderScale",
+        label: "Select Order Scale (MOQ)",
+        options: ["Select Order Scale (MOQ)", ...orderScaleOptions],
       }
     );
   } else {

@@ -35,24 +35,43 @@
 // export default Overview;
 
 const Overview = ({ car }) => {
-  const carData = [
-    { label: "Make", value: car?.make || "N/A" },
-    { label: "Model", value: car?.model || "N/A" },
-    { label: "Color", value: car?.color || "N/A" },
-    { label: "Drive Type", value: car?.drivetrain || "N/A" },
-    { label: "Transmission", value: car?.transmission || "N/A" },
-    { label: "Condition", value: car?.condition || "N/A" },
-    { label: "Year", value: car?.year || "N/A" },
-    {
-      label: "Mileage",
-      value: car?.mileage ? `${Number(car.mileage).toLocaleString()} mi` : "N/A",
-    },
-    { label: "Fuel Type", value: car?.fuelType || "N/A" },
-    { label: "Engine Size", value: car?.engineSize || "N/A" },
-    { label: "Doors", value: car?.doors || "N/A" },
-    { label: "Cylinders", value: car?.cylinders || "N/A" },
-    { label: "VIN", value: car?.vin || "N/A" },
-  ];
+  const carData =
+    car?.category === "species"
+      ? [
+          {
+            label: "Product Category",
+            value: car?.productCategory || "N/A",
+          },
+          {
+            label: "Packaging Type",
+            value: car?.packagingType || "N/A",
+          },
+          {
+            label: "Order Scale (MOQ)",
+            value: car?.orderScale || "N/A",
+          },
+          { label: "Condition", value: car?.condition || "N/A" },
+          { label: "Year", value: car?.year || "N/A" },
+          { label: "Listing Type", value: "General Merchandise" },
+        ]
+      : [
+          { label: "Make", value: car?.make || "N/A" },
+          { label: "Model", value: car?.model || "N/A" },
+          { label: "Color", value: car?.color || "N/A" },
+          { label: "Drive Type", value: car?.drivetrain || "N/A" },
+          { label: "Transmission", value: car?.transmission || "N/A" },
+          { label: "Condition", value: car?.condition || "N/A" },
+          { label: "Year", value: car?.year || "N/A" },
+          {
+            label: "Mileage",
+            value: car?.mileage ? `${Number(car.mileage).toLocaleString()} mi` : "N/A",
+          },
+          { label: "Fuel Type", value: car?.fuelType || "N/A" },
+          { label: "Engine Size", value: car?.engineSize || "N/A" },
+          { label: "Doors", value: car?.doors || "N/A" },
+          { label: "Cylinders", value: car?.cylinders || "N/A" },
+          { label: "VIN", value: car?.vin || "N/A" },
+        ];
 
   return (
     <ul className="list-group">

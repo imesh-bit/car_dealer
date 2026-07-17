@@ -548,20 +548,37 @@ const CarItems = ({
               {/* End wrapper */}
 
               <div className="listing_footer">
-                <ul className="mb0">
-                  <li className="list-inline-item">
-                    <span className="flaticon-road-perspective me-2" />
-                    {listing.mileage}
-                  </li>
-                  <li className="list-inline-item">
-                    <span className="flaticon-gas-station me-2" />
-                    {listing.fuelType}
-                  </li>
-                  <li className="list-inline-item">
-                    <span className="flaticon-gear me-2" />
-                    {listing.transmission}
-                  </li>
-                </ul>
+                {listing.category === "species" ? (
+                  <ul className="mb0">
+                    <li className="list-inline-item">
+                      <span className="flaticon-clipboard me-2" />
+                      {listing.productCategory}
+                    </li>
+                    <li className="list-inline-item">
+                      <span className="flaticon-box me-2" />
+                      {listing.packagingType}
+                    </li>
+                    <li className="list-inline-item">
+                      <span className="flaticon-layers me-2" />
+                      {listing.orderScale}
+                    </li>
+                  </ul>
+                ) : (
+                  <ul className="mb0">
+                    <li className="list-inline-item">
+                      <span className="flaticon-road-perspective me-2" />
+                      {listing.mileage}
+                    </li>
+                    <li className="list-inline-item">
+                      <span className="flaticon-gas-station me-2" />
+                      {listing.fuelType}
+                    </li>
+                    <li className="list-inline-item">
+                      <span className="flaticon-gear me-2" />
+                      {listing.transmission}
+                    </li>
+                  </ul>
+                )}
                 {/* End car meta */}
                 <ul className="mb0 share-icons">
                   <li className="list-inline-item pointer">

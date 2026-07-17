@@ -25,8 +25,9 @@ const CarItems = ({
   maxPrice,
   partCategory,
   brand,
-  speciesType,
-  breed,
+  productCategory,
+  packagingType,
+  orderScale,
 }) => {
   const selectedFeatures = features ? features.split(",") : [];
   const selectedCategory = category || "automobile";
@@ -51,10 +52,25 @@ const CarItems = ({
     if (brand && brand !== "Select Brand" && listing.brand !== brand)
       return false;
 
-    if (speciesType && speciesType !== "Select Species Type" && listing.speciesType !== speciesType)
+    if (
+      productCategory &&
+      productCategory !== "Select Product Category" &&
+      listing.productCategory !== productCategory
+    )
       return false;
 
-    if (breed && breed !== "Select Breed" && listing.breed !== breed)
+    if (
+      packagingType &&
+      packagingType !== "Select Packaging Type" &&
+      listing.packagingType !== packagingType
+    )
+      return false;
+
+    if (
+      orderScale &&
+      orderScale !== "Select Order Scale (MOQ)" &&
+      listing.orderScale !== orderScale
+    )
       return false;
 
     if (bodyType && bodyType !== "Select Type" && listing.bodyType !== bodyType)
@@ -246,20 +262,37 @@ const CarItems = ({
               {/* End wrapper */}
 
               <div className="listing_footer">
-                <ul className="mb0">
-                  <li className="list-inline-item">
-                    <span className="flaticon-road-perspective me-2" />
-                    {listing.mileage}
-                  </li>
-                  <li className="list-inline-item">
-                    <span className="flaticon-gas-station me-2" />
-                    {listing.fuelType}
-                  </li>
-                  <li className="list-inline-item">
-                    <span className="flaticon-gear me-2" />
-                    {listing.transmission}
-                  </li>
-                </ul>
+                {listing.category === "species" ? (
+                  <ul className="mb0">
+                    <li className="list-inline-item">
+                      <span className="flaticon-clipboard me-2" />
+                      {listing.productCategory}
+                    </li>
+                    <li className="list-inline-item">
+                      <span className="flaticon-box me-2" />
+                      {listing.packagingType}
+                    </li>
+                    <li className="list-inline-item">
+                      <span className="flaticon-layers me-2" />
+                      {listing.orderScale}
+                    </li>
+                  </ul>
+                ) : (
+                  <ul className="mb0">
+                    <li className="list-inline-item">
+                      <span className="flaticon-road-perspective me-2" />
+                      {listing.mileage}
+                    </li>
+                    <li className="list-inline-item">
+                      <span className="flaticon-gas-station me-2" />
+                      {listing.fuelType}
+                    </li>
+                    <li className="list-inline-item">
+                      <span className="flaticon-gear me-2" />
+                      {listing.transmission}
+                    </li>
+                  </ul>
+                )}
               </div>
             </div>
           </div>

@@ -54,7 +54,7 @@ const categoryGroups = {
       queryKey: "partCategory",
     },
     {
-      icon: "flaticon-power",
+      icon: "fa-light fa-plug-circle-plus",
       title: "Electrical",
       value: "Electrical",
       queryKey: "partCategory",
@@ -74,28 +74,28 @@ const categoryGroups = {
   ],
   species: [
     {
-      icon: "flaticon-dog",
-      title: "Dog",
-      value: "Dog",
-      queryKey: "speciesType",
+      icon: "flaticon-gear",
+      title: "Processed Food Items",
+      value: "Processed Food Items",
+      queryKey: "productCategory",
     },
     {
-      icon: "flaticon-cat",
-      title: "Cat",
-      value: "Cat",
-      queryKey: "speciesType",
+      icon:"fa-light fa-mortar-pestle",
+      title: "Dry Goods & Spices",
+      value: "Dry Goods & Spices",
+      queryKey: "productCategory",
     },
     {
-      icon: "flaticon-bird",
-      title: "Bird",
-      value: "Bird",
-      queryKey: "speciesType",
+      icon: "flaticon-home",
+      title: "Household & Daily Essentials",
+      value: "Household & Daily Essentials",
+      queryKey: "productCategory",
     },
     {
-      icon: "flaticon-fish",
-      title: "Fish",
-      value: "Fish",
-      queryKey: "speciesType",
+      icon: "flaticon-factory",
+      title: "Industrial Raw Materials",
+      value: "Industrial Raw Materials",
+      queryKey: "productCategory",
     },
   ],
 };
@@ -111,7 +111,7 @@ const Category = ({ category = "automobile" }) => {
       }
 
       if (category === "species") {
-        return (listing.speciesType || "").toLowerCase() === item.value.toLowerCase();
+        return (listing.productCategory || "").toLowerCase() === item.value.toLowerCase();
       }
 
       return (listing.bodyType || "").toLowerCase() === item.value.toLowerCase();

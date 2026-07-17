@@ -14,7 +14,7 @@ const ListGridFilter = ({ category = "automobile", totalCount = 0 }) => {
   const labelMap = {
     automobile: "Cars",
     "auto-part": "Parts",
-    species: "Listings",
+    species: "General Merchandise",
   };
 
   const resultLabel = labelMap[category] || "Listings";
