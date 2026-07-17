@@ -6,7 +6,11 @@ import listingCar from "@/data/listingCar";
 import Image from "next/image";
 import Link from "next/link";
 
-const PopularVehicles = () => {
+const PopularVehicles = ({ category = "automobile" }) => {
+  const visibleListings = listingCar.filter(
+    (item) => (item.category || "automobile") === category
+  );
+
   return (
     <>
       <Swiper
@@ -15,7 +19,7 @@ const PopularVehicles = () => {
         loop={true}
         speed={1000}
         centeredSlides={true}
-        initialSlide={Math.floor(listingCar.length / 2)}
+        initialSlide={Math.floor(visibleListings.length / 2)}
         modules={[Pagination, Navigation]}
         pagination={{
           el: ".js-pagination-pag2",
@@ -32,7 +36,7 @@ const PopularVehicles = () => {
           1024: { slidesPerView: 3 },
         }}
       >
-        {listingCar.slice(0, 6).map((listing, index) => (
+        {visibleListings.slice(0, 6).map((listing, index) => (
           <SwiperSlide key={listing.id}>
             {/* Added a container class to handle flex column flow */}
             <div className="item carlisting-popular-vehicles" style={{ display: 'flex', flexDirection: 'column' }}>

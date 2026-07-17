@@ -7,7 +7,11 @@ import listingCar from "@/data/listingCar";
 import Image from "next/image";
 import Link from "next/link";
 
-const PopularListings = () => {
+const PopularListings = ({ category = "automobile" }) => {
+  const visibleListings = listingCar.filter(
+    (item) => (item.category || "automobile") === category
+  );
+
   return (
     <>
       <Swiper
@@ -35,7 +39,7 @@ const PopularListings = () => {
           },
         }}
       >
-        {listingCar.map((listing, index) => (
+        {visibleListings.map((listing, index) => (
           <SwiperSlide key={listing.id}>
             <div className="item">
               <div className="car-listing">

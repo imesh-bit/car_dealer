@@ -165,6 +165,7 @@ const ListingV4 = async ({ searchParams }) => {
   const resolvedSearchParams = await searchParams;
   const {
     status,
+    category,
     make,
     model,
     price, // legacy single "max price" value from HeroFilter
@@ -183,6 +184,10 @@ const ListingV4 = async ({ searchParams }) => {
     features,
     minPrice,
     maxPrice,
+    partCategory,
+    brand,
+    speciesType,
+    breed,
   } = resolvedSearchParams || {};
 
   return (
@@ -269,6 +274,7 @@ const ListingV4 = async ({ searchParams }) => {
               <div className="row">
                 <CarItems
                   status={status}
+                  category={category}
                   make={make}
                   model={model}
                   price={price}
@@ -287,6 +293,10 @@ const ListingV4 = async ({ searchParams }) => {
                   features={features}
                   minPrice={minPrice}
                   maxPrice={maxPrice}
+                  partCategory={partCategory}
+                  brand={brand}
+                  speciesType={speciesType}
+                  breed={breed}
                 />
               </div>
               {/* End .row */}

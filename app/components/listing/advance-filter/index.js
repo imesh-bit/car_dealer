@@ -81,6 +81,10 @@ const emptyFilters = {
   make: "Select Makes",
   model: "Select Models",
   bodyType: "Select Type",
+  partCategory: "All Categories",
+  brand: "Select Brand",
+  speciesType: "Select Species Type",
+  breed: "Select Breed",
   year: "Year",
   fuelType: "Fuel Type",
   transmission: "Transmission",
@@ -94,7 +98,7 @@ const emptyFilters = {
   features: [],
 };
 
-const AdvanceFilter = () => {
+const AdvanceFilter = ({ category = "automobile" }) => {
   const router = useRouter();
 
   // Real min/max price straight from the data, used as the slider bounds
@@ -137,9 +141,21 @@ const AdvanceFilter = () => {
     const params = new URLSearchParams();
 
     if (filters.sort !== emptyFilters.sort) params.set("sort", filters.sort);
-    if (filters.make !== emptyFilters.make) params.set("make", filters.make);
-    if (filters.model !== emptyFilters.model)
-      params.set("model", filters.model);
+    if (category === "auto-part") {
+      if (filters.partCategory !== emptyFilters.partCategory)
+        params.set("partCategory", filters.partCategory);
+      if (filters.brand !== emptyFilters.brand) params.set("brand", filters.brand);
+    }
+    if (category === "species") {
+      if (filters.speciesType !== emptyFilters.speciesType)
+        params.set("speciesType", filters.speciesType);
+      if (filters.breed !== emptyFilters.breed) params.set("breed", filters.breed);
+    }
+    if (category === "automobile") {
+      if (filters.make !== emptyFilters.make) params.set("make", filters.make);
+      if (filters.model !== emptyFilters.model)
+        params.set("model", filters.model);
+    }
     if (filters.bodyType !== emptyFilters.bodyType)
       params.set("type", filters.bodyType);
     if (filters.year !== emptyFilters.year) params.set("year", filters.year);
@@ -175,7 +191,7 @@ const AdvanceFilter = () => {
   return (
     <>
       <div className="row">
-        <MainFilter filters={filters} updateFilter={updateFilter} />
+        <MainFilter filters={filters} updateFilter={updateFilter} category={category} />
 
         <div className="col col-sm-4 col-lg-2">
           <div className="advance_search_style">

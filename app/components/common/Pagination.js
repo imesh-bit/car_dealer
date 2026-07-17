@@ -1,10 +1,13 @@
 "use client";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
-const Pagination = () => {
-  const [currentPage, setCurrentPage] = useState(2);
-  const totalPages = 3;
+const Pagination = ({ totalPages = 3 }) => {
+  const [currentPage, setCurrentPage] = useState(1);
   const pages = [];
+
+  useEffect(() => {
+    setCurrentPage(1);
+  }, [totalPages]);
 
   const handleClick = (page) => {
     setCurrentPage(page);

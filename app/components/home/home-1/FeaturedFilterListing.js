@@ -153,13 +153,17 @@ import Image from "next/image";
 import Link from "next/link";
 import { useState } from "react";
 
-const FeaturedFilterListing = () => {
+const FeaturedFilterListing = ({ category = "automobile" }) => {
   const [filter, setFilter] = useState("*");
+
+  const visibleListings = listingsData.filter(
+    (item) => (item.category || "automobile") === category
+  );
 
   const filteredItems =
     filter === "*"
-      ? listingsData.slice(0, 8)
-      : listingsData.slice(0, 8).filter((item) => item.tags.includes(filter));
+      ? visibleListings.slice(0, 8)
+      : visibleListings.filter((item) => item.tags.includes(filter)).slice(0, 8);
 
   return (
     <div className="popular_listing_sliders ">

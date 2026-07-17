@@ -1,4 +1,4 @@
-const ListGridFilter = () => {
+const ListGridFilter = ({ category = "automobile", totalCount = 0 }) => {
   const options = [
     "Date: newest First",
     "Most Recent",
@@ -11,13 +11,20 @@ const ListGridFilter = () => {
     <option key={index}>{option}</option>
   ));
 
+  const labelMap = {
+    automobile: "Cars",
+    "auto-part": "Parts",
+    species: "Listings",
+  };
+
+  const resultLabel = labelMap[category] || "Listings";
+
   return (
     <div className="listing_filter_row db-767">
       <div className="col-md-4">
         <div className="page_control_shorting left_area tac-sm mb30-767 mt15">
           <p>
-            We found <span className="heading-color fw600">4733</span> Cars
-            available for you
+            We found <span className="heading-color fw600">{totalCount}</span> {resultLabel} available for you
           </p>
         </div>
       </div>

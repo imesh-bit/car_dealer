@@ -4,6 +4,7 @@ import Link from "next/link";
 
 const CarItems = ({
   status,
+  category,
   make,
   model,
   price,
@@ -22,15 +23,38 @@ const CarItems = ({
   features,
   minPrice,
   maxPrice,
+  partCategory,
+  brand,
+  speciesType,
+  breed,
 }) => {
   const selectedFeatures = features ? features.split(",") : [];
+  const selectedCategory = category || "automobile";
 
   let filteredListings = listingCar.filter((listing) => {
+    const listingCategory = listing.category || "automobile";
+
+    if (selectedCategory && selectedCategory !== "all") {
+      if (listingCategory !== selectedCategory) return false;
+    }
+
     if (status === "Used Cars" && !listing.tags.includes("used")) return false;
     if (status === "New Cars" && !listing.tags.includes("new")) return false;
 
     if (make && make !== "Select Makes" && listing.make !== make) return false;
     if (model && model !== "Select Models" && listing.model !== model)
+      return false;
+
+    if (partCategory && partCategory !== "All Categories" && listing.partCategory !== partCategory)
+      return false;
+
+    if (brand && brand !== "Select Brand" && listing.brand !== brand)
+      return false;
+
+    if (speciesType && speciesType !== "Select Species Type" && listing.speciesType !== speciesType)
+      return false;
+
+    if (breed && breed !== "Select Breed" && listing.breed !== breed)
       return false;
 
     if (bodyType && bodyType !== "Select Type" && listing.bodyType !== bodyType)

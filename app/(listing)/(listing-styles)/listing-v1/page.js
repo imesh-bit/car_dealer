@@ -8,6 +8,7 @@ import AdvanceFilter from "@/app/components/listing/advance-filter";
 import Pagination from "@/app/components/common/Pagination";
 import ListGridFilter from "@/app/components/listing/ListGridFilter";
 import CarItems from "@/app/components/listing/listing-styles/listing-v1/CarItems";
+import listingCar from "@/data/listingCar";
 
 export const metadata = {
     title: "Listing V1 || Voiture - Automotive & Car Dealer NextJS Template",
@@ -17,6 +18,7 @@ const ListingV1 = async ({ searchParams }) => {
     const resolvedSearchParams = await searchParams;
     const {
         status,
+        category,
         make,
         model,
         price,
@@ -35,7 +37,24 @@ const ListingV1 = async ({ searchParams }) => {
         features,
         minPrice,
         maxPrice,
+        partCategory,
+        brand,
+        speciesType,
+        breed,
     } = resolvedSearchParams || {};
+
+    const activeCategory = category || "automobile";
+    const categoryTitleMap = {
+        automobile: "Automobiles",
+        "auto-part": "Auto Parts",
+        species: "Species",
+    };
+
+    const visibleListings = listingCar.filter(
+        (item) => (item.category || "automobile") === activeCategory
+    );
+    const totalCount = visibleListings.length;
+    const totalPages = Math.max(1, Math.ceil(totalCount / 8));
 
     return (
         <div className="wrapper">
@@ -64,7 +83,7 @@ const ListingV1 = async ({ searchParams }) => {
             {/* Advance_search_menu_sectn*/}
             <section className="advance_search_menu_sectn bgc-thm2 pt20 pb0 mt70-992 filter-style_two">
                 <div className="container">
-                    <AdvanceFilter />
+                    <AdvanceFilter category={activeCategory} />
                 </div>
             </section>
             {/* End Advance_search_menu_sectn*/}
@@ -76,7 +95,7 @@ const ListingV1 = async ({ searchParams }) => {
                         <div className="col-xl-12">
                             <div className="breadcrumb_content style2">
                                 <h2 className="breadcrumb_title">
-                                    Used Vehicles For Sale
+                                    {categoryTitleMap[activeCategory] || "Automobiles"}
                                 </h2>
                                 <p className="subtitle">Listing-v1</p>
                                 <ol className="breadcrumb fn-sm mt15-sm">
@@ -101,13 +120,14 @@ const ListingV1 = async ({ searchParams }) => {
             <section className="our-listing pt0 bgc-f9 pb30-991">
                 <div className="container">
                     <div className="row">
-                        <ListGridFilter />
+                        <ListGridFilter category={activeCategory} totalCount={totalCount} />
                     </div>
                     {/* End .row */}
 
                     <div className="row">
                         <CarItems
                             status={status}
+                            category={category}
                             make={make}
                             model={model}
                             price={price}
@@ -126,6 +146,10 @@ const ListingV1 = async ({ searchParams }) => {
                             features={features}
                             minPrice={minPrice}
                             maxPrice={maxPrice}
+                            partCategory={partCategory}
+                            brand={brand}
+                            speciesType={speciesType}
+                            breed={breed}
                         />
                     </div>
                     {/* End .row */}
@@ -133,7 +157,7 @@ const ListingV1 = async ({ searchParams }) => {
                     <div className="row">
                         <div className="col-lg-12">
                             <div className="mbp_pagination mt10">
-                                <Pagination />
+                                <Pagination totalPages={totalPages} />
                             </div>
                         </div>
                     </div>

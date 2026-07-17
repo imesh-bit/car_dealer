@@ -23,7 +23,10 @@ export const metadata = {
   description: `RAICO GROUP - Automotive & Car Dealer. `,
 };
 
-const Home_1 = () => {
+const Home_1 = async ({ searchParams }) => {
+  const resolvedSearchParams = await searchParams;
+  const activeCategory = resolvedSearchParams?.category || "automobile";
+
   return (
     <div className="wrapper ovh">
       {/* Sidebar Panel Start */}
@@ -58,7 +61,7 @@ const Home_1 = () => {
       <section className="car-category mobile_space bgc-f9  pb100">
         <div className="container">
           <div className="row">
-            <Category />
+            <Category category={activeCategory} />
           </div>
         </div>
       </section>
@@ -78,7 +81,7 @@ const Home_1 = () => {
 
           <div className="row">
             <div className="col-lg-12" data-aos-delay="100" data-aos="fade-up">
-              <FeaturedFilterListing />
+              <FeaturedFilterListing category={activeCategory} />
             </div>
           </div>
           {/* End .row */}
@@ -141,7 +144,7 @@ const Home_1 = () => {
           <div className="col-lg-12">
             <div className="home1_popular_listing">
               <div className="listing_item_4grid_slider dots_none">
-                <PopularListings />
+                <PopularListings category={activeCategory} />
               </div>
             </div>
           </div>
@@ -167,7 +170,7 @@ const Home_1 = () => {
               data-aos-delay="100"
             >
               <div className="listing_item_car_grid_slider ">
-                <PopularVehicles />
+                <PopularVehicles category={activeCategory} />
               </div>
             </div>
           </div>

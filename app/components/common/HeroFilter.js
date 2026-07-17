@@ -119,87 +119,274 @@ import { useRouter } from "next/navigation";
 import { useMemo, useState } from "react";
 import listingsData from "@/data/listingCar";
 
+const tabs = ["Automobiles", "Auto Parts", "Species"];
+
+const tabCategoryMap = {
+  Automobiles: "automobile",
+  "Auto Parts": "auto-part",
+  Species: "species",
+};
+
+const buildPriceOptions = (sourceListings) => {
+  const prices = sourceListings.map((item) => item.price).filter(Boolean);
+
+  if (prices.length === 0) return ["All Price"];
+
+  const max = Math.max(...prices);
+  const step = Math.max(1, Math.ceil(max / 5));
+  const bands = Array.from({ length: 5 }, (_, index) => step * (index + 1));
+
+  return [
+    "All Price",
+    "No max Price",
+    ...bands.map((band) => `¥${band.toLocaleString()}`),
+  ];
+};
+
 const HeroFilter = () => {
   const router = useRouter();
 
-  const [selectedStatus, setSelectedStatus] = useState("All Status");
+  const [selectedTab, setSelectedTab] = useState("Automobiles");
   const [selectedMake, setSelectedMake] = useState("Select Makes");
   const [selectedModel, setSelectedModel] = useState("Select Models");
   const [selectedPrice, setSelectedPrice] = useState("All Price");
+  const [selectedPartCategory, setSelectedPartCategory] = useState(
+    "All Categories"
+  );
+  const [selectedBrand, setSelectedBrand] = useState("Select Brand");
+  const [selectedSpeciesType, setSelectedSpeciesType] = useState(
+    "Select Species Type"
+  );
+  const [selectedBreed, setSelectedBreed] = useState("Select Breed");
 
-  // Unique makes pulled straight from the listing data
+  const automobileListings = useMemo(
+    () =>
+      listingsData.filter(
+        (listing) => (listing.category || "automobile") === "automobile"
+      ),
+    []
+  );
+
+  const autoPartListings = useMemo(
+    () =>
+      listingsData.filter(
+        (listing) => (listing.category || "automobile") === "auto-part"
+      ),
+    []
+  );
+
+  const speciesListings = useMemo(
+    () =>
+      listingsData.filter(
+        (listing) => (listing.category || "automobile") === "species"
+      ),
+    []
+  );
+
+  const activeListings = useMemo(() => {
+    if (selectedTab === "Auto Parts") return autoPartListings;
+    if (selectedTab === "Species") return speciesListings;
+    return automobileListings;
+  }, [selectedTab, autoPartListings, speciesListings, automobileListings]);
+
   const makeOptions = useMemo(() => {
     const makes = [
-      ...new Set(listingsData.map((car) => car.make).filter(Boolean)),
+      ...new Set(automobileListings.map((car) => car.make).filter(Boolean)),
     ].sort();
     return ["Select Makes", ...makes];
-  }, []);
+  }, [automobileListings]);
 
-  // Models narrow down to whichever make is currently selected
   const modelOptions = useMemo(() => {
     const relevantCars =
       selectedMake === "Select Makes"
-        ? listingsData
-        : listingsData.filter((car) => car.make === selectedMake);
+        ? automobileListings
+        : automobileListings.filter((car) => car.make === selectedMake);
+
     const models = [
       ...new Set(relevantCars.map((car) => car.model).filter(Boolean)),
     ].sort();
+
     return ["Select Models", ...models];
-  }, [selectedMake]);
+  }, [selectedMake, automobileListings]);
 
-  // Price bands computed from the real min/max price in the data (in Yen)
-  const priceOptions = useMemo(() => {
-    const prices = listingsData.map((car) => car.price).filter(Boolean);
-    if (prices.length === 0) return ["All Price"];
+  const partCategoryOptions = useMemo(() => {
+    const categories = [
+      ...new Set(autoPartListings.map((item) => item.partCategory).filter(Boolean)),
+    ].sort();
 
-    const max = Math.max(...prices);
-    const step = Math.max(1, Math.ceil(max / 5));
-    const bands = Array.from({ length: 5 }, (_, i) => step * (i + 1));
+    return ["All Categories", ...categories];
+  }, [autoPartListings]);
 
-    return [
-      "All Price",
-      "No max Price",
-      ...bands.map((band) => `¥${band.toLocaleString()}`),
-    ];
-  }, []);
+  const brandOptions = useMemo(() => {
+    const brands = [
+      ...new Set(autoPartListings.map((item) => item.brand).filter(Boolean)),
+    ].sort();
+
+    return ["Select Brand", ...brands];
+  }, [autoPartListings]);
+
+  const speciesTypeOptions = useMemo(() => {
+    const speciesTypes = [
+      ...new Set(speciesListings.map((item) => item.speciesType).filter(Boolean)),
+    ].sort();
+
+    return ["Select Species Type", ...speciesTypes];
+  }, [speciesListings]);
+
+  const breedOptions = useMemo(() => {
+    const relevantSpecies =
+      selectedSpeciesType === "Select Species Type"
+        ? speciesListings
+        : speciesListings.filter((item) => item.speciesType === selectedSpeciesType);
+
+    const breeds = [
+      ...new Set(relevantSpecies.map((item) => item.breed).filter(Boolean)),
+    ].sort();
+
+    return ["Select Breed", ...breeds];
+  }, [selectedSpeciesType, speciesListings]);
+
+  const priceOptions = useMemo(
+    () => buildPriceOptions(activeListings),
+    [activeListings]
+  );
 
   const handleMakeChange = (value) => {
     setSelectedMake(value);
-    // Reset model since the available models just changed
     setSelectedModel("Select Models");
   };
 
-  const filters = [
-    {
-      label: "Make",
-      options: makeOptions,
-      value: selectedMake,
-      onChange: handleMakeChange,
-    },
-    {
-      label: "Models",
-      options: modelOptions,
-      value: selectedModel,
-      onChange: setSelectedModel,
-    },
-    {
-      label: "Price",
-      options: priceOptions,
-      value: selectedPrice,
-      onChange: setSelectedPrice,
-    },
-  ];
+  const handleSpeciesTypeChange = (value) => {
+    setSelectedSpeciesType(value);
+    setSelectedBreed("Select Breed");
+  };
 
-  const handleStatusClick = (status) => {
-    setSelectedStatus(status);
+  const tabsConfig = useMemo(() => {
+    if (selectedTab === "Auto Parts") {
+      return [
+        {
+          label: "Category",
+          options: partCategoryOptions,
+          value: selectedPartCategory,
+          onChange: setSelectedPartCategory,
+        },
+        {
+          label: "Brand",
+          options: brandOptions,
+          value: selectedBrand,
+          onChange: setSelectedBrand,
+        },
+        {
+          label: "Price",
+          options: priceOptions,
+          value: selectedPrice,
+          onChange: setSelectedPrice,
+        },
+      ];
+    }
+
+    if (selectedTab === "Species") {
+      return [
+        {
+          label: "Species Type",
+          options: speciesTypeOptions,
+          value: selectedSpeciesType,
+          onChange: handleSpeciesTypeChange,
+        },
+        {
+          label: "Breed",
+          options: breedOptions,
+          value: selectedBreed,
+          onChange: setSelectedBreed,
+        },
+        {
+          label: "Price",
+          options: priceOptions,
+          value: selectedPrice,
+          onChange: setSelectedPrice,
+        },
+      ];
+    }
+
+    return [
+      {
+        label: "Make",
+        options: makeOptions,
+        value: selectedMake,
+        onChange: handleMakeChange,
+      },
+      {
+        label: "Models",
+        options: modelOptions,
+        value: selectedModel,
+        onChange: setSelectedModel,
+      },
+      {
+        label: "Price",
+        options: priceOptions,
+        value: selectedPrice,
+        onChange: setSelectedPrice,
+      },
+    ];
+  }, [
+    selectedTab,
+    partCategoryOptions,
+    selectedPartCategory,
+    brandOptions,
+    selectedBrand,
+    priceOptions,
+    selectedPrice,
+    speciesTypeOptions,
+    selectedSpeciesType,
+    breedOptions,
+    selectedBreed,
+    makeOptions,
+    selectedMake,
+    modelOptions,
+    selectedModel,
+  ]);
+
+  const handleTabClick = (tab) => {
+    if (tab === selectedTab) return;
+
+    const nextCategory = tabCategoryMap[tab];
+
+    setSelectedTab(tab);
+    setSelectedMake("Select Makes");
+    setSelectedModel("Select Models");
+    setSelectedPrice("All Price");
+    setSelectedPartCategory("All Categories");
+    setSelectedBrand("Select Brand");
+    setSelectedSpeciesType("Select Species Type");
+    setSelectedBreed("Select Breed");
+
+    router.push(`/?category=${encodeURIComponent(nextCategory)}`);
   };
 
   const handleSearch = () => {
     const params = new URLSearchParams();
+    const selectedCategory = tabCategoryMap[selectedTab];
 
-    if (selectedStatus !== "All Status") params.set("status", selectedStatus);
-    if (selectedMake !== "Select Makes") params.set("make", selectedMake);
-    if (selectedModel !== "Select Models") params.set("model", selectedModel);
+    params.set("category", selectedCategory);
+
+    if (selectedTab === "Automobiles") {
+      if (selectedMake !== "Select Makes") params.set("make", selectedMake);
+      if (selectedModel !== "Select Models")
+        params.set("model", selectedModel);
+    }
+
+    if (selectedTab === "Auto Parts") {
+      if (selectedPartCategory !== "All Categories")
+        params.set("partCategory", selectedPartCategory);
+      if (selectedBrand !== "Select Brand") params.set("brand", selectedBrand);
+    }
+
+    if (selectedTab === "Species") {
+      if (selectedSpeciesType !== "Select Species Type")
+        params.set("speciesType", selectedSpeciesType);
+      if (selectedBreed !== "Select Breed") params.set("breed", selectedBreed);
+    }
+
     if (selectedPrice !== "All Price") params.set("price", selectedPrice);
 
     const queryString = params.toString();
@@ -209,39 +396,23 @@ const HeroFilter = () => {
   return (
     <div className="col-lg-12">
       <ul className="nav nav-pills justify-content-center">
-        <li className="nav-item" role="presentation">
-          <button
-            className={`nav-link ${
-              selectedStatus === "All Status" && "active"
-            }`}
-            onClick={() => handleStatusClick("All Status")}
-          >
-            All Status
-          </button>
-        </li>
-        <li className="nav-item" role="presentation">
-          <button
-            className={`nav-link ${selectedStatus === "Used Cars" && "active"}`}
-            onClick={() => handleStatusClick("Used Cars")}
-          >
-            Used Cars
-          </button>
-        </li>
-        <li className="nav-item" role="presentation">
-          <button
-            className={`nav-link ${selectedStatus === "New Cars" && "active"}`}
-            onClick={() => handleStatusClick("New Cars")}
-          >
-            New Cars
-          </button>
-        </li>
+        {tabs.map((tab) => (
+          <li className="nav-item" role="presentation" key={tab}>
+            <button
+              className={`nav-link ${selectedTab === tab && "active"}`}
+              onClick={() => handleTabClick(tab)}
+            >
+              {tab}
+            </button>
+          </li>
+        ))}
       </ul>
 
       {/* filter tabs */}
       <div className="adss_bg_stylehome1">
         <div className="home1_advance_search_wrapper">
           <ul className="mb0 text-center">
-            {filters.map((filter) => (
+            {tabsConfig.map((filter) => (
               <li className="list-inline-item" key={filter.label}>
                 <div className="select-boxes">
                   <div className="car_brand">

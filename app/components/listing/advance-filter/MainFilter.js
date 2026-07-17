@@ -4,10 +4,17 @@
 import { useMemo } from "react";
 import listingsData from "@/data/listingCar";
 
-const MainFilter = ({ filters, updateFilter }) => {
+const MainFilter = ({ filters, updateFilter, category = "automobile" }) => {
+  const activeCategory = category || "automobile";
+
   const makeOptions = useMemo(() => {
     const makes = [
-      ...new Set(listingsData.map((car) => car.make).filter(Boolean)),
+      ...new Set(
+        listingsData
+          .filter((item) => (item.category || "automobile") === "automobile")
+          .map((car) => car.make)
+          .filter(Boolean)
+      ),
     ].sort();
     return makes;
   }, []);
@@ -15,8 +22,12 @@ const MainFilter = ({ filters, updateFilter }) => {
   const modelOptions = useMemo(() => {
     const relevantCars =
       filters.make === "Select Makes"
-        ? listingsData
-        : listingsData.filter((car) => car.make === filters.make);
+        ? listingsData.filter((item) => (item.category || "automobile") === "automobile")
+        : listingsData.filter(
+            (item) =>
+              (item.category || "automobile") === "automobile" &&
+              item.make === filters.make
+          );
     return [
       ...new Set(relevantCars.map((car) => car.model).filter(Boolean)),
     ].sort();
@@ -25,6 +36,50 @@ const MainFilter = ({ filters, updateFilter }) => {
   const bodyTypeOptions = useMemo(() => {
     return [
       ...new Set(listingsData.map((car) => car.bodyType).filter(Boolean)),
+    ].sort();
+  }, []);
+
+  const partCategoryOptions = useMemo(() => {
+    return [
+      ...new Set(
+        listingsData
+          .filter((item) => (item.category || "automobile") === "auto-part")
+          .map((item) => item.partCategory)
+          .filter(Boolean)
+      ),
+    ].sort();
+  }, []);
+
+  const brandOptions = useMemo(() => {
+    return [
+      ...new Set(
+        listingsData
+          .filter((item) => (item.category || "automobile") === "auto-part")
+          .map((item) => item.brand)
+          .filter(Boolean)
+      ),
+    ].sort();
+  }, []);
+
+  const speciesTypeOptions = useMemo(() => {
+    return [
+      ...new Set(
+        listingsData
+          .filter((item) => (item.category || "automobile") === "species")
+          .map((item) => item.speciesType)
+          .filter(Boolean)
+      ),
+    ].sort();
+  }, []);
+
+  const breedOptions = useMemo(() => {
+    return [
+      ...new Set(
+        listingsData
+          .filter((item) => (item.category || "automobile") === "species")
+          .map((item) => item.breed)
+          .filter(Boolean)
+      ),
     ].sort();
   }, []);
 
@@ -38,22 +93,48 @@ const MainFilter = ({ filters, updateFilter }) => {
       label: "Sort By",
       options: ["Most Recent", "Recent", "Best Selling", "Old Review"],
     },
-    {
-      key: "make",
-      label: "Select Makes",
-      options: makeOptions,
-    },
-    {
-      key: "model",
-      label: "Select Models",
-      options: modelOptions,
-    },
-    {
-      key: "bodyType",
-      label: "Select Type",
-      options: bodyTypeOptions,
-    },
   ];
+
+  if (activeCategory === "auto-part") {
+    filterConfigs.push(
+      {
+        key: "partCategory",
+        label: "All Categories",
+        options: ["All Categories", ...partCategoryOptions],
+      },
+      {
+        key: "brand",
+        label: "Select Brand",
+        options: ["Select Brand", ...brandOptions],
+      }
+    );
+  } else if (activeCategory === "species") {
+    filterConfigs.push(
+      {
+        key: "speciesType",
+        label: "Select Species Type",
+        options: ["Select Species Type", ...speciesTypeOptions],
+      },
+      {
+        key: "breed",
+        label: "Select Breed",
+        options: ["Select Breed", ...breedOptions],
+      }
+    );
+  } else {
+    filterConfigs.push(
+      {
+        key: "make",
+        label: "Select Makes",
+        options: makeOptions,
+      },
+      {
+        key: "model",
+        label: "Select Models",
+        options: modelOptions,
+      }
+    );
+  }
 
   return (
     <>
