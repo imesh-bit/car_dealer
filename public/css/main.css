@@ -38243,6 +38243,10 @@ canvas#myChart {
   margin: 120px 0;
 }
 
+.deliver-divider {
+  padding: 90px 0;
+}
+
 .home1_divider_content .title {
   color: #ffffff;
   font-size: 40px;
@@ -43332,15 +43336,14 @@ input.quantity-num[type=number]::-webkit-outer-spin-button {
     right: 0;
     width: 65px;
   }
+  .deliver-divider {
+    padding: 70px 0;
+  }
   .home1_divider_content {
-    margin-bottom: 0;
+    margin: 40px 0 0;
   }
   .home1_divider_content .para {
     width: auto;
-  }
-  .home1_divider_video_pop {
-    left: 0;
-    top: 0;
   }
   .home1_popular_listing .listing_item_4grid_slider .owl-stage-outer {
     display: inline-block;

@@ -155,7 +155,7 @@ const Home_1 = () => {
           <div className="row">
             <div className="col-lg-6 offset-lg-3">
               <div className="main-title text-center">
-                <h2>Popular Vehicles</h2>
+                <h2>Trending Listings</h2>
               </div>
             </div>
           </div>

@@ -5,31 +5,31 @@ const categories = [
     icon: "flaticon-car-black-side-view-pointing-left",
     title: "Compact",
     type: "Compact",
-    listing: 12,
+    
   },
   {
     icon: "flaticon-sedan-car-model",
     title: "Sedan",
     type: "Sedan",
-    listing: 24,
+   
   },
   {
     icon: "flaticon-jeep",
     title: "SUV",
     type: "SUV",
-    listing: 675,
+    
   },
   {
     icon: "flaticon-cabrio-car",
     title: "Convertible",
     type: "Convertible",
-    listing: 543,
+    
   },
   {
     icon: "flaticon-coupe-car",
     title: "Coupe",
     type: "Coupe",
-    listing: 99,
+    
   },
 ];
 

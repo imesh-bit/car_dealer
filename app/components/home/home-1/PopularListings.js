@@ -52,15 +52,15 @@ const PopularListings = () => {
                   ) : undefined}
 
                   <Image
-                    width={284}
-                    height={183}
+                    width={640}
+                    height={420}
                     style={{
                       width: "100%",
                       height: "100%",
                       objectFit: "cover",
                     }}
                     sizes="(max-width: 640px) 100vw, (max-width: 1024px) 33vw, 25vw"
-                    quality={80}
+                    quality={100}
                     priority={index < 4}
                     src={listing.image}
                     alt={listing.title}
