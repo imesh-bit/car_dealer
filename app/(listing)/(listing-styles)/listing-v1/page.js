@@ -48,7 +48,7 @@ const ListingV1 = async ({ searchParams }) => {
     const categoryTitleMap = {
         automobile: "Automobiles",
         "auto-part": "Auto Parts",
-        species: "General Merchandise",
+        species: "General",
     };
 
     const visibleListings = listingCar.filter(

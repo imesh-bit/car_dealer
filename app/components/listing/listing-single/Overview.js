@@ -52,7 +52,7 @@ const Overview = ({ car }) => {
           },
           { label: "Condition", value: car?.condition || "N/A" },
           { label: "Year", value: car?.year || "N/A" },
-          { label: "Listing Type", value: "General Merchandise" },
+          { label: "Listing Type", value: "General" },
         ]
       : [
           { label: "Make", value: car?.make || "N/A" },

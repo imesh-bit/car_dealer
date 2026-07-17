@@ -119,12 +119,12 @@ import { useRouter } from "next/navigation";
 import { useMemo, useState } from "react";
 import listingsData from "@/data/listingCar";
 
-const tabs = ["Automobiles", "Auto Parts", "General Merchandise"];
+const tabs = ["Automobiles", "Auto Parts", "General"];
 
 const tabCategoryMap = {
   Automobiles: "automobile",
   "Auto Parts": "auto-part",
-  "General Merchandise": "species",
+  "General": "species",
 };
 
 const buildPriceOptions = (sourceListings) => {
@@ -190,7 +190,7 @@ const HeroFilter = () => {
 
   const activeListings = useMemo(() => {
     if (selectedTab === "Auto Parts") return autoPartListings;
-    if (selectedTab === "General Merchandise") return speciesListings;
+    if (selectedTab === "General") return speciesListings;
     return automobileListings;
   }, [selectedTab, autoPartListings, speciesListings, automobileListings]);
 
