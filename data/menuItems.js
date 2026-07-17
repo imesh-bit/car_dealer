@@ -133,31 +133,31 @@ module.exports = [
   //     },
   //   ],
   // },
-  {
-    label: "Shop",
-    subMenu: [
-      {
-        label: "Shop",
-        path: "/shop",
-      },
-      {
-        label: "Shop Single",
-        path: "/shop-single",
-      },
-      {
-        label: "Cart",
-        path: "/cart",
-      },
-      {
-        label: "Checkout",
-        path: "/checkout",
-      },
-      {
-        label: "Complete Order",
-        path: "/complete-order",
-      },
-    ],
-  },
+  // {
+  //   label: "Shop",
+  //   subMenu: [
+  //     {
+  //       label: "Shop",
+  //       path: "/shop",
+  //     },
+  //     {
+  //       label: "Shop Single",
+  //       path: "/shop-single",
+  //     },
+  //     {
+  //       label: "Cart",
+  //       path: "/cart",
+  //     },
+  //     {
+  //       label: "Checkout",
+  //       path: "/checkout",
+  //     },
+  //     {
+  //       label: "Complete Order",
+  //       path: "/complete-order",
+  //     },
+  //   ],
+  // },
   {
     label: "Pages",
     subMenu: [
