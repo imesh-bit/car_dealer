@@ -304,7 +304,7 @@ const HeroFilter = () => {
       ];
     }
 
-    if (selectedTab === "General Merchandise") {
+    if (selectedTab === "General") {
       return [
         {
           label: "Product Category",
@@ -403,7 +403,7 @@ const HeroFilter = () => {
       if (selectedBrand !== "Select Brand") params.set("brand", selectedBrand);
     }
 
-    if (selectedTab === "General Merchandise") {
+    if (selectedTab === "General") {
       if (selectedProductCategory !== "Select Product Category")
         params.set("productCategory", selectedProductCategory);
       if (selectedPackagingType !== "Select Packaging Type")
