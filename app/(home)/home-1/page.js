@@ -16,7 +16,7 @@ import Testimonial from "@/app/components/common/Testimonial";
 import Partner from "@/app/components/common/Partner";
 import Counter from "@/app/components/home/home-1/Counter";
 import PopularVehicles from "@/app/components/home/home-4/PopularVehicles";
-import Category from "@/app/components/home/home-6/Category";
+import Category from "@/app/components/home/home-4/Category";
 
 export const metadata = {
   title: "RAICO GROUP - Automotive & Car Dealer",
