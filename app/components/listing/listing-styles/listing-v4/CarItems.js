@@ -472,12 +472,11 @@ const CarItems = ({
               ) : undefined}
 
               <Image
-                width={260}
-                height={167}
+                fill
+                sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 284px"
                 style={{
-                  width: "100%",
-                  height: "100%",
                   objectFit: "cover",
+                  objectPosition: "center",
                 }}
                 priority
                 src={listing.image}

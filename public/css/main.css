@@ -39321,6 +39321,7 @@ input.quantity-num[type=number]::-webkit-outer-spin-button {
   overflow: hidden;
   position: relative;
   z-index: 0;
+  aspect-ratio: 284 / 183;
 }
 
 .car-listing:hover .thumb {

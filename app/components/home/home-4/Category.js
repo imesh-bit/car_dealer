@@ -60,13 +60,13 @@ const categoryGroups = {
       queryKey: "partCategory",
     },
     {
-      icon: "flaticon-brake",
+      icon: "fa-light fa-screwdriver-wrench",
       title: "Brakes",
       value: "Brakes",
       queryKey: "partCategory",
     },
     {
-      icon: "flaticon-suspension",
+      icon: "fa-light fa-gear",
       title: "Suspension",
       value: "Suspension",
       queryKey: "partCategory",
@@ -86,13 +86,13 @@ const categoryGroups = {
       queryKey: "productCategory",
     },
     {
-      icon: "flaticon-home",
+      icon: "fa-light fa-house",
       title: "Household & Daily Essentials",
       value: "Household & Daily Essentials",
       queryKey: "productCategory",
     },
     {
-      icon: "flaticon-factory",
+      icon: "fa-light fa-industry",
       title: "Industrial Raw Materials",
       value: "Industrial Raw Materials",
       queryKey: "productCategory",

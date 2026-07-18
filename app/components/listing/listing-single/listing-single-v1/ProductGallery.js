@@ -180,12 +180,15 @@ export default function ProductGallery({ car }) {
           >
             {slides.map((slide, index) => (
               <SwiperSlide key={index}>
-                <div className="item">
+                <div
+                  className="item"
+                  style={{ position: "relative", width: "100%", height: "460px" }}
+                >
                   <Image
-                    width={856}
-                    height={554}
+                    fill
                     priority
-                    style={{ objectFit: "cover" }}
+                    sizes="(max-width: 767px) 100vw, 856px"
+                    style={{ objectFit: "cover", objectPosition: "center" }}
                     className="w-100 h-100"
                     src={slide.imageSrc}
                     alt={car?.title || "large car"}
@@ -219,14 +222,18 @@ export default function ProductGallery({ car }) {
             >
               {slides.map((slide, index) => (
                 <SwiperSlide key={index}>
-                  <Image
-                    width={163}
-                    height={106}
-                    priority
-                    style={{ objectFit: "cover" }}
-                    src={slide.imageSrc}
-                    alt={car?.title || "thumb car"}
-                  />
+                  <div
+                    style={{ position: "relative", width: "100%", height: "106px" }}
+                  >
+                    <Image
+                      fill
+                      priority
+                      sizes="(max-width: 767px) 100vw, 163px"
+                      style={{ objectFit: "cover", objectPosition: "center" }}
+                      src={slide.imageSrc}
+                      alt={car?.title || "thumb car"}
+                    />
+                  </div>
                 </SwiperSlide>
               ))}
             </Swiper>

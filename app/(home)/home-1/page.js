@@ -71,11 +71,11 @@ const Home_1 = async ({ searchParams }) => {
       <section className="featured-product">
         <div className="container" >
           <div className="row justify-content-center">
-            {/* <div className="col-lg-8">
+            <div className="col-lg-8">
               <div className="main-title text-center">
                 <h2>Featured Listings</h2>
               </div>
-            </div> */}
+            </div>
           </div>
           {/* End .row */}
 
