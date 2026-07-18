@@ -6,10 +6,11 @@ module.exports = [
     image: "/images/listing/7.jpg",
     gallery: [
       { imageSrc: "/images/listing/7.jpg", videoId: "VWrJkx6O0L8" },
-      { imageSrc: "/images/listing/lsp1-v5.jpg", videoId: "TLEyLGWvjII" },
-      { imageSrc: "/images/listing/lsp1-v5.jpg", videoId: "BS2jGGYC60c" },
-      { imageSrc: "/images/listing/lsp1-v5.jpg", videoId: "8PiZNUCexrA" },
-      { imageSrc: "/images/listing/lsp1-v5.jpg", videoId: "m4ZGuAbUMg8" },
+      { imageSrc: "/images/listing/Genral-items-inner-listing/jackfruit1.jpg"},
+      { imageSrc: "/images/listing/Genral-items-inner-listing/jackfruit2.jpg" },
+      { imageSrc: "/images/listing/Genral-items-inner-listing/jackfruit3.jpg" },
+      { imageSrc: "/images/listing/Genral-items-inner-listing/jackfruit4.jpg" },
+
     ],
     photosCount: 9,
     videosCount: 0,

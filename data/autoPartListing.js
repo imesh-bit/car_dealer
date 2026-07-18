@@ -3,7 +3,7 @@ module.exports = [
     id: 6,
     featured: false,
     category: "auto-part",
-    image: "/images/listing/5.jpg",
+    image: "/images/listing/auto-parts/bosch.jpg",
     photosCount: 8,
     videosCount: 1,
     title: "Bosch Oxygen Sensor - 2024",
