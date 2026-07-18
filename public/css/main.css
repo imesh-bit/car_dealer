@@ -39340,6 +39340,11 @@ input.quantity-num[type=number]::-webkit-outer-spin-button {
   z-index: 0;
   aspect-ratio: 284 / 183;
 }
+@media only screen and (max-width: 767.98px) {
+  .car-listing .thumb {
+    aspect-ratio: 16 / 10;
+  }
+}
 
 .car-listing:hover .thumb {
   background: linear-gradient(180deg, rgba(12, 18, 39, 0) 28.42%, rgba(12, 18, 39, 0.8) 100%);
@@ -39389,6 +39394,9 @@ input.quantity-num[type=number]::-webkit-outer-spin-button {
 }
 
 .car-listing .thumb img {
+  display: block;
+  height: 100%;
+  width: 100%;
   -webkit-transform: scale(1);
   -moz-transform: scale(1);
   -ms-transform: scale(1);
