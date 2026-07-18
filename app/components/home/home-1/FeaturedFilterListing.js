@@ -155,6 +155,7 @@ import { useState } from "react";
 
 const FeaturedFilterListing = ({ category = "automobile" }) => {
   const [filter, setFilter] = useState("*");
+  const isAutomobileView = category === "automobile";
 
   const visibleListings = listingsData.filter(
     (item) => (item.category || "automobile") === category
@@ -168,27 +169,29 @@ const FeaturedFilterListing = ({ category = "automobile" }) => {
   return (
     <div className="popular_listing_sliders ">
       {/* Nav tabs */}
-      <div className="nav nav-tabs  justify-content-center">
-        <button
-          className={filter === "*" ? "active nav-link" : "nav-link"}
-          onClick={() => setFilter("*")}
-        >
-          All Status
-        </button>
+      {isAutomobileView && (
+        <div className="nav nav-tabs  justify-content-center">
+          <button
+            className={filter === "*" ? "active nav-link" : "nav-link"}
+            onClick={() => setFilter("*")}
+          >
+            All Status
+          </button>
 
-        <button
-          className={filter === "new" ? "active nav-link" : "nav-link"}
-          onClick={() => setFilter("new")}
-        >
-          New Cars
-        </button>
-        <button
-          className={filter === "used" ? "active nav-link" : "nav-link"}
-          onClick={() => setFilter("used")}
-        >
-          Used Cars
-        </button>
-      </div>
+          <button
+            className={filter === "new" ? "active nav-link" : "nav-link"}
+            onClick={() => setFilter("new")}
+          >
+            New Cars
+          </button>
+          <button
+            className={filter === "used" ? "active nav-link" : "nav-link"}
+            onClick={() => setFilter("used")}
+          >
+            Used Cars
+          </button>
+        </div>
+      )}
       {/* Tab panes */}
       <div className="row">
         {filteredItems.map((listing) => (

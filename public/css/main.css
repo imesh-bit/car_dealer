@@ -33205,11 +33205,28 @@ span.ui-slider-handle.ui-corner-all.ui-state-default:focus-visible,
   -webkit-background-size: cover;
   background-size: cover;
   background-position: center center;
-  height: 800px;
+  min-height: 800px;
+  height: auto;
 }
 @media (min-width: 1920px) {
   .bg-home1 {
-    height: 900px;
+    min-height: 900px;
+  }
+}
+@media only screen and (max-width: 991px) {
+  .bg-home1 {
+    min-height: 700px;
+    background-position: center top;
+  }
+}
+@media only screen and (max-width: 575px) {
+  .bg-home1 {
+    min-height: 620px;
+    background-position: center center;
+  }
+
+  .home_content {
+    padding: 140px 0 80px;
   }
 }
 
@@ -44097,17 +44114,19 @@ input.quantity-num[type=number]::-webkit-outer-spin-button {
     text-align: center;
   }
   .bg-home1 {
-    height: 295px;
+    height: auto;
+    min-height: 420px;
+    background-position: center center;
   }
   .advance_search_panel .adss_bg_stylehome1 {
     border-radius: 0;
     box-shadow: none;
   }
   .home_content.home1_style {
-    padding: 88px 0 0;
+    padding: 88px 0 24px;
   }
   .car-category.mobile_space {
-    margin-top: 400px;
+    margin-top: 0;
   }
   .why_chose_us .icon {
     margin: 0 auto 20px;
