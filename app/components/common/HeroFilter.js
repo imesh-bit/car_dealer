@@ -114,8 +114,6 @@
 
 // export default HeroFilter;
 
-// 
-
 "use client";
 import { useRouter } from "next/navigation";
 import { useMemo, useState } from "react";
@@ -440,10 +438,7 @@ const HeroFilter = () => {
         <div className="home1_advance_search_wrapper">
           <ul className="mb0 text-center">
             {tabsConfig.map((filter) => (
-              <li
-                className="list-inline-item mb-4 mb-lg-0 w-100 w-lg-auto"
-                key={filter.label}
-              >
+              <li className="list-inline-item" key={filter.label}>
                 <div className="select-boxes">
                   <div className="car_brand">
                     <h6 className="title">{filter.label}</h6>
@@ -464,11 +459,11 @@ const HeroFilter = () => {
             ))}
 
             {/* Search button */}
-            <li className="list-inline-item mt-2 mt-lg-0 w-100 w-lg-auto">
+            <li className="list-inline-item">
               <div className="d-block">
                 <button
                   onClick={handleSearch}
-                  className="btn btn-thm advnc_search_form_btn w-100"
+                  className="btn btn-thm advnc_search_form_btn"
                 >
                   <span className="flaticon-magnifiying-glass" />
                   Search
@@ -478,20 +473,6 @@ const HeroFilter = () => {
           </ul>
         </div>
       </div>
-
-      <style jsx>{`
-        @media (max-width: 991px) {
-          .home1_advance_search_wrapper {
-            padding: 20px;
-          }
-          .select-boxes {
-            margin-bottom: 0;
-          }
-          .car_brand .title {
-            margin-bottom: 8px;
-          }
-        }
-      `}</style>
     </div>
   );
 };
