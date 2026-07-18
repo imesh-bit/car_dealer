@@ -210,12 +210,12 @@ const FeaturedFilterListing = ({ category = "automobile" }) => {
                 ) : undefined}
 
                 <Image
-                   width={284}
-                   height={183}
-                   style={{
-                    width: "100%",
-                    height: "100%",
+                  fill
+                  sizes="(max-width: 767px) 100vw, (max-width: 1200px) 50vw, 284px"
+                  className="w-100 h-100"
+                  style={{
                     objectFit: "cover",
+                    objectPosition: "center",
                   }}
                   src={listing.image}
                   alt={listing.title}
