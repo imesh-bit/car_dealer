@@ -54,19 +54,19 @@ const categoryGroups = {
       queryKey: "partCategory",
     },
     {
-      icon: "fa-light fa-plug-circle-plus",
+      icon: "flaticon-cogwheel",
       title: "Electrical",
       value: "Electrical",
       queryKey: "partCategory",
     },
     {
-      icon: "fa-light fa-screwdriver-wrench",
+      icon: "flaticon-shield",
       title: "Brakes",
       value: "Brakes",
       queryKey: "partCategory",
     },
     {
-      icon: "fa-light fa-gear",
+      icon: "flaticon-sedan-car-model",
       title: "Suspension",
       value: "Suspension",
       queryKey: "partCategory",
@@ -74,25 +74,25 @@ const categoryGroups = {
   ],
   species: [
     {
-      icon: "flaticon-gear",
+      icon: "flaticon-price-tag",
       title: "Processed Food Items",
       value: "Processed Food Items",
       queryKey: "productCategory",
     },
     {
-      icon:"fa-light fa-mortar-pestle",
+      icon: "flaticon-list",
       title: "Dry Goods & Spices",
       value: "Dry Goods & Spices",
       queryKey: "productCategory",
     },
     {
-      icon: "fa-light fa-house",
+      icon: "flaticon-heart",
       title: "Household & Daily Essentials",
       value: "Household & Daily Essentials",
       queryKey: "productCategory",
     },
     {
-      icon: "fa-light fa-industry",
+      icon: "flaticon-cogwheel",
       title: "Industrial Raw Materials",
       value: "Industrial Raw Materials",
       queryKey: "productCategory",
