@@ -1,3 +1,4 @@
+// 
 "use client";
 import React, { useState } from "react";
 import menuItems from "@/data/menuItems";
@@ -114,13 +115,16 @@ const MobileMenu = () => {
                         {/* End mobile_menu_bar */}
 
                         <div className="mobile_menu_main_logo">
-                            <Image
-                                width={140}
-                                height={45}
-                                priority
-                                src="/images/header-logo2.png"
-                                alt="brand"
-                            />
+                            <span className="mm-logo-chip">
+                                <Image
+                                    width={140}
+                                    height={32}
+                                    priority
+                                    className="mm-logo-img"
+                                    src="/images/header-logo.png"
+                                    alt="RAIKO GROUP"
+                                />
+                            </span>
                         </div>
                         {/* End .mobile_menu_main_logo */}
                     </div>
@@ -140,13 +144,16 @@ const MobileMenu = () => {
                 <div className="offcanvas-body">
                     <div className="pro-header">
                         <Link href="/">
-                            <Image
-                                width={140}
-                                height={45}
-                                priority
-                                src="/images/header-logo.svg"
-                                alt="brand"
-                            />
+                            <span className="mm-logo-chip">
+                                <Image
+                                    width={157}
+                                    height={36}
+                                    priority
+                                    className="mm-logo-img"
+                                    src="/images/header-logo.png"
+                                    alt="RAIKO GROUP"
+                                />
+                            </span>
                         </Link>
                         <div
                             className="fix-icon"
@@ -197,6 +204,22 @@ const MobileMenu = () => {
                 {/* End offcanvas-body */}
             </div>
             {/* End mobile sidebar menu */}
+
+            <style jsx>{`
+                .mm-logo-chip {
+                    display: inline-flex;
+                    align-items: center;
+                    background: rgba(10, 12, 20, 0.65);
+                    border-radius: 8px;
+                    padding: 5px 10px;
+                }
+                .mm-logo-img {
+                    height: 32px;
+                    width: auto;
+                    object-fit: contain;
+                    display: block;
+                }
+            `}</style>
         </>
     );
 };

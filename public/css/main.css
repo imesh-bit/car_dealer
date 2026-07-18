@@ -14133,11 +14133,13 @@ header.header-nav.menu_style_home_one.home6_style a.navbar_brand {
   position: relative;
 }
 
+header.header-nav.menu_style_home_one.home3_style a.navbar_brand .logo1,
 header.header-nav.menu_style_home_one.stricky-fixed a.navbar_brand .logo1,
 header.header-nav.menu_style_home_four.stricky-fixed a.navbar_brand .logo1 {
   display: none;
 }
 
+header.header-nav.menu_style_home_one.home3_style a.navbar_brand .logo2,
 header.header-nav.menu_style_home_one.stricky-fixed a.navbar_brand .logo2,
 header.header-nav.menu_style_home_four.stricky-fixed a.navbar_brand .logo2 {
   display: inline-block;
