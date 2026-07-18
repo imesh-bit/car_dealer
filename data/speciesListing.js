@@ -55,7 +55,7 @@ module.exports = [
     id: 9,
     featured: true,
     category: "species",
-    image: "/images/listing/8.jpg",
+    image: "/images/listing/1.jpg",
     photosCount: 7,
     videosCount: 0,
     title: "Curry Powder Wholesale Pack - 2024",
