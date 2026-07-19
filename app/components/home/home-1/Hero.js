@@ -9,7 +9,7 @@ const Hero = () => {
           <div className="col-lg-10 m-auto">
             <div className="home_content home1_style">
               <div className="home-text text-center mb30">
-                <h2 className="title">
+                <h1 className="title">
                   <span className="aminated-object1">
                     <Image
                       width={110}
@@ -20,11 +20,12 @@ const Hero = () => {
                       priority
                       className="objects"
                       src="/images/home/title-bottom-border.svg"
-                      alt="img"
+                      alt=""
+                      aria-hidden="true"
                     />
                   </span>
                   Find Your Next Match
-                </h2>
+                </h1>
                 <p className="para">Find the right price, dealer and advice.</p>
               </div>
               <div className="advance_search_panel">

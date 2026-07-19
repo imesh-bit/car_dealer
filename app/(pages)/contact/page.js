@@ -8,9 +8,14 @@ import Map from "@/app/components/common/Map";
 import Address from "@/app/components/pages/contact/Address";
 import Form from "@/app/components/pages/contact/Form";
 
-export const metadata = {
-  title: "Contact Us - RAIKO GROUP 株式会社",
-};
+import { createPageMetadata } from "@/lib/metadata";
+
+export const metadata = createPageMetadata({
+  title: "Contact Us",
+  description:
+    "Get in touch with RAICO GROUP for vehicle inquiries, support, and dealership information.",
+  path: "/contact",
+});
 
 const Contact = () => {
   return (

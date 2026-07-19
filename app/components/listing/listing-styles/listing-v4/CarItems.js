@@ -478,7 +478,6 @@ const CarItems = ({
                   objectFit: "cover",
                   objectPosition: "center",
                 }}
-                priority
                 src={listing.image}
                 alt={listing.title}
               />

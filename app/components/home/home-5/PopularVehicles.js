@@ -169,7 +169,7 @@ const PopularVehicles = () => {
                       objectFit: "cover",
                     }}
                     sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
-                    quality={100}
+                    quality={80}
                     priority={index < 4}
                     src={listing.image}
                     alt={listing.title}

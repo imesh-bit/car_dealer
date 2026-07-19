@@ -19,6 +19,8 @@ import SellerDetail from "@/app/components/listing/listing-single/sidebar/Seller
 import Link from "next/link";
 import ReleatedCar from "@/app/components/listing/listing-single/ReleatedCar";
 import listingsData from "@/data/listingCar";
+import { CarJsonLd } from "@/app/components/common/JsonLd";
+import { createListingMetadata } from "@/lib/metadata";
 
 // Pre-render a page for every car at build time
 export async function generateStaticParams() {
@@ -31,12 +33,10 @@ export async function generateMetadata({ params }) {
   const car = listingsData.find((item) => String(item.id) === id);
 
   if (!car) {
-    return { title: "Listing Not Found || Voiture" };
+    return { title: "Listing Not Found" };
   }
 
-  return {
-    title: `${car.title} || Voiture - Automotive & Car Dealer NextJS Template`,
-  };
+  return createListingMetadata(car);
 }
 
 const ListingSingleV1 = async ({ params }) => {
@@ -55,6 +55,7 @@ const ListingSingleV1 = async ({ params }) => {
 
   return (
     <div className="wrapper">
+      <CarJsonLd car={car} />
       <div
         className="offcanvas offcanvas-end"
         tabIndex="-1"
@@ -110,7 +111,7 @@ const ListingSingleV1 = async ({ params }) => {
                       </a>
                     </li>
                   </ul>
-                  <h2 className="title">{car.title}</h2>
+                  <h1 className="title">{car.title}</h1>
                   <p className="para">{car.tagline}</p>
                 </div>
               </div>

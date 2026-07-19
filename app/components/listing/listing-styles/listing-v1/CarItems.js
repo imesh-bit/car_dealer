@@ -173,7 +173,7 @@ const CarItems = ({
 
   return (
     <>
-      {filteredListings.map((listing) => (
+      {filteredListings.map((listing, index) => (
         <div className="col-sm-6 col-lg-4 col-xl-3" key={listing.id}>
           <div className="car-listing">
             <div className="thumb">
@@ -195,7 +195,7 @@ const CarItems = ({
                   objectFit: "cover",
                   objectPosition: "center",
                 }}
-                priority
+                priority={index < 4}
                 src={listing.image}
                 alt={listing.title}
               />

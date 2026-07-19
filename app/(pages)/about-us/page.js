@@ -10,9 +10,14 @@ import Testimonial from "@/app/components/common/Testimonial";
 import Partner from "@/app/components/common/Partner";
 import LoginSignupModal from "@/app/components/common/login-signup";
 
-export const metadata = {
-  title: "About Us || Voiture - Automotive & Car Dealer NextJS Template",
-};
+import { createPageMetadata } from "@/lib/metadata";
+
+export const metadata = createPageMetadata({
+  title: "About Us",
+  description:
+    "Learn about RAICO GROUP, our team, values, and commitment to quality automotive sales and service.",
+  path: "/about-us",
+});
 
 const AboutUs = () => {
   return (
@@ -45,7 +50,7 @@ const AboutUs = () => {
           <div className="row">
             <div className="col-xl-12">
               <div className="breadcrumb_content">
-                <h2 className="breadcrumb_title">About Us</h2>
+                <h1 className="breadcrumb_title">About Us</h1>
                 <p className="subtitle">About Us</p>
                 <ol className="breadcrumb">
                   <li className="breadcrumb-item">

@@ -9,10 +9,14 @@ import Pagination from "@/app/components/common/Pagination";
 import ListGridFilter from "@/app/components/listing/ListGridFilter";
 import CarItems from "@/app/components/listing/listing-styles/listing-v1/CarItems";
 import listingCar from "@/data/listingCar";
+import { createPageMetadata } from "@/lib/metadata";
 
-export const metadata = {
-    title: "Listing V1 || Voiture - Automotive & Car Dealer NextJS Template",
-};
+export const metadata = createPageMetadata({
+    title: "Cars for Sale",
+    description:
+        "Browse our inventory of new and used cars, auto parts, and merchandise. Filter by make, model, price, and more.",
+    path: "/listing-v1",
+});
 
 const ListingV1 = async ({ searchParams }) => {
     const resolvedSearchParams = await searchParams;
@@ -95,13 +99,13 @@ const ListingV1 = async ({ searchParams }) => {
                     <div className="row">
                         <div className="col-xl-12">
                             <div className="breadcrumb_content style2">
-                                <h2 className="breadcrumb_title">
+                                <h1 className="breadcrumb_title">
                                     {categoryTitleMap[activeCategory] || "Automobiles"}
-                                </h2>
+                                </h1>
                                 <p className="subtitle">Listing-v1</p>
                                 <ol className="breadcrumb fn-sm mt15-sm">
                                     <li className="breadcrumb-item">
-                                        <a href="#">Home</a>
+                                        <a href="/">Home</a>
                                     </li>
                                     <li
                                         className="breadcrumb-item active"

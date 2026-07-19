@@ -18,10 +18,14 @@ import Counter from "@/app/components/home/home-1/Counter";
 import PopularVehicles from "@/app/components/home/home-4/PopularVehicles";
 import Category from "@/app/components/home/home-4/Category";
 
-export const metadata = {
-  title: "RAICO GROUP - Automotive & Car Dealer",
-  description: `RAICO GROUP - Automotive & Car Dealer. `,
-};
+import { createPageMetadata } from "@/lib/metadata";
+
+export const metadata = createPageMetadata({
+  title: "Automotive & Car Dealer",
+  description:
+    "Browse featured cars, compare listings, and find the right vehicle at the best price with RAICO GROUP.",
+  path: "/",
+});
 
 const Home_1 = async ({ searchParams }) => {
   const resolvedSearchParams = await searchParams;

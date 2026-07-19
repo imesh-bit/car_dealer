@@ -44,10 +44,13 @@ const ProductGallery = () => {
                   <div className="single_item">
                     <div className="thumb">
                       <div className="tags">FEATURED</div>
-                      <img
+                      <Image
+                        fill
+                        sizes="(max-width: 768px) 100vw, 66vw"
                         className="img-fluid"
                         src="/images/listing/lsp5-v2.jpg"
-                        alt="lsp5-v2.jpg"
+                        alt="Featured vehicle gallery image"
+                        style={{ objectFit: "cover" }}
                       />
                     </div>
                   </div>
