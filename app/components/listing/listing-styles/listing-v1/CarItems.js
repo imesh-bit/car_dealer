@@ -2,6 +2,33 @@ import listingCar from "@/data/listingCar";
 import Image from "next/image";
 import Link from "next/link";
 
+const matchesHeroAutomobileCategory = (listing, filterType) => {
+  const normalizedType = (filterType || "").toLowerCase();
+  const bodyType = (listing.bodyType || "").toLowerCase();
+
+  if (!normalizedType || normalizedType === "select type") {
+    return true;
+  }
+
+  if (normalizedType === "cars") {
+    return ["cars", "sedan", "suv", "coupe", "compact", "convertible", "wagon"].includes(bodyType);
+  }
+
+  if (normalizedType === "bikes") {
+    return ["bikes", "bike", "motorcycle"].includes(bodyType);
+  }
+
+  if (normalizedType === "trucks") {
+    return ["trucks", "truck", "pickup", "lorry", "van", "trailer"].includes(bodyType);
+  }
+
+  if (normalizedType === "machinery") {
+    return ["machinery", "backhoe loader", "heavy-equipment", "tractor", "excavator"].includes(bodyType);
+  }
+
+  return bodyType === normalizedType;
+};
+
 const CarItems = ({
   status,
   category,

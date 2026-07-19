@@ -32,13 +32,13 @@ export default function ClientInitializer() {
       await Promise.all(tasks);
     };
 
-    if ("requestIdleCallback" in window) {
-      window.requestIdleCallback(() => {
+    const scheduleEnhancements = () => {
+      window.setTimeout(() => {
         initEnhancements();
-      });
-    } else {
-      setTimeout(initEnhancements, 1);
-    }
+      }, 150);
+    };
+
+    scheduleEnhancements();
 
     return () => {
       cancelled = true;

@@ -19,6 +19,7 @@ const Counter = () => {
           className="col-sm-6 col-lg-3"
           data-aos="fade-up"
           data-wow-delay={counter.delay}
+          suppressHydrationWarning
         >
           <div className="funfact_one text-center">
             <div className="details">

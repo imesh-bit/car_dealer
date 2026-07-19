@@ -5,38 +5,26 @@ const categoryGroups = {
   automobile: [
     {
       icon: "flaticon-car-black-side-view-pointing-left",
-      title: "Compact",
-      value: "Compact",
+      title: "Cars",
+      value: "Cars",
       queryKey: "type",
     },
     {
-      icon: "flaticon-sedan-car-model",
-      title: "Sedan",
-      value: "Sedan",
+      icon: "fa-light fa-motorcycle",
+      title: "Bikes",
+      value: "Bikes",
       queryKey: "type",
     },
     {
-      icon: "flaticon-jeep",
-      title: "SUV",
-      value: "SUV",
-      queryKey: "type",
-    },
-    {
-      icon: "flaticon-cabrio-car",
-      title: "Convertible",
-      value: "Convertible",
-      queryKey: "type",
-    },
-    {
-      icon: "flaticon-coupe-car",
-      title: "Coupe",
-      value: "Coupe",
+      icon: "flaticon-delivery-truck",
+      title: "Trucks",
+      value: "Trucks",
       queryKey: "type",
     },
     {
       icon: "flaticon-gear",
-      title: "Backhoe Loader",
-      value: "Backhoe Loader",
+      title: "Machinery",
+      value: "Machinery",
       queryKey: "type",
     },
   ],
@@ -100,6 +88,28 @@ const categoryGroups = {
   ],
 };
 
+const getAutomobileHeroCategory = (listing) => {
+  const bodyType = (listing.bodyType || "").toLowerCase();
+
+  if (["sedan", "suv", "coupe", "compact", "convertible", "wagon"].includes(bodyType)) {
+    return "Cars";
+  }
+
+  if (["bike", "motorcycle", "bikes"].includes(bodyType)) {
+    return "Bikes";
+  }
+
+  if (["truck", "pickup", "lorry", "van", "trailer"].includes(bodyType)) {
+    return "Trucks";
+  }
+
+  if (["backhoe loader", "machinery", "heavy-equipment"].includes(bodyType)) {
+    return "Machinery";
+  }
+
+  return "Cars";
+};
+
 const Category = ({ category = "automobile" }) => {
   const categories = categoryGroups[category] || categoryGroups.automobile;
 
@@ -114,7 +124,7 @@ const Category = ({ category = "automobile" }) => {
         return (listing.productCategory || "").toLowerCase() === item.value.toLowerCase();
       }
 
-      return (listing.bodyType || "").toLowerCase() === item.value.toLowerCase();
+      return getAutomobileHeroCategory(listing).toLowerCase() === item.value.toLowerCase();
     }).length,
   }));
 
@@ -133,6 +143,7 @@ const Category = ({ category = "automobile" }) => {
             data-aos-offset="0"
             data-aos-delay={index * 200 + 100}
             key={`${item.title}-${index}`}
+            suppressHydrationWarning
           >
             <div className="category_item home4_style mt0-md">
               <div className="icon">

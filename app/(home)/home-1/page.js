@@ -33,7 +33,7 @@ const Home_1 = async ({ searchParams }) => {
   const activeCategory = resolvedSearchParams?.category || "automobile";
 
   return (
-    <div className="wrapper ovh">
+    <div className="wrapper ovh" suppressHydrationWarning>
       {/* Sidebar Panel Start */}
 
       <div
@@ -85,7 +85,7 @@ const Home_1 = async ({ searchParams }) => {
           {/* End .row */}
 
           <div className="row">
-            <div className="col-lg-12" data-aos-delay="100" data-aos="fade-up">
+            <div className="col-lg-12" data-aos-delay="100" data-aos="fade-up" suppressHydrationWarning>
               <FeaturedFilterListing category={activeCategory} />
             </div>
           </div>
@@ -171,6 +171,7 @@ const Home_1 = async ({ searchParams }) => {
               className="home1_popular_listing home4_style"
               data-aos="fade"
               data-aos-delay="100"
+              suppressHydrationWarning
             >
               <div className="listing_item_car_grid_slider ">
                 <PopularVehicles category={activeCategory} />

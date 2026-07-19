@@ -18,6 +18,7 @@ const Partner = () => {
           className="col-6 col-xs-6 col-sm-4 col-xl-2"
           data-aos="fade-up"
           data-aos-delay={partner.delay}
+          suppressHydrationWarning
         >
           <div className="partner_item">
             <Image

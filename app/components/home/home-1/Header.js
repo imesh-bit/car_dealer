@@ -170,13 +170,14 @@ const Header = () => {
         }
         .brand-logo {
           height: 40px;
-          width: 175px;
+          width: auto;
           object-fit: contain;
           display: block;
         }
         @media (max-width: 575px) {
           .brand-logo {
             height: 30px;
+            width: auto;
           }
           .brand-logo-chip {
             padding: 5px 10px;
