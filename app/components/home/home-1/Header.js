@@ -170,7 +170,7 @@ const Header = () => {
         }
         .brand-logo {
           height: 40px;
-          width: auto;
+          width: 175px;
           object-fit: contain;
           display: block;
         }

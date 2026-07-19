@@ -63,7 +63,7 @@ export default async function RootLayout({ children }) {
     : defaultLocale;
 
   return (
-    <html lang={initialLocale}>
+    <html lang={initialLocale} suppressHydrationWarning>
       <body className={inter.className} suppressHydrationWarning>
         <Providers initialLocale={initialLocale}>
           <OrganizationJsonLd />

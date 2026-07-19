@@ -440,7 +440,7 @@ const MobileMenu = () => {
             <style jsx>{`
                 .mm-logo-img-plain {
                     height: 32px;
-                    width: auto;
+                    width: 157px;
                     object-fit: contain;
                     display: block;
                 }
