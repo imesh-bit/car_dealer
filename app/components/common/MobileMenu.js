@@ -347,14 +347,16 @@ const MobileMenu = () => {
                         {/* End mobile_menu_bar */}
 
                         <div className="mobile_menu_main_logo">
-                            <Image
-                                width={140}
-                                height={32}
-                                priority
-                                className="mm-logo-img-plain"
-                                src="/images/header-logo-dark.png"
-                                alt="RAIKO GROUP"
-                            />
+                            <Link href="/" aria-label="Go to homepage">
+                                <Image
+                                    width={140}
+                                    height={32}
+                                    priority
+                                    className="mm-logo-img-plain"
+                                    src="/images/header-logo-dark.png"
+                                    alt="RAIKO GROUP"
+                                />
+                            </Link>
                         </div>
                         {/* End .mobile_menu_main_logo */}
                     </div>
