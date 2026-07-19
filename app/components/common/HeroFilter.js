@@ -876,20 +876,12 @@ const tabCategoryMap = {
   "General": "species",
 };
 
-const buildPriceOptions = (sourceListings) => {
-  const prices = sourceListings.map((item) => item.price).filter(Boolean);
+const buildConditionOptions = (sourceListings) => {
+  const conditions = [
+    ...new Set(sourceListings.map((item) => item.condition).filter(Boolean)),
+  ].sort();
 
-  if (prices.length === 0) return ["All Price"];
-
-  const max = Math.max(...prices);
-  const step = Math.max(1, Math.ceil(max / 5));
-  const bands = Array.from({ length: 5 }, (_, index) => step * (index + 1));
-
-  return [
-    "All Price",
-    "No max Price",
-    ...bands.map((band) => `¥${band.toLocaleString()}`),
-  ];
+  return ["All Conditions", ...conditions];
 };
 
 const HeroFilter = () => {
@@ -898,7 +890,7 @@ const HeroFilter = () => {
   const [selectedTab, setSelectedTab] = useState("Automobiles");
   const [selectedMake, setSelectedMake] = useState("Select Makes");
   const [selectedModel, setSelectedModel] = useState("Select Models");
-  const [selectedPrice, setSelectedPrice] = useState("All Price");
+  const [selectedCondition, setSelectedCondition] = useState("All Conditions");
   const [selectedPartCategory, setSelectedPartCategory] = useState(
     "All Categories"
   );
@@ -1007,8 +999,8 @@ const HeroFilter = () => {
     return ["Select Order Scale (MOQ)", ...orderScales];
   }, [speciesListings]);
 
-  const priceOptions = useMemo(
-    () => buildPriceOptions(activeListings),
+  const conditionOptions = useMemo(
+    () => buildConditionOptions(activeListings),
     [activeListings]
   );
 
@@ -1045,10 +1037,10 @@ const HeroFilter = () => {
           onChange: setSelectedBrand,
         },
         {
-          label: "Price",
-          options: priceOptions,
-          value: selectedPrice,
-          onChange: setSelectedPrice,
+          label: "Condition",
+          options: conditionOptions,
+          value: selectedCondition,
+          onChange: setSelectedCondition,
         },
       ];
     }
@@ -1090,10 +1082,10 @@ const HeroFilter = () => {
         onChange: setSelectedModel,
       },
       {
-        label: "Price",
-        options: priceOptions,
-        value: selectedPrice,
-        onChange: setSelectedPrice,
+        label: "Condition",
+        options: conditionOptions,
+        value: selectedCondition,
+        onChange: setSelectedCondition,
       },
     ];
   }, [
@@ -1102,8 +1094,8 @@ const HeroFilter = () => {
     selectedPartCategory,
     brandOptions,
     selectedBrand,
-    priceOptions,
-    selectedPrice,
+    conditionOptions,
+    selectedCondition,
     productCategoryOptions,
     selectedProductCategory,
     packagingTypeOptions,
@@ -1124,7 +1116,7 @@ const HeroFilter = () => {
     setSelectedTab(tab);
     setSelectedMake("Select Makes");
     setSelectedModel("Select Models");
-    setSelectedPrice("All Price");
+    setSelectedCondition("All Conditions");
     setSelectedPartCategory("All Categories");
     setSelectedBrand("Select Brand");
     setSelectedProductCategory("Select Product Category");
@@ -1161,7 +1153,8 @@ const HeroFilter = () => {
         params.set("orderScale", selectedOrderScale);
     }
 
-    if (selectedPrice !== "All Price") params.set("price", selectedPrice);
+    if (selectedCondition !== "All Conditions")
+      params.set("condition", selectedCondition);
 
     const queryString = params.toString();
     router.push(queryString ? `/listing-v1?${queryString}` : "/listing-v1");

@@ -26,6 +26,7 @@ const ListingV1 = async ({ searchParams }) => {
         make,
         model,
         price,
+        condition,
         sort,
         type,
         year,
@@ -136,6 +137,7 @@ const ListingV1 = async ({ searchParams }) => {
                             make={make}
                             model={model}
                             price={price}
+                            condition={condition}
                             sort={sort}
                             bodyType={type}
                             year={year}

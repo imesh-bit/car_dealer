@@ -8,6 +8,7 @@ const CarItems = ({
   make,
   model,
   price,
+  condition,
   sort,
   bodyType,
   year,
@@ -123,6 +124,9 @@ const CarItems = ({
       return false;
 
     if (vin && !listing.vin.toLowerCase().includes(vin.toLowerCase()))
+      return false;
+
+    if (condition && condition !== "All Conditions" && listing.condition !== condition)
       return false;
 
     if (price && price !== "All Price" && price !== "No max Price") {
