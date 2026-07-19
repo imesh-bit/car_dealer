@@ -1,7 +1,12 @@
+"use client";
+
 import Image from "next/image";
 import HeroFilter from "../../common/HeroFilter";
+import { useTranslation } from "@/hooks/useTranslation";
 
 const Hero = () => {
+  const { t } = useTranslation();
+
   return (
     <section className="home-one bg-home1">
       <div className="container">
@@ -24,9 +29,9 @@ const Hero = () => {
                       aria-hidden="true"
                     />
                   </span>
-                  Find Your Next Match
+                  {t("home.heroTitle")}
                 </h1>
-                <p className="para">Find the right price, dealer and advice.</p>
+                <p className="para">{t("home.heroSubtitle")}</p>
               </div>
               <div className="advance_search_panel">
                 <div className="row">

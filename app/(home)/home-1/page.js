@@ -8,7 +8,6 @@ import HeaderTop from "@/app/components/home/home-1/HeaderTop";
 import HeaderSidebar from "@/app/components/common/HeaderSidebar";
 import Header from "@/app/components/home/home-1/Header";
 import MobileMenu from "@/app/components/common/MobileMenu";
-import Link from "next/link";
 import FeaturedFilterListing from "@/app/components/home/home-1/FeaturedFilterListing";
 import Hero from "@/app/components/home/home-1/Hero";
 import Footer from "@/app/components/common/Footer";
@@ -17,6 +16,8 @@ import Partner from "@/app/components/common/Partner";
 import Counter from "@/app/components/home/home-1/Counter";
 import PopularVehicles from "@/app/components/home/home-4/PopularVehicles";
 import Category from "@/app/components/home/home-4/Category";
+import TranslatedHeading from "@/app/components/common/TranslatedHeading";
+import ShowAllCarsLink from "@/app/components/common/ShowAllCarsLink";
 
 import { createPageMetadata } from "@/lib/metadata";
 
@@ -77,7 +78,7 @@ const Home_1 = async ({ searchParams }) => {
           <div className="row justify-content-center">
             <div className="col-lg-8">
               <div className="main-title text-center">
-                <h2>Featured Listings</h2>
+                <TranslatedHeading messageKey="home.featuredListings" />
               </div>
             </div>
           </div>
@@ -93,12 +94,7 @@ const Home_1 = async ({ searchParams }) => {
           <div className="row mt20">
             <div className="col-lg-12">
               <div className="text-center">
-                <Link href="/page-list-v1" className="more_listing">
-                  Show All Cars{" "}
-                  <span className="icon">
-                    <span className="fas fa-plus" />
-                  </span>
-                </Link>
+                <ShowAllCarsLink />
               </div>
             </div>
           </div>
@@ -114,7 +110,7 @@ const Home_1 = async ({ searchParams }) => {
           <div className="row justify-content-center">
             <div className="col-lg-8">
               <div className="main-title text-center">
-                <h2>Why Choose Us?</h2>
+                <TranslatedHeading messageKey="home.whyChooseUs" />
               </div>
             </div>
           </div>
@@ -139,7 +135,10 @@ const Home_1 = async ({ searchParams }) => {
           <div className="row">
             <div className="col-lg-6 offset-lg-3">
               <div className="main-title text-center">
-                <h2 className="text-white">Popular Listings</h2>
+                <TranslatedHeading
+                  messageKey="home.popularListings"
+                  className="text-white"
+                />
               </div>
             </div>
           </div>
@@ -162,7 +161,7 @@ const Home_1 = async ({ searchParams }) => {
           <div className="row">
             <div className="col-lg-6 offset-lg-3">
               <div className="main-title text-center">
-                <h2>Trending Listings</h2>
+                <TranslatedHeading messageKey="home.trendingListings" />
               </div>
             </div>
           </div>
@@ -221,7 +220,7 @@ const Home_1 = async ({ searchParams }) => {
           <div className="row">
             <div className="col-lg-6 offset-lg-3">
               <div className="main-title text-center">
-                <h2>Popular Brands</h2>
+                <TranslatedHeading messageKey="home.popularBrands" />
               </div>
             </div>
           </div>

@@ -1,4 +1,11 @@
+"use client";
+
+import LanguageSwitcher from "./LanguageSwitcher";
+import { useTranslation } from "@/hooks/useTranslation";
+
 const HeaderTop = () => {
+  const { t } = useTranslation();
+
   const socialData = [
     {
       icon: "fab fa-facebook-f",
@@ -29,7 +36,7 @@ const HeaderTop = () => {
     },
     {
       icon: "flaticon-clock",
-      text: "Mon - Fri 8:00 - 19:00",
+      text: t("header.openingHoursAlt"),
     },
   ];
 
@@ -64,12 +71,15 @@ const HeaderTop = () => {
                   </li>
                 ))}
                 <li className="list-inline-item">
+                  <LanguageSwitcher variant="compact" />
+                </li>
+                <li className="list-inline-item">
                   <a
                     href="#"
                     data-bs-toggle="modal"
                     data-bs-target="#logInModal"
                   >
-                    Login
+                    {t("header.login")}
                   </a>
                 </li>
                 <li className="list-inline-item">
@@ -78,7 +88,7 @@ const HeaderTop = () => {
                     data-bs-toggle="modal"
                     data-bs-target="#logInModal"
                   >
-                    Register
+                    {t("header.register")}
                   </a>
                 </li>
               </ul>

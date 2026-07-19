@@ -1,13 +1,18 @@
+"use client";
+
 import Link from "next/link";
+import { useTranslation } from "@/hooks/useTranslation";
 
 const Navigation = () => {
+  const { t } = useTranslation();
+
   const links = [
-    { label: "Home", path: "/" },
-    { label: "About Us", path: "/about-us" },
-    { label: "Listings", path: "/listing-v1" },
-    { label: "Blog", path: "/blog" },
-    { label: "User", path: "/user-profile" },
-    { label: "Service", path: "/service" },
+    { label: t("nav.home"), path: "/" },
+    { label: t("nav.aboutUs"), path: "/about-us" },
+    { label: t("nav.listings"), path: "/listing-v1" },
+    { label: t("nav.blog"), path: "/blog" },
+    { label: t("nav.user"), path: "/user-profile" },
+    { label: t("nav.service"), path: "/service" },
   ];
 
   return (

@@ -1,26 +1,29 @@
+"use client";
+
+import { useTranslation } from "@/hooks/useTranslation";
+
 const WhyChoose = () => {
+  const { t } = useTranslation();
+
   const reasons = [
     {
       iconClass: "flaticon-price-tag",
-      title: "Best Price",
-      description:
-        "Our stress-free finance department that can find financial solutions to save you money.",
+      title: t("home.bestPrice"),
+      description: t("home.whyChooseDescription"),
       delay: 100,
       style: "style1",
     },
     {
       iconClass: "flaticon-car",
-      title: "Trusted By Thousands",
-      description:
-        "Our stress-free finance department that can find financial solutions to save you money.",
+      title: t("home.trustedByThousands"),
+      description: t("home.whyChooseDescription"),
       delay: 200,
       style: "style2",
     },
     {
       iconClass: "flaticon-trust",
-      title: "Wide Range of Brands",
-      description:
-        "Our stress-free finance department that can find financial solutions to save you money.",
+      title: t("home.wideRangeOfBrands"),
+      description: t("home.whyChooseDescription"),
       delay: 300,
       style: "style3",
     },

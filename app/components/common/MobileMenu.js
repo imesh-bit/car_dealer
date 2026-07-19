@@ -229,11 +229,13 @@
 
 "use client";
 import React, { useState } from "react";
-import menuItems from "@/data/menuItems";
+import { getMenuItems } from "@/lib/i18n/getMenuItems";
 import { isParentActive } from "@/utils/isMenuActive";
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import LanguageSwitcher from "./LanguageSwitcher";
+import { useTranslation } from "@/hooks/useTranslation";
 
 const CustomMenuItem = ({ item, path }) => {
     // const [isOpen, setIsOpen] = useState(item.subMenu ? isParentActive(item.subMenu, path) : false);
@@ -280,6 +282,8 @@ const CustomMenuItem = ({ item, path }) => {
 
 const MobileMenu = () => {
     const path = usePathname();
+    const { t } = useTranslation();
+    const menuItems = getMenuItems(t);
 
     const socialLinks = [
         {
@@ -336,7 +340,7 @@ const MobileMenu = () => {
                                 data-bs-target="#mobileMenu"
                                 aria-controls="mobileMenu"
                             >
-                                <small>Menu</small>
+                                <small>{t("header.menu")}</small>
                                 <span />
                             </a>
                         </div>
@@ -388,6 +392,8 @@ const MobileMenu = () => {
                         </div>
                     </div>
                     {/* End pro-header */}
+
+                    <LanguageSwitcher variant="mobile" />
 
                     {/* mobile menu items start */}
                     <div className="custom-mobile-menu">

@@ -1,21 +1,22 @@
+"use client";
+
 import React from "react";
 import Social from "./Social";
+import { useTranslation } from "@/hooks/useTranslation";
 
 const CopyRight = () => {
+  const { t } = useTranslation();
+
   return (
     <div className="container">
       <div className="row">
         <div className="col-md-6 col-lg-8 col-xl-9">
           <div className="copyright-widget mt5 text-start mb20-sm">
             <p>
-              <a
-                href=""
-                target="_blank"
-                rel="noopener noreferrer"
-              >
+              <a href="" target="_blank" rel="noopener noreferrer">
                 RAICO GROUP
               </a>{" "}
-              © {new Date().getFullYear()}. All Rights Reserved.
+              © {new Date().getFullYear()}. {t("footer.allRightsReserved")}
             </p>
           </div>
         </div>

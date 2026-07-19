@@ -1,8 +1,15 @@
 import { Inter } from "next/font/google";
+import { cookies } from "next/headers";
 import "../public/css/main.css";
 import ScrollToTop from "./components/common/ScrollTop";
 import ClientInitializer from "./components/common/ClientInitializer";
+import Providers from "./components/common/Providers";
 import { OrganizationJsonLd } from "./components/common/JsonLd";
+import {
+  defaultLocale,
+  localeCookieName,
+  locales,
+} from "@/lib/i18n/config";
 import {
   DEFAULT_OG_IMAGE,
   SITE_DESCRIPTION,
@@ -48,14 +55,22 @@ export const metadata = {
   },
 };
 
-export default function RootLayout({ children }) {
+export default async function RootLayout({ children }) {
+  const cookieStore = await cookies();
+  const cookieLocale = cookieStore.get(localeCookieName)?.value;
+  const initialLocale = locales.includes(cookieLocale)
+    ? cookieLocale
+    : defaultLocale;
+
   return (
-    <html lang="en">
+    <html lang={initialLocale}>
       <body className={inter.className} suppressHydrationWarning>
-        <OrganizationJsonLd />
-        <ClientInitializer />
-        {children}
-        <ScrollToTop />
+        <Providers initialLocale={initialLocale}>
+          <OrganizationJsonLd />
+          <ClientInitializer />
+          {children}
+          <ScrollToTop />
+        </Providers>
       </body>
     </html>
   );

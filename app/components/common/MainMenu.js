@@ -1,11 +1,14 @@
 "use client";
-import menuItems from "@/data/menuItems";
+import { getMenuItems } from "@/lib/i18n/getMenuItems";
 import { isParentActive } from "@/utils/isMenuActive";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { useTranslation } from "@/hooks/useTranslation";
 
 const MainMenu = () => {
     const path = usePathname();
+    const { t } = useTranslation();
+    const menuItems = getMenuItems(t);
 
     return (
         <>
