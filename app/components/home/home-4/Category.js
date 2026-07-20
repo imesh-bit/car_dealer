@@ -1,112 +1,70 @@
 import Link from "next/link";
 import listingCar from "@/data/listingCar";
 
+// icons8 "ios" style, white — used for every category icon
+const iconWrapStyle = {
+  display: "flex",
+  alignItems: "flex-end",
+  justifyContent: "center",
+  height: "56px",
+  marginBottom: "12px",
+};
+
+const Icons8Icon = ({ name, alt }) => (
+  <div style={iconWrapStyle}>
+    <img width="56" height="56" src={`https://img.icons8.com/ios/100/FFFFFF/${name}.png`} alt={alt} />
+  </div>
+);
+
+const CustomIcons = {
+  // automobile
+  car: <Icons8Icon name="fiat-500" alt="Cars" />,
+  bike: <Icons8Icon name="motorcycle" alt="Bikes" />,
+  truck: <Icons8Icon name="truck--v1" alt="Trucks" />,
+  machinery: <Icons8Icon name="bulldozer" alt="Machinery" />,
+
+  // auto-part
+  engine: <Icons8Icon name="engine" alt="Engine" />,
+  cooling: <Icons8Icon name="cooling" alt="Cooling" />,
+  electrical: <Icons8Icon name="electrical" alt="Electrical" />,
+  brakes: <Icons8Icon name="brake-discs" alt="Brakes" />,
+  suspension: <Icons8Icon name="suspension-dampers" alt="Suspension" />,
+
+  // species
+  processedFood: <Icons8Icon name="food-bar" alt="Processed Food Items" />,
+  dryGoods: <Icons8Icon name="vegan-food" alt="Dry Goods & Spices" />,
+  household: <Icons8Icon name="sponge" alt="Household & Daily Essentials" />,
+  rawMaterials: <Icons8Icon name="ingredients" alt="Industrial Raw Materials" />,
+};
+
 const categoryGroups = {
   automobile: [
-    {
-      icon: "flaticon-car-black-side-view-pointing-left",
-      title: "Cars",
-      value: "Cars",
-      queryKey: "type",
-    },
-    {
-      icon: "fa-light fa-motorcycle",
-      title: "Bikes",
-      value: "Bikes",
-      queryKey: "type",
-    },
-    {
-      icon: "flaticon-delivery-truck",
-      title: "Trucks",
-      value: "Trucks",
-      queryKey: "type",
-    },
-    {
-      icon: "flaticon-gear",
-      title: "Machinery",
-      value: "Machinery",
-      queryKey: "type",
-    },
+    { customIcon: "car", title: "Cars", value: "Cars", queryKey: "type" },
+    { customIcon: "bike", title: "Bikes", value: "Bikes", queryKey: "type" },
+    { customIcon: "truck", title: "Trucks", value: "Trucks", queryKey: "type" },
+    { customIcon: "machinery", title: "Machinery", value: "Machinery", queryKey: "type" },
   ],
   "auto-part": [
-    {
-      icon: "flaticon-gear",
-      title: "Engine",
-      value: "Engine",
-      queryKey: "partCategory",
-    },
-    {
-      icon: "flaticon-dashboard",
-      title: "Cooling",
-      value: "Cooling",
-      queryKey: "partCategory",
-    },
-    {
-      icon: "flaticon-cogwheel",
-      title: "Electrical",
-      value: "Electrical",
-      queryKey: "partCategory",
-    },
-    {
-      icon: "flaticon-shield",
-      title: "Brakes",
-      value: "Brakes",
-      queryKey: "partCategory",
-    },
-    {
-      icon: "flaticon-sedan-car-model",
-      title: "Suspension",
-      value: "Suspension",
-      queryKey: "partCategory",
-    },
+    { customIcon: "engine", title: "Engine", value: "Engine", queryKey: "partCategory" },
+    { customIcon: "cooling", title: "Cooling", value: "Cooling", queryKey: "partCategory" },
+    { customIcon: "electrical", title: "Electrical", value: "Electrical", queryKey: "partCategory" },
+    { customIcon: "brakes", title: "Brakes", value: "Brakes", queryKey: "partCategory" },
+    { customIcon: "suspension", title: "Suspension", value: "Suspension", queryKey: "partCategory" },
   ],
   species: [
-    {
-      icon: "flaticon-price-tag",
-      title: "Processed Food Items",
-      value: "Processed Food Items",
-      queryKey: "productCategory",
-    },
-    {
-      icon: "flaticon-list",
-      title: "Dry Goods & Spices",
-      value: "Dry Goods & Spices",
-      queryKey: "productCategory",
-    },
-    {
-      icon: "flaticon-heart",
-      title: "Household & Daily Essentials",
-      value: "Household & Daily Essentials",
-      queryKey: "productCategory",
-    },
-    {
-      icon: "flaticon-cogwheel",
-      title: "Industrial Raw Materials",
-      value: "Industrial Raw Materials",
-      queryKey: "productCategory",
-    },
+    { customIcon: "processedFood", title: "Processed Food Items", value: "Processed Food Items", queryKey: "productCategory" },
+    { customIcon: "dryGoods", title: "Dry Goods & Spices", value: "Dry Goods & Spices", queryKey: "productCategory" },
+    { customIcon: "household", title: "Household & Daily Essentials", value: "Household & Daily Essentials", queryKey: "productCategory" },
+    { customIcon: "rawMaterials", title: "Industrial Raw Materials", value: "Industrial Raw Materials", queryKey: "productCategory" },
   ],
 };
 
 const getAutomobileHeroCategory = (listing) => {
   const bodyType = (listing.bodyType || "").toLowerCase();
-
-  if (["sedan", "suv", "coupe", "compact", "convertible", "wagon"].includes(bodyType)) {
-    return "Cars";
-  }
-
-  if (["bike", "motorcycle", "bikes"].includes(bodyType)) {
-    return "Bikes";
-  }
-
-  if (["truck", "pickup", "lorry", "van", "trailer"].includes(bodyType)) {
-    return "Trucks";
-  }
-
-  if (["backhoe loader", "machinery", "heavy-equipment"].includes(bodyType)) {
-    return "Machinery";
-  }
-
+  if (["sedan", "suv", "coupe", "compact", "convertible", "wagon"].includes(bodyType)) return "Cars";
+  if (["bike", "motorcycle", "bikes"].includes(bodyType)) return "Bikes";
+  if (["truck", "pickup", "lorry", "van", "trailer"].includes(bodyType)) return "Trucks";
+  if (["backhoe loader", "machinery", "heavy-equipment"].includes(bodyType)) return "Machinery";
   return "Cars";
 };
 
@@ -119,11 +77,9 @@ const Category = ({ category = "automobile" }) => {
       if (category === "auto-part") {
         return (listing.partCategory || "").toLowerCase() === item.value.toLowerCase();
       }
-
       if (category === "species") {
         return (listing.productCategory || "").toLowerCase() === item.value.toLowerCase();
       }
-
       return getAutomobileHeroCategory(listing).toLowerCase() === item.value.toLowerCase();
     }).length,
   }));
@@ -146,9 +102,7 @@ const Category = ({ category = "automobile" }) => {
             suppressHydrationWarning
           >
             <div className="category_item home4_style mt0-md">
-              <div className="icon">
-                <span className={item.icon} />
-              </div>
+              <div className="icon">{CustomIcons[item.customIcon]}</div>
               <div className="details">
                 <p className="title">
                   <Link href={href}>{item.title}</Link>
