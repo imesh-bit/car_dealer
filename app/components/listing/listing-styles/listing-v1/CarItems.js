@@ -56,9 +56,10 @@ const CarItems = ({
   productCategory,
   packagingType,
   orderScale,
-}) => {
+  view,}) => {
   const selectedFeatures = features ? features.split(",") : [];
   const selectedCategory = category || "automobile";
+  const isListView = String(view || "grid").toLowerCase() === "list";
 
   let filteredListings = listingCar.filter((listing) => {
     const listingCategory = listing.category || "automobile";
@@ -233,13 +234,13 @@ const CarItems = ({
               <div className="thmb_cntnt2">
                 <ul className="mb0">
                   <li className="list-inline-item">
-                    <a className="text-white" href="#">
+                    <a href="#" style={{ color: "#1a3760" }}>
                       <span className="flaticon-photo-camera mr3" />{" "}
                       {listing.photosCount}
                     </a>
                   </li>
                   <li className="list-inline-item">
-                    <a className="text-white" href="#">
+                    <a href="#" style={{ color: "#1a3760" }}>
                       <span className="flaticon-play-button mr3" />{" "}
                       {listing.videosCount}
                     </a>

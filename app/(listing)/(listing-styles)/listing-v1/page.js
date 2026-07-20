@@ -100,7 +100,7 @@ const ListingV1 = async ({ searchParams }) => {
                     <div className="row">
                         <div className="col-xl-12">
                             <div className="breadcrumb_content style2">
-                                <h1 className="breadcrumb_title">
+                                <h1 className="breadcrumb_title" style={{ color: "#1a3760" }}>
                                     {categoryTitleMap[activeCategory] || "Automobiles"}
                                 </h1>
                                 <p className="subtitle">Listing-v1</p>
