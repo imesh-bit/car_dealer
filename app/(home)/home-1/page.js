@@ -20,6 +20,7 @@ import Category from "@/app/components/home/home-4/Category";
 import TranslatedHeading from "@/app/components/common/TranslatedHeading";
 import ShowAllCarsLink from "@/app/components/common/ShowAllCarsLink";
 import WeBestBlock from "@/app/components/home/home-4/WeBestBlock";
+import Address from "@/app/components/home/home-3/Address";
 
 import { createPageMetadata } from "@/lib/metadata";
 
@@ -260,27 +261,26 @@ const Home_1 = async ({ searchParams }) => {
             </section>
             {/* End Our Blog */}
 
-      {/* Our Partners */}
-      <section className="our-partner pt0 pb100">
-        <div className="container">
-          <div className="row">
-            <div className="col-lg-6 offset-lg-3">
-              <div className="main-title text-center">
-                <TranslatedHeading messageKey="home.popularBrands" />
+      {/* Our Contact */}
+            <section className="popular-listing pb90">
+              <div className="container">
+                <div className="row">
+                  <div className="col-lg-6 m-auto">
+                    <div className="main-title text-center">
+                      <h2>How To Find Us</h2>
+                    </div>
+                  </div>
+                </div>
+                {/* End .row */}
+      
+                <div className="row">
+                  <Address />
+                </div>
               </div>
-            </div>
-          </div>
-          {/* End .row */}
-
-          <div className="partner_divider">
-            <div className="row">
-              <Partner />
-            </div>
-            {/* End .row */}
-          </div>
-        </div>
-      </section>
-      {/* End  Our Partners */}
+            </section>
+            {/* End Our Contact */}
+      
+            
 
       {/* Our Footer */}
       <Footer />

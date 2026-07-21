@@ -1,3 +1,5 @@
+"use client";
+
 import Image from "next/image";
 import CopyRight from "./footer/CopyRight";
 import FooterItems from "./footer/FooterItems";
