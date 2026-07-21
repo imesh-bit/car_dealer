@@ -134,7 +134,7 @@ const Home_1 = async ({ searchParams }) => {
                 <div className="row">
                   <div className="col-lg-6 m-auto">
                     <div className="main-title text-center">
-                      <h2>We Are The Best</h2>
+                      <TranslatedHeading messageKey="home.weAreTheBest" />
                     </div>
                   </div>
                 </div>
@@ -246,7 +246,7 @@ const Home_1 = async ({ searchParams }) => {
                 <div className="row">
                   <div className="col-lg-6 offset-lg-3">
                     <div className="main-title text-center">
-                      <h2>Recent Articles</h2>
+                      <TranslatedHeading messageKey="home.recentArticles" />
                     </div>
                   </div>
                 </div>

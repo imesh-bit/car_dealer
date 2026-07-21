@@ -2,13 +2,16 @@
 import React, { useEffect, useRef, useState } from "react";
 import CountUp from "react-countup";
 import { useInView } from "react-intersection-observer";
+import { useTranslation } from "@/hooks/useTranslation";
 
 const Counter = () => {
+  const { t } = useTranslation();
+
   const counters = [
-    { number: 27600, label: "Cars For Sale", delay: 100 },
-    { number: 6500, label: "Dealer Reviews", delay: 200 },
-    { number: 8230, label: "Visitors Pre Day", delay: 300 },
-    { number: 5250, label: "Verified Dealers", delay: 400 },
+    { number: 27600, labelKey: "home.carsForSale", delay: 100 },
+    { number: 6500, labelKey: "home.dealerReviews", delay: 200 },
+    { number: 8230, labelKey: "home.visitorsPerDay", delay: 300 },
+    { number: 5250, labelKey: "home.verifiedDealers", delay: 400 },
   ];
 
   return (
@@ -26,7 +29,7 @@ const Counter = () => {
               <div className="timer">
                 <CounterWithAnimation end={counter.number} />
               </div>
-              <p className="para">{counter.label}</p>
+              <p className="para">{t(counter.labelKey)}</p>
             </div>
           </div>
         </div>

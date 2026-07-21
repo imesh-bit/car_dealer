@@ -1,36 +1,37 @@
+"use client";
+
 import Link from "next/link";
+import { useTranslation } from "@/hooks/useTranslation";
 
 const WeBestBlock = () => {
+  const { t } = useTranslation();
+
   const blocksData = [
     {
       icon: "flaticon-user-1",
       iconClass: "one",
-      title: "Highly Secured",
-      description:
-        "Our stress-free finance department can find financial solutions to save you money.",
+      titleKey: "home.highlySecured",
+      descriptionKey: "home.featureDescription",
     },
     {
       icon: "flaticon-high-five",
-      title: "Trusted Agents",
+      titleKey: "home.trustedAgents",
       iconClass: "two",
-      description:
-        "Our stress-free finance department can find financial solutions to save you money.",
+      descriptionKey: "home.featureDescription",
       marginClass: "mt60 mt0-lg",
     },
     {
       icon: "flaticon-megaphone",
-      title: "Get an Offer",
+      titleKey: "home.getAnOffer",
       iconClass: "three",
-      description:
-        "Our stress-free finance department can find financial solutions to save you money.",
+      descriptionKey: "home.featureDescription",
     },
     {
       icon: "flaticon-headphones",
-      title: "Free Support",
+      titleKey: "home.freeSupport",
       iconClass: "four",
       marginClass: "mt60 mt0-lg",
-      description:
-        "Our stress-free finance department can find financial solutions to save you money.",
+      descriptionKey: "home.featureDescription",
     },
   ];
 
@@ -49,8 +50,8 @@ const WeBestBlock = () => {
               <span className={block.icon} />
             </div>
             <div className="details">
-              <h4 className="title">{block.title}</h4>
-              <p>{block.description}</p>
+              <h4 className="title">{t(block.titleKey)}</h4>
+              <p>{t(block.descriptionKey)}</p>
               <Link href="/listing-v3" className="more_listing home4_style">
                 Learn More{" "}
                 <span className="icon">
