@@ -1,6 +1,6 @@
 "use client";
 import { Swiper, SwiperSlide } from "swiper/react";
-import { Navigation } from "swiper";
+import { Navigation, Autoplay } from "swiper";
 import "swiper/css";
 import "swiper/css/navigation";
 import listingCar from "@/data/listingCar";
@@ -18,7 +18,14 @@ const PopularListings = ({ category = "automobile" }) => {
         spaceBetween={20}
         slidesPerView={4}
         speed={1000}
-        modules={[Navigation]}
+        loop={true}
+        grabCursor={true}
+        autoplay={{
+          delay: 3600,
+          disableOnInteraction: false,
+          pauseOnMouseEnter: true,
+        }}
+        modules={[Navigation, Autoplay]}
         navigation={{
           nextEl: ".p1-arrow-next",
           prevEl: ".p1-arrow-prev",
