@@ -23501,6 +23501,22 @@ input.quantity-num[type="number"]::-webkit-outer-spin-button {
   letter-spacing: 0em;
   margin-bottom: 20px;
 }
+.trending-listings-section {
+  position: relative;
+}
+
+.trending-listings-section .main-title {
+  margin-bottom: 1.5rem;
+}
+
+.trending-listings-section .home1_popular_listing.home4_style {
+  padding-top: 16px;
+}
+
+.trending-slider {
+  padding: 10px 0 18px;
+}
+
 .listing_item_car_grid_slider .swiper-slide .carlisting-popular-vehicles .thumb img {
   transform: scale(0.6);
   transition: all 0.3s ease;
@@ -23512,7 +23528,7 @@ input.quantity-num[type="number"]::-webkit-outer-spin-button {
   opacity: 0.4;
 }
 .listing_item_car_grid_slider .swiper-slide.swiper-slide-active .item {
-  margin: 0 30px;
+  margin: 0 20px;
 }
 .listing_item_car_grid_slider .swiper-slide.swiper-slide-active .carlisting-popular-vehicles .details {
   opacity: 1;
@@ -23523,6 +23539,24 @@ input.quantity-num[type="number"]::-webkit-outer-spin-button {
 .listing_item_car_grid_slider .swiper-slide.swiper-slide-active .carlisting-popular-vehicles .thumb img {
   transform: scale(1.1);
   transition: all 0.3s ease;
+}
+
+@media (max-width: 767px) {
+  .trending-listings-section {
+    padding-top: 72px !important;
+  }
+
+  .trending-listings-section .main-title {
+    margin-bottom: 1rem;
+  }
+
+  .trending-slider {
+    padding: 6px 0 12px;
+  }
+
+  .listing_item_car_grid_slider .swiper-slide.swiper-slide-active .item {
+    margin: 0 8px;
+  }
 }
 .listing_item_car_grid_slider.owl-theme .owl-dots .owl-dot span {
   background: #fff;

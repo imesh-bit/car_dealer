@@ -1,6 +1,6 @@
  "use client";
 import { Swiper, SwiperSlide } from "swiper/react";
-import { Navigation, Pagination } from "swiper";
+import { Navigation, Pagination, Autoplay } from "swiper";
 import "swiper/swiper-bundle.css";
 import listingCar from "@/data/listingCar";
 import Image from "next/image";
@@ -20,7 +20,12 @@ const PopularVehicles = ({ category = "automobile" }) => {
         speed={1000}
         centeredSlides={true}
         initialSlide={Math.floor(visibleListings.length / 2)}
-        modules={[Pagination, Navigation]}
+        autoplay={{
+          delay: 3200,
+          disableOnInteraction: false,
+          pauseOnMouseEnter: true,
+        }}
+        modules={[Pagination, Navigation, Autoplay]}
         pagination={{
           el: ".js-pagination-pag2",
           spaceBetween: 10,

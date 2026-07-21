@@ -6,11 +6,10 @@ const Blog = () => {
   return (
     <>
       {blogPosts.slice(0, 3).map((post) => (
-        <div
+        <article
           key={post.id}
           className="col-md-6 col-xl-4"
-          data-aos="fade-up"
-          data-aos-delay="100"
+          suppressHydrationWarning
         >
           <div className="for_blog">
             <div className="thumb">
@@ -60,7 +59,7 @@ const Blog = () => {
               </div>
             </div>
           </div>
-        </div>
+        </article>
       ))}
     </>
   );

@@ -178,11 +178,11 @@ const Home_1 = async ({ searchParams }) => {
       {/* End Our Popular Listing */}
 
       {/* Popular Vehicles */}
-      <section className="popular-listing pt0 pb110">
-        <div className="container-fluid">
+      <section className="popular-listing trending-listings-section pt80 pb110">
+        <div className="container-fluid px-2 px-md-3">
           <div className="row">
             <div className="col-lg-6 offset-lg-3">
-              <div className="main-title text-center">
+              <div className="main-title text-center mb-4 mb-lg-5">
                 <TranslatedHeading messageKey="home.trendingListings" />
               </div>
             </div>
@@ -190,12 +190,12 @@ const Home_1 = async ({ searchParams }) => {
 
           <div className="col-lg-12">
             <div
-              className="home1_popular_listing home4_style"
+              className="home1_popular_listing home4_style px-0 px-md-3"
               data-aos="fade"
               data-aos-delay="100"
               suppressHydrationWarning
             >
-              <div className="listing_item_car_grid_slider ">
+              <div className="listing_item_car_grid_slider trending-slider">
                 <PopularVehicles category={activeCategory} />
               </div>
             </div>
