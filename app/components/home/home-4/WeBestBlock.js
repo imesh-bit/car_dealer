@@ -42,6 +42,7 @@ const WeBestBlock = () => {
           className={`col-sm-6 col-xl-3`}
           data-aos="fade-up"
           data-aos-delay={`${index * 200}`}
+          suppressHydrationWarning
         >
           <div className={`iconbox_home4_style mb30-lg ${block.marginClass}`}>
             <div className={`icon ${block.iconClass}`}>

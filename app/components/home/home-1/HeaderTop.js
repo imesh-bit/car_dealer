@@ -1,5 +1,6 @@
 "use client";
 
+import JapanTimeDisplay from "@/app/components/common/JapanTimeDisplay";
 import LanguageSwitcher from "@/app/components/common/LanguageSwitcher";
 import { useTranslation } from "@/hooks/useTranslation";
 
@@ -17,7 +18,7 @@ const HeaderTop = () => {
     },
     {
       icon: "flaticon-clock",
-      text: t("header.openingHours"),
+      text: <JapanTimeDisplay compact />,
     },
   ];
 
