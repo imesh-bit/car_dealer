@@ -19,7 +19,7 @@ const Icons8Icon = ({ name, alt }) => (
 const CustomIcons = {
   // automobile
   car: <Icons8Icon name="fiat-500" alt="Cars" />,
-  bike: <Icons8Icon name="motorcycle" alt="Bikes" />,
+  bike: <Icons8Icon name="dirt-bike--v2" alt="Bikes" />,
   truck: <Icons8Icon name="truck--v1" alt="Trucks" />,
   machinery: <Icons8Icon name="bulldozer" alt="Machinery" />,
 

@@ -1561,6 +1561,30 @@
 	.db-992 {
 		display: block !important;
 	}
+	.mobile-header-top {
+		background-color: rgba(0, 0, 0, 0.8);
+		padding: 8px 0;
+		border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+		z-index: 2;
+	}
+	.mobile-header-top .header_top_contact_opening_widget {
+		margin: 0;
+	}
+	.mobile-header-top .header_top_contact_opening_widget ul {
+		padding: 0;
+		margin: 0;
+	}
+	.mobile-header-top .header_top_contact_opening_widget ul li a {
+		font-size: 11px;
+		margin-right: 0;
+		color: #fff;
+		display: flex;
+		align-items: center;
+		gap: 5px;
+	}
+	.mobile-header-top .header_top_contact_opening_widget ul li a span {
+		font-size: 12px;
+	}
 	.fn-992 {
 		float: none !important;
 	}
@@ -2912,6 +2936,7 @@
 	}
 	.bg-img1 {
 		background-position: 20% center;
+		background-attachment: scroll;
 	}
 	.maxtext h1 {
 		font-size: 30px;

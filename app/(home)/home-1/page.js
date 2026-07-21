@@ -5,6 +5,7 @@ import PopularListings from "@/app/components/home/home-1/PopularListings";
 import WhyChoose from "@/app/components/common/WhyChoose";
 import LoginSignupModal from "@/app/components/common/login-signup";
 import HeaderTop from "@/app/components/home/home-1/HeaderTop";
+import MobileHeaderTop from "@/app/components/home/home-1/MobileHeaderTop";
 import HeaderSidebar from "@/app/components/common/HeaderSidebar";
 import Header from "@/app/components/home/home-1/Header";
 import MobileMenu from "@/app/components/common/MobileMenu";
@@ -50,6 +51,10 @@ const Home_1 = async ({ searchParams }) => {
       {/* header top */}
       <HeaderTop />
       {/* End header top */}
+
+      {/* Mobile header top */}
+      <MobileHeaderTop />
+      {/* End Mobile header top */}
 
       {/* Main Header Nav */}
       <Header />

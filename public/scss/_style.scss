@@ -918,6 +918,10 @@ address {
 .home3_style .header_top_social_widgets ul li:last-child a {
   border-left: 1px solid rgba(26, 55, 96, 0.2);
 }
+
+.mobile-header-top {
+  display: none;
+}
 .header_top_contact_opening_widget ul li a span {
   font-size: 15px;
   margin-right: 10px;

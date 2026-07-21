@@ -13373,6 +13373,9 @@ address {
 .home3_style .header_top_social_widgets ul li:last-child a {
   border-left: 1px solid rgba(26, 55, 96, 0.2);
 }
+.mobile-header-top {
+  display: none;
+}
 
 .header_top_contact_opening_widget ul li a span {
   font-size: 15px;
@@ -41801,6 +41804,30 @@ input.quantity-num[type=number]::-webkit-outer-spin-button {
   .db-992 {
     display: block !important;
   }
+  .mobile-header-top {
+    background-color: rgba(0, 0, 0, 0.8);
+    padding: 8px 0;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    z-index: 2;
+  }
+  .mobile-header-top .header_top_contact_opening_widget {
+    margin: 0;
+  }
+  .mobile-header-top .header_top_contact_opening_widget ul {
+    padding: 0;
+    margin: 0;
+  }
+  .mobile-header-top .header_top_contact_opening_widget ul li a {
+    font-size: 11px;
+    margin-right: 0;
+    color: #fff;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+  }
+  .mobile-header-top .header_top_contact_opening_widget ul li a span {
+    font-size: 12px;
+  }
   .fn-992 {
     float: none !important;
   }
@@ -43125,6 +43152,7 @@ input.quantity-num[type=number]::-webkit-outer-spin-button {
   }
   .bg-img1 {
     background-position: 20% center;
+    background-attachment: scroll;
   }
   .maxtext h1, .maxtext .h1 {
     font-size: 30px;

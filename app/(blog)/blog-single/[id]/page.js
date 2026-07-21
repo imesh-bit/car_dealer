@@ -23,8 +23,9 @@ export async function generateStaticParams() {
   }));
 }
 
-const BlogSingleDynamic = ({ params }) => {
-  const post = blogPosts.find((item) => item.id.toString() === params.id);
+const BlogSingleDynamic = async ({ params }) => {
+  const resolvedParams = await params;
+  const post = blogPosts.find((item) => item.id.toString() === resolvedParams.id);
 
   if (!post) {
     return <div className="wrapper">Post not found.</div>;
