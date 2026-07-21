@@ -44,7 +44,7 @@ const Category = () => {
           data-aos="fade-up"
           data-aos-delay={category.delay}
         >
-          <div className="category_item">
+          <div className="category_item home4_style">
             <div className="thumb">
               <Image
                 width={150}

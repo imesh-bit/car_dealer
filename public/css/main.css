@@ -39237,6 +39237,8 @@ input.quantity-num[type=number]::-webkit-outer-spin-button {
 
 .category_item.home4_style:hover {
   background-color: #206992;
+  transform: translateY(-10px);
+  box-shadow: 0px 20px 50px rgba(32, 105, 146, 0.3);
 }
 
 .category_item.home4_style .icon span,
@@ -39249,6 +39251,11 @@ input.quantity-num[type=number]::-webkit-outer-spin-button {
   line-height: 22px;
   letter-spacing: 0em;
   margin-bottom: 5px;
+  transition: all 0.3s ease;
+}
+
+.category_item.home4_style:hover .icon span {
+  transform: scale(1.15);
 }
 
 .category_item.home6_style {
