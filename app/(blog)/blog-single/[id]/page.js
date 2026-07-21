@@ -17,13 +17,19 @@ import Comments from "@/app/components/blog/blog-single/Comments";
 import CommentForm from "@/app/components/blog/blog-single/CommentForm";
 import blogPosts from "@/data/blog";
 
-const defaultPost = blogPosts[0];
+export async function generateStaticParams() {
+  return blogPosts.map((post) => ({
+    id: post.id.toString(),
+  }));
+}
 
-export const metadata = {
-  title: "Young Jackfruit in Brine || Premium Sri Lankan Import | RAICO GROUP",
-};
+const BlogSingleDynamic = ({ params }) => {
+  const post = blogPosts.find((item) => item.id.toString() === params.id);
 
-const BlogDynamicSingle = () => {
+  if (!post) {
+    return <div className="wrapper">Post not found.</div>;
+  }
+
   return (
     <div className="wrapper">
       <div
@@ -34,21 +40,11 @@ const BlogDynamicSingle = () => {
       >
         <HeaderSidebar />
       </div>
-      {/* Sidebar Panel End */}
 
-      {/* header top */}
       <HeaderTop />
-      {/* End header top */}
-
-      {/* Main Header Nav */}
       <DefaultHeader />
-      {/* End Main Header Nav */}
-
-      {/* Main Header Nav For Mobile */}
       <MobileMenu />
-      {/* End Main Header Nav For Mobile */}
 
-      {/* Blog Single Post */}
       <section className="blog_post_container bt1 pt50 pb0 mt70-992">
         <div className="container">
           <div className="row">
@@ -56,19 +52,14 @@ const BlogDynamicSingle = () => {
               <div className="for_blog blog_single_post">
                 <div className="details">
                   <div className="wrapper">
-                    <h2 className="title">
-                      Young Jackfruit in Brine: Premium Sri Lankan Import for Global Kitchens
-                    </h2>
-                    <Meta post={defaultPost} />
+                    <h2 className="title">{post.title}</h2>
+                    <Meta post={post} />
                   </div>
                 </div>
               </div>
             </div>
-            {/* End .col */}
           </div>
-          {/* End .row */}
         </div>
-        {/* End .container */}
 
         <div className="container-fluid p0">
           <div className="row">
@@ -80,74 +71,58 @@ const BlogDynamicSingle = () => {
                   priority
                   style={{ objectFit: "cover" }}
                   className="img-whp"
-                  src="/images/listing/Genral-items-inner-listing/jackfruit1.jpg"
-                  alt="Young Jackfruit in Brine"
+                  src={post.heroImg || post.imgSrc}
+                  alt={post.title}
                 />
               </div>
             </div>
           </div>
-          {/* End .row */}
         </div>
-        {/* End container-fluid */}
       </section>
-      {/* Blog Single Post */}
 
-      {/* Start Blog Single Post Description */}
       <section className="blog_post_container pt50 pb70">
         <div className="container">
           <div className="row justify-content-center">
             <div className="col-xl-8">
               <div className="main_blog_post_content">
                 <div className="mbp_thumb_post">
-                  <h4>Description</h4>
-                  <p className="para mb25 mt20">
-                    Discover our Young Jackfruit in Brine, imported directly from Sri Lanka’s fertile coastal estates. Every can preserves tender jackfruit in a natural brine solution, delivering a fresh, clean texture that performs beautifully in global recipes.
-                  </p>
-                  <p className="para mb20">
-                    Harvested at the perfect stage, this young jackfruit is packed with care to maintain its mild flavor and versatile meat-like bite. It is a plant-powered ingredient designed for chefs, home cooks, and retailers seeking premium, ready-to-use produce.
-                  </p>
-                  <p className="para mb40">
-                    Packed in Sri Lanka and shipped worldwide, our jackfruit is ideal for curries, sandwiches, tacos, stews, and healthy vegan dishes. It offers the authenticity of Ceylon heritage with the convenience of modern global distribution.
-                  </p>
+                  {post.description.map((paragraph, index) => (
+                    <p key={index} className="para mb25 mt20">
+                      {paragraph}
+                    </p>
+                  ))}
+
                   <div className="mbp_blockquote">
-                    <Blockquote text={defaultPost.blockquote.text} author={defaultPost.blockquote.author} />
+                    <Blockquote text={post.blockquote.text} author={post.blockquote.author} />
                   </div>
-                  {/* End .mbp_blockquote */}
 
                   <div className="row mb40">
                     <div className="col-lg-12">
                       <h4 className="mb20">What you&apos;ll learn</h4>
                     </div>
-                    <Features features={defaultPost.features} />
+                    <Features features={post.features} />
                   </div>
-                  {/* End .row */}
 
                   <div className="row">
                     <div className="col-lg-12">
                       <Image
                         width={796}
                         height={465}
-                        style={{
-                          objectFit: "cover",
-                          width: "100%",
-                          height: "100%",
-                        }}
-                        src="/images/listing/Genral-items-inner-listing/jackfruit2.jpg"
-                        alt="Jar of Young Jackfruit in Brine"
+                        style={{ objectFit: "cover", width: "100%", height: "100%" }}
+                        src={post.secondaryImg || post.imgSrc}
+                        alt={post.title}
                       />
                     </div>
                   </div>
-                  {/* End .row */}
 
                   <div className="row">
                     <div className="col-lg-12">
                       <div className="custom_bsp_grid mt50">
                         <h4 className="mb30">What Makes It Special</h4>
-                        <Requirements requirements={defaultPost.requirements} />
+                        <Requirements requirements={post.requirements} />
                       </div>
                     </div>
                   </div>
-                  {/* End .row */}
 
                   <hr className="mb40" />
                   <div className="row">
@@ -160,9 +135,7 @@ const BlogDynamicSingle = () => {
                       </div>
                     </div>
                   </div>
-                  {/* End .row */}
                 </div>
-                {/* End mbp_thumb_post */}
 
                 <hr className="mt50" />
                 <Pagination />
@@ -174,24 +147,16 @@ const BlogDynamicSingle = () => {
                     <Comments />
                   </div>
                 </div>
-                {/* End comments */}
 
                 <div className="bsp_reveiw_wrt">
                   <CommentForm />
                 </div>
-                {/* End CommentForm */}
               </div>
-              {/* End main_blog_post_content */}
             </div>
-            {/* End .col */}
           </div>
-          {/* End .row */}
         </div>
-        {/* End .container */}
       </section>
-      {/* End Blog Single Post Description */}
 
-      {/* Our Blog Recent Articles */}
       <section className="our-blog pb90 bgc-f9">
         <div className="container">
           <div className="row">
@@ -201,22 +166,15 @@ const BlogDynamicSingle = () => {
               </div>
             </div>
           </div>
-          {/* End .row */}
 
           <div className="row">
             <Blog />
           </div>
-          {/* End .row */}
         </div>
-        {/* End .container */}
       </section>
-      {/* Our Blog Recent Articles */}
 
-      {/* Our Footer */}
       <Footer />
-      {/* End Our Footer */}
 
-      {/* Modal */}
       <div
         className="sign_up_modal modal fade"
         id="logInModal"
@@ -227,10 +185,8 @@ const BlogDynamicSingle = () => {
       >
         <LoginSignupModal />
       </div>
-      {/* End Modal */}
     </div>
-    // End wrapper
   );
 };
 
-export default BlogDynamicSingle;
+export default BlogSingleDynamic;

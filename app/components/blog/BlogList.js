@@ -44,9 +44,9 @@ const BlogList = () => {
                   </ul>
                 </div>
                 <h4 className="title">
-                  <Link href="/blog-single">{post.title}</Link>
+                  <Link href={`/blog-single/${post.id}`}>{post.title}</Link>
                 </h4>
-                <Link href="/blog-single" className="more_listing">
+                <Link href={`/blog-single/${post.id}`} className="more_listing">
                   Read More{" "}
                   <span className="icon">
                     <span className="fas fa-plus" />

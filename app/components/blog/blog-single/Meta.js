@@ -1,18 +1,18 @@
-const Meta = () => {
+const Meta = ({ post }) => {
   const metaItems = [
     {
       icon: "flaticon-user",
-      text: "Brooklyn Simmons",
+      text: post.author,
       href: "#",
     },
     {
       icon: "flaticon-chat",
-      text: "12 Comments",
+      text: `${post.numComments} Comments`,
       href: "#",
     },
     {
       icon: "flaticon-calendar-1",
-      text: "April 25, 2021",
+      text: post.date,
       href: "#",
     },
   ];
