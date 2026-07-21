@@ -21,7 +21,7 @@ const PopularVehicles = ({ category = "automobile" }) => {
         centeredSlides={true}
         initialSlide={Math.floor(visibleListings.length / 2)}
         autoplay={{
-          delay: 3200,
+          delay: 1000,
           disableOnInteraction: false,
           pauseOnMouseEnter: true,
         }}
