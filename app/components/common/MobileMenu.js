@@ -235,6 +235,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import LanguageSwitcher from "./LanguageSwitcher";
+import JapanTimeDisplay from "./JapanTimeDisplay";
 import { useTranslation } from "@/hooks/useTranslation";
 
 const CustomMenuItem = ({ item, path }) => {
@@ -420,6 +421,9 @@ const MobileMenu = () => {
                                         <a href="#">{info.text}</a>
                                     </span>
                                 ))}
+                                <span className="phone-num mobile-japan-time">
+                                    <i className="flaticon-clock" /> <JapanTimeDisplay compact />
+                                </span>
                             </div>
 
                             <div className="social-links">
@@ -443,6 +447,16 @@ const MobileMenu = () => {
                     width: 157px;
                     object-fit: contain;
                     display: block;
+                }
+                .mobile-japan-time {
+                    display: block;
+                    margin-top: 1rem;
+                    color: #1a3760;
+                    font-size: 0.95rem;
+                    line-height: 1.65;
+                }
+                .mobile-japan-time i {
+                    margin-right: 0.5rem;
                 }
             `}</style>
         </>
