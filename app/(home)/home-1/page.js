@@ -18,6 +18,7 @@ import PopularVehicles from "@/app/components/home/home-4/PopularVehicles";
 import Category from "@/app/components/home/home-4/Category";
 import TranslatedHeading from "@/app/components/common/TranslatedHeading";
 import ShowAllCarsLink from "@/app/components/common/ShowAllCarsLink";
+import WeBestBlock from "@/app/components/home/home-4/WeBestBlock";
 
 import { createPageMetadata } from "@/lib/metadata";
 
@@ -105,7 +106,7 @@ const Home_1 = async ({ searchParams }) => {
       {/* End Featured Product  */}
 
       {/* Why Chose us  */}
-      <section className="why-chose pt0 pb90">
+      {/* <section className="why-chose pt0 pb90">
         <div className="container">
           <div className="row justify-content-center">
             <div className="col-lg-8">
@@ -118,8 +119,29 @@ const Home_1 = async ({ searchParams }) => {
             <WhyChoose />
           </div>
         </div>
-      </section>
+      </section> */}
       {/* Why Chose us  */}
+
+
+      {/* We Are The Best */}
+            <section className="we-are-best">
+              <div className="container">
+                <div className="row">
+                  <div className="col-lg-6 m-auto">
+                    <div className="main-title text-center">
+                      <h2>We Are The Best</h2>
+                    </div>
+                  </div>
+                </div>
+                {/* End .row */}
+      
+                <div className="row">
+                  <WeBestBlock />
+                </div>
+                {/* End .row */}
+              </div>
+            </section>
+            {/* End We Are The Best */}
 
       {/* Delivery Divider */}
       <section className="deliver-divider bg-img1">
