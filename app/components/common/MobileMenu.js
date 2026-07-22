@@ -237,25 +237,57 @@ import { usePathname } from "next/navigation";
 import LanguageSwitcher from "./LanguageSwitcher";
 import JapanTimeDisplay from "./JapanTimeDisplay";
 import { useTranslation } from "@/hooks/useTranslation";
+import {
+    Calculator,
+    ChevronDown,
+    Clock3,
+    FileText,
+    Globe2,
+    Headphones,
+    House,
+    Info,
+    MapPin,
+    Phone,
+    Send,
+} from "lucide-react";
+
+const menuIconByPath = {
+    "/": House,
+    "/about-us": Info,
+    "/loan-calculator": Calculator,
+    "/contact": Send,
+    "/faq": Headphones,
+    "/service": Globe2,
+    "/terms-conditions": FileText,
+};
+
+const MenuIcon = ({ item }) => {
+    const Icon = item.subMenu ? Globe2 : menuIconByPath[item.path] || FileText;
+
+    return <Icon className="mobile-menu__icon" size={19} strokeWidth={1.8} aria-hidden="true" />;
+};
 
 const CustomMenuItem = ({ item, path }) => {
-    // const [isOpen, setIsOpen] = useState(item.subMenu ? isParentActive(item.subMenu, path) : false);
-    const [isOpen, setIsOpen] = useState(item.subMenu ? true : false);
+    const [isOpen, setIsOpen] = useState(item.subMenu ? isParentActive(item.subMenu, path) : false);
     if (item.subMenu) {
         return (
             <li className={`nav-item custom-submenu ${isOpen ? "open" : ""}`}>
-                <div
+                <button
+                    type="button"
                     className={`nav-link d-flex justify-content-between align-items-center ${
                         isParentActive(item.subMenu, path) ? "active" : ""
                     }`}
                     onClick={() => setIsOpen(!isOpen)}
-                    style={{ cursor: "pointer" }}
+                    aria-expanded={isOpen}
                 >
-                    <span>{item.label}</span>
-                    <i className={`fas fa-angle-${isOpen ? "up" : "down"}`}></i>
-                </div>
-                {isOpen && (
-                    <ul className="list-unstyled ps-3 sub-menu-list">
+                    <span className="mobile-menu__link-content">
+                        <MenuIcon item={item} />
+                        <span>{item.label}</span>
+                    </span>
+                    <ChevronDown className="mobile-menu__chevron" size={18} strokeWidth={1.8} aria-hidden="true" />
+                </button>
+                <ul className="list-unstyled sub-menu-list">
+                    <div className="sub-menu-list__inner">
                         {item.subMenu.map((subItem, index) => (
                             <CustomMenuItem
                                 key={index}
@@ -263,8 +295,8 @@ const CustomMenuItem = ({ item, path }) => {
                                 path={path}
                             />
                         ))}
-                    </ul>
-                )}
+                    </div>
+                </ul>
             </li>
         );
     }
@@ -275,7 +307,10 @@ const CustomMenuItem = ({ item, path }) => {
                 href={item.path}
                 className={`nav-link ${item.path === path ? "active" : ""}`}
             >
-                {item.label}
+                <span className="mobile-menu__link-content">
+                    <MenuIcon item={item} />
+                    <span>{item.label}</span>
+                </span>
             </Link>
         </li>
     );
@@ -316,15 +351,15 @@ const MobileMenu = () => {
 
     const contactInfo = [
         {
-            icon: "flaticon-map",
+            icon: MapPin,
             text: "924-1 Tenma,Fuji,Shizuoka 419-0205,Japan",
         },
         {
-            icon: "flaticon-phone-call",
+            icon: Phone,
             text: "+81 90-6360-9950",
         },
         {
-            icon: "flaticon-clock",
+            icon: Clock3,
             text: "Mon - Fri 8:00 - 18:00",
         },
     ];
@@ -417,12 +452,13 @@ const MobileMenu = () => {
                             <div className="mmenu-contact-info">
                                 {contactInfo.map((info, index) => (
                                     <span className="phone-num" key={index}>
-                                        <i className={info.icon} />{" "}
+                                        <info.icon className="mobile-menu__contact-icon" size={17} strokeWidth={1.8} />
                                         <a href="#">{info.text}</a>
                                     </span>
                                 ))}
                                 <span className="phone-num mobile-japan-time">
-                                    <i className="flaticon-clock" /> <JapanTimeDisplay compact />
+                                    <Clock3 className="mobile-menu__contact-icon" size={17} strokeWidth={1.8} />
+                                    <JapanTimeDisplay compact />
                                 </span>
                             </div>
 
