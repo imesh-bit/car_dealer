@@ -38,19 +38,19 @@ const CustomIcons = {
 };
 
 const categoryBackgrounds = {
-  Cars: "/images/listing/1.jpg",
+  Cars: "/images/listing/car.jpg",
   Bikes: "/images/listing/bike.jpg",
   Trucks: "/images/listing/truck.jpg",
   Machinery: "/images/listing/jcb-backhoe1.jpg",
   Engine: "/images/listing/engine.jpg",
-  Cooling: "/images/listing/auto-parts/bosch.jpg",
-  Electrical: "/images/listing/auto-parts/bosch.jpg",
-  Brakes: "/images/listing/auto-parts/bosch.jpg",
-  Suspension: "/images/listing/auto-parts/bosch.jpg",
-  "Processed Food Items": "/images/listing/7.jpg",
-  "Dry Goods & Spices": "/images/listing/8.jpg",
-  "Household & Daily Essentials": "/images/listing/9.jpg",
-  "Industrial Raw Materials": "/images/listing/10.jpg",
+  Cooling: "/images/listing/cooling.jpg",
+  Electrical: "/images/listing/electrical.jpg",
+  Brakes: "/images/listing/brakes.jpg",
+  Suspension: "/images/listing/suspension.jpg",
+  "Processed Food Items": "/images/listing/processed.jpg",
+  "Dry Goods & Spices": "/images/listing/dryfoods.jpg",
+  "Household & Daily Essentials": "/images/listing/daily.jpg",
+  "Industrial Raw Materials": "/images/listing/drum.jpg",
 };
 
 const categoryGroups = {
