@@ -10,68 +10,79 @@ const MobileHeaderTop = () => {
         @media only screen and (max-width: 992px) {
           .mobile-header-show {
             display: block !important;
-            background-color: #fff;
-            padding: 12px 0;
-            border-bottom: 1px solid #e8e8e8;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+            width: 100%;
+            overflow: hidden;
+            background: #18181b;
+            color: #d4d4d8;
+            font-family: inherit;
           }
           .mobile-header-top .container {
             max-width: 100% !important;
-            padding: 0 15px;
+            padding: 0 16px;
           }
-          .mobile-header-top .row {
-            margin: 0;
-          }
-          .mobile-header-top .col-6 {
+          .mobile-header-ticker {
+            min-height: 26px;
             display: flex;
             align-items: center;
-            justify-content: center;
-            padding: 0 5px;
-          }
-          .mobile-header-top .col-6:first-child {
-            justify-content: flex-start;
-          }
-          .mobile-header-top .col-6:last-child {
-            justify-content: flex-end;
-          }
-          .mobile-header-top .header_top_contact_opening_widget,
-          .mobile-header-top .header_top_social_widgets {
-            margin: 0;
-          }
-          .mobile-header-top .header_top_contact_opening_widget ul,
-          .mobile-header-top .header_top_social_widgets ul {
-            margin: 0;
-            padding: 0;
-            list-style: none;
-          }
-          .mobile-header-top .header_top_contact_opening_widget ul li,
-          .mobile-header-top .header_top_social_widgets ul li {
-            display: inline-block;
-            margin: 0;
-          }
-          .mobile-header-top .header_top_contact_opening_widget ul li a,
-          .mobile-header-top .header_top_social_widgets ul li a {
-            color: #1a3760;
+            justify-content: space-between;
+            gap: 12px;
+            padding: 4px 0;
             font-size: 11px;
-            font-weight: 500;
-            line-height: 14px;
-            margin: 0;
-            padding: 0;
+            line-height: 1;
+            letter-spacing: 0.02em;
+          }
+          .mobile-header-time {
             display: flex;
             align-items: center;
-            gap: 4px;
-            transition: all 0.3s ease;
+            gap: 7px;
+            min-width: 0;
           }
-          .mobile-header-top .header_top_contact_opening_widget ul li a:hover,
-          .mobile-header-top .header_top_social_widgets ul li a:hover {
-            color: #ffb000;
+          .mobile-header-online-dot {
+            width: 6px;
+            height: 6px;
+            flex: 0 0 6px;
+            border-radius: 50%;
+            background: #4ade80;
+            box-shadow: 0 0 0 3px rgba(74, 222, 128, 0.12);
+            animation: mobile-header-pulse 2s ease-in-out infinite;
           }
-          .mobile-header-top .header_top_contact_opening_widget ul li a span,
-          .mobile-header-top .header_top_social_widgets ul li a span {
-            font-size: 13px;
-            display: flex;
-            align-items: center;
-            color: #1a3760;
+          .mobile-header-language {
+            flex: 0 0 auto;
+          }
+          .mobile-header-top .language-switcher {
+            gap: 2px;
+          }
+          .mobile-header-top .language-switcher__item {
+            gap: 2px;
+          }
+          .mobile-header-top .language-switcher__button {
+            color: #a1a1aa;
+            padding: 4px 6px;
+            border-radius: 3px;
+            font-size: 11px;
+          }
+          .mobile-header-top .language-switcher__button:hover,
+          .mobile-header-top .language-switcher__button.is-active {
+            color: #fff;
+            background: rgba(255, 255, 255, 0.12);
+          }
+          .mobile-menu .header.stylehome1 {
+            min-height: 58px;
+            padding: 12px 16px !important;
+            border-bottom: 1px solid #e4e4e7;
+            box-shadow: 0 2px 8px rgba(24, 24, 27, 0.06);
+          }
+          .mobile-menu .menubar {
+            transition: color 0.2s ease, transform 0.2s ease;
+          }
+          .mobile-menu .menubar:hover,
+          .mobile-menu .menubar:focus-visible {
+            color: #18181b;
+            transform: translateY(-1px);
+          }
+          .mobile-menu .mobile_menu_main_logo img {
+            max-width: 140px;
+            height: auto;
           }
         }
         @media only screen and (min-width: 993px) {
@@ -79,26 +90,20 @@ const MobileHeaderTop = () => {
             display: none !important;
           }
         }
+        @keyframes mobile-header-pulse {
+          0%, 100% { opacity: 1; }
+          50% { opacity: 0.45; }
+        }
       `}</style>
-      <div className="header_top mobile-header-top mobile-header-show db-992" suppressHydrationWarning>
+      <div className="mobile-header-top mobile-header-show" suppressHydrationWarning>
         <div className="container">
-          <div className="row align-items-center">
-            <div className="col-6">
-              <div className="header_top_contact_opening_widget">
-                <ul>
-                  <li className="list-inline-item">
-                    <a href="#" onClick={(e) => e.preventDefault()} title="Japan Time">
-                      <span className="flaticon-clock" />
-                      <JapanTimeDisplay compact />
-                    </a>
-                  </li>
-                </ul>
-              </div>
+          <div className="mobile-header-ticker" role="group" aria-label="Japan time and language selector">
+            <div className="mobile-header-time">
+              <span className="mobile-header-online-dot" aria-hidden="true" />
+              <JapanTimeDisplay compact />
             </div>
-            <div className="col-6">
-              <div className="header_top_social_widgets">
-                <LanguageSwitcher variant="compact" />
-              </div>
+            <div className="mobile-header-language">
+              <LanguageSwitcher variant="compact" />
             </div>
           </div>
         </div>

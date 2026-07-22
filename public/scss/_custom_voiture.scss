@@ -32,11 +32,11 @@
 
 // mobile menu
 .offcanvas.mobile_menu-canvas {
-    background: linear-gradient(160deg, rgba(15, 23, 42, 0.98) 0%, rgba(2, 6, 23, 0.98) 72%, rgba(17, 24, 39, 0.98) 100%);
+    background: linear-gradient(160deg, rgba(10, 35, 87, 0.99) 0%, rgba(8, 30, 74, 0.99) 56%, rgba(5, 21, 52, 0.99) 100%);
     backdrop-filter: blur(24px);
     -webkit-backdrop-filter: blur(24px);
     border-left: 1px solid rgba(255, 255, 255, 0.1);
-    color: #f8fafc;
+    color: #f4f7fb;
     width: min(88vw, 390px);
 }
 .offcanvas.mobile_menu-canvas .offcanvas-body {
@@ -55,7 +55,7 @@
     }
 }
 .custom-mobile-menu {
-    color: #f8fafc;
+    color: #f4f7fb;
     margin-top: 18px;
     
     .nav-item {
@@ -66,7 +66,7 @@
             background: transparent;
             border: 0;
             border-radius: 10px;
-            color: #e2e8f0;
+            color: #e7eef8;
             display: flex;
             justify-content: space-between;
             padding: 14px 12px;
@@ -81,7 +81,7 @@
                 color: #f5c34b;
             }
             &:hover {
-                background: rgba(255, 255, 255, 0.07);
+                background: rgba(74, 174, 231, 0.14);
                 color: #f5c34b;
                 transform: translateX(3px);
             }
@@ -95,7 +95,7 @@
     }
 
     .mobile-menu__icon {
-        color: #94a3b8;
+        color: #a9bdd4;
         flex: 0 0 auto;
         transition: color 0.25s ease;
     }
@@ -106,7 +106,7 @@
     }
 
     .mobile-menu__chevron {
-        color: #94a3b8;
+        color: #a9bdd4;
         transition: color 0.25s ease, transform 0.3s ease;
     }
 
@@ -142,14 +142,14 @@
             
             .nav-link {
                 border-radius: 7px;
-                color: #94a3b8;
+                color: #a9bdd4;
                 font-size: 14px;
                 font-weight: 400;
                 padding: 10px 10px;
 
                 &:hover,
                 &.active {
-                    background: rgba(245, 195, 75, 0.1);
+                    background: rgba(74, 174, 231, 0.13);
                     color: #f5c34b;
                 }
             }
@@ -168,7 +168,7 @@
 }
 .mmenu-contact-info .phone-num {
     align-items: flex-start;
-    color: #94a3b8;
+    color: #b7c7da;
     display: flex;
     font-size: 13px;
     gap: 11px;
@@ -190,7 +190,7 @@
     margin-top: 0 !important;
 }
 .mobile-japan-time > *:last-child {
-    color: #94a3b8;
+    color: #b7c7da;
 }
 .social-links {
     border-top: 1px solid rgba(255, 255, 255, 0.08);
@@ -203,7 +203,7 @@
     align-items: center;
     border: 1px solid rgba(255, 255, 255, 0.12);
     border-radius: 50%;
-    color: #94a3b8;
+    color: #b7c7da;
     display: inline-flex;
     height: 34px;
     justify-content: center;

@@ -53,15 +53,12 @@ const Home_1 = async ({ searchParams }) => {
       <HeaderTop />
       {/* End header top */}
 
-      {/* Mobile header top */}
-      <MobileHeaderTop />
-      {/* End Mobile header top */}
-
       {/* Main Header Nav */}
       <Header />
       {/* End Main Header Nav */}
 
       {/* Main Header Nav For Mobile */}
+      <MobileHeaderTop />
       <MobileMenu />
       {/* End Main Header Nav For Mobile */}
 
