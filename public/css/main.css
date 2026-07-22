@@ -38244,9 +38244,69 @@ canvas#myChart {
 
 /* Onlnie Delivery Css */
 /* juice Divider Css */
+.home1_car_intro_section {
+  min-height: 420px;
+  overflow: hidden;
+  padding: 80px 0;
+  position: relative;
+  background: #020617;
+}
+
+.home1_car_intro_image,
+.home1_car_intro_overlay {
+  height: 100%;
+  left: 0;
+  position: absolute;
+  top: 0;
+  width: 100%;
+}
+
+.home1_car_intro_image {
+  object-fit: cover;
+  object-position: center;
+}
+
+.home1_car_intro_overlay {
+  background: linear-gradient(90deg, rgba(2, 6, 23, 0.94) 0%, rgba(2, 6, 23, 0.84) 52%, rgba(2, 6, 23, 0.68) 100%);
+}
+
+.home1_car_intro_section .container {
+  position: relative;
+  z-index: 1;
+}
+
 .home1_divider_content {
   position: relative;
-  margin: 120px 0;
+  margin: 0;
+  max-width: 580px;
+}
+
+.home1_divider_badge {
+  background: rgba(245, 158, 11, 0.14);
+  border: 1px solid rgba(251, 191, 36, 0.55);
+  border-radius: 999px;
+  color: #fbbf24;
+  display: inline-block;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  margin-bottom: 18px;
+  padding: 8px 13px;
+}
+
+.home1_car_intro_section .home1_divider_content .title {
+  font-size: clamp(30px, 4vw, 44px);
+  font-weight: 700;
+  line-height: 1.15;
+  margin-bottom: 18px;
+}
+
+.home1_car_intro_section .home1_divider_content .para {
+  color: #cbd5e1;
+  font-size: 16px;
+  line-height: 1.75;
+  max-width: 560px;
+  width: 100%;
 }
 
 .home1_divider_content .title {
@@ -43681,6 +43741,17 @@ input.quantity-num[type=number]::-webkit-outer-spin-button {
   }
   .home1_divider_content {
     margin-bottom: 0;
+  }
+  .home1_car_intro_section {
+    min-height: 0;
+    padding: 64px 0;
+  }
+  .home1_car_intro_overlay {
+    background: linear-gradient(180deg, rgba(2, 6, 23, 0.9) 0%, rgba(2, 6, 23, 0.8) 100%);
+  }
+  .home1_car_intro_section .home1_divider_content .title {
+    font-size: 30px;
+    line-height: 1.2;
   }
   .home1_divider_content .para {
     width: auto;
