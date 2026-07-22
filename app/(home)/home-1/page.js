@@ -228,7 +228,7 @@ const Home_1 = async ({ searchParams }) => {
       {/* End Popular Vehicles */}
 
       {/* <!-- Funfact --> */}
-      <section className="our-funfact pt50 pb30">
+      <section className="our-funfact home1-counter-section pt50 pb30">
         <div className="container">
           <div className="row">
             <Counter />

@@ -1,17 +1,17 @@
 "use client";
 import React, { useEffect, useRef, useState } from "react";
 import CountUp from "react-countup";
-import { useInView } from "react-intersection-observer";
+import { CarFront, ShieldCheck, Star, Users } from "lucide-react";
 import { useTranslation } from "@/hooks/useTranslation";
 
 const Counter = () => {
   const { t } = useTranslation();
 
   const counters = [
-    { number: 27600, labelKey: "home.carsForSale", delay: 100 },
-    { number: 6500, labelKey: "home.dealerReviews", delay: 200 },
-    { number: 8230, labelKey: "home.visitorsPerDay", delay: 300 },
-    { number: 5250, labelKey: "home.verifiedDealers", delay: 400 },
+    { number: 27600, labelKey: "home.carsForSale", delay: 100, icon: CarFront },
+    { number: 6500, labelKey: "home.dealerReviews", delay: 200, icon: Star },
+    { number: 8230, labelKey: "home.visitorsPerDay", delay: 300, icon: Users },
+    { number: 5250, labelKey: "home.verifiedDealers", delay: 400, icon: ShieldCheck },
   ];
 
   return (
@@ -19,12 +19,15 @@ const Counter = () => {
       {counters.map((counter, index) => (
         <div
           key={index}
-          className="col-sm-6 col-lg-3"
+          className="col-sm-6 col-lg-3 home1-counter-item"
           data-aos="fade-up"
           data-wow-delay={counter.delay}
           suppressHydrationWarning
         >
-          <div className="funfact_one text-center">
+          <div className="funfact_one home1-counter-card">
+            <div className="home1-counter-icon" aria-hidden="true">
+              <counter.icon size={22} strokeWidth={2.2} />
+            </div>
             <div className="details">
               <div className="timer">
                 <CounterWithAnimation end={counter.number} />

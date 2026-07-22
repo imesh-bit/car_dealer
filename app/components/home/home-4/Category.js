@@ -39,10 +39,10 @@ const CustomIcons = {
 
 const categoryBackgrounds = {
   Cars: "/images/listing/1.jpg",
-  Bikes: "/images/listing/3.jpg",
-  Trucks: "/images/listing/4.jpg",
+  Bikes: "/images/listing/bike.jpg",
+  Trucks: "/images/listing/truck.jpg",
   Machinery: "/images/listing/jcb-backhoe1.jpg",
-  Engine: "/images/listing/auto-parts/bosch.jpg",
+  Engine: "/images/listing/engine.jpg",
   Cooling: "/images/listing/auto-parts/bosch.jpg",
   Electrical: "/images/listing/auto-parts/bosch.jpg",
   Brakes: "/images/listing/auto-parts/bosch.jpg",
