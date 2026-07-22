@@ -103,6 +103,45 @@
         text-align: left;
     }
 }
+
+@media (max-width: 767px) {
+    .car-category .category_card_mobile {
+        background-color: #101d2b;
+        border: 1px solid rgba(174, 138, 82, 0.78);
+        border-radius: 16px;
+        box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+        aspect-ratio: 4 / 3;
+        height: auto;
+        justify-content: flex-end;
+        margin: 0 0 16px;
+        padding: 18px 14px;
+    }
+
+    .car-category .category_card_mobile .icon {
+        margin-bottom: 8px;
+    }
+
+    .car-category .category_card_mobile .icon img {
+        height: 42px;
+        width: 42px;
+    }
+
+    .car-category .category_card_mobile .details .title,
+    .car-category .category_card_mobile .details .title a {
+        font-size: 15px;
+        font-weight: 700;
+        line-height: 20px;
+        margin-bottom: 3px;
+    }
+
+    .car-category .category_card_mobile .details .para {
+        color: rgba(255, 255, 255, 0.68);
+        font-size: 12px;
+        font-weight: 500;
+        line-height: 16px;
+        margin-bottom: 0;
+    }
+}
 .form-select:focus {
     border-color: var(--primary-color) !important;
     outline: 0;
