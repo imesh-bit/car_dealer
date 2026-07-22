@@ -163,7 +163,14 @@ const Home_1 = async ({ searchParams }) => {
             {/* End We Are The Best */}
 
       {/* Delivery Divider */}
-      <section className="deliver-divider bg-img1">
+      <section className="deliver-divider bg-img1 home1_car_intro_section">
+        <img
+          className="home1_car_intro_image object-cover"
+          src="/images/background/1.jpg"
+          alt=""
+          aria-hidden="true"
+        />
+        <div className="home1_car_intro_overlay" aria-hidden="true" />
         <div className="container">
           <CarIntro />
         </div>

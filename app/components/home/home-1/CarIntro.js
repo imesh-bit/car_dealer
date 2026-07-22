@@ -7,8 +7,9 @@ const CarIntro = () => {
 
   return (
     <div className="row align-items-center">
-      <div className="col-md-9 col-xl-5">
+      <div className="col-12 col-md-9 col-xl-7">
         <div className="home1_divider_content">
+          <span className="home1_divider_badge">OUR PROMISE</span>
           <h2 className="title">{t("home.carIntroTitle")}</h2>
           <p className="para">{t("home.carIntroDescription")}</p>
         </div>
