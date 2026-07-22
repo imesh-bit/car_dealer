@@ -29,6 +29,7 @@ const Address = () => {
         className="col-md-5 col-lg-4"
         data-aos="fade-up"
         data-aos-delay="100"
+        suppressHydrationWarning
       >
         <div className="contact-info mb30">
           {footerData.map((data, index) => (
@@ -52,6 +53,7 @@ const Address = () => {
         className="col-md-7 col-lg-8"
         data-aos="fade-up"
         data-aos-delay="300"
+        suppressHydrationWarning
       >
         <div className="our-map mb30 bdrs8 ovh">
           <div className="h400 map_in">

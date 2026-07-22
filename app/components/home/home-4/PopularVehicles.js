@@ -1,6 +1,7 @@
  "use client";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation, Pagination, Autoplay } from "swiper";
+import { motion } from "framer-motion";
 import "swiper/swiper-bundle.css";
 import listingCar from "@/data/listingCar";
 import Image from "next/image";
@@ -21,7 +22,7 @@ const PopularVehicles = ({ category = "automobile" }) => {
         centeredSlides={true}
         initialSlide={Math.floor(visibleListings.length / 2)}
         autoplay={{
-          delay: 1000,
+          delay: 4500,
           disableOnInteraction: false,
           pauseOnMouseEnter: true,
         }}
@@ -43,28 +44,29 @@ const PopularVehicles = ({ category = "automobile" }) => {
       >
         {visibleListings.slice(0, 6).map((listing, index) => (
           <SwiperSlide key={listing.id}>
-            {/* Added a container class to handle flex column flow */}
-            <div className="item carlisting-popular-vehicles" style={{ display: 'flex', flexDirection: 'column' }}>
-              
-              {/* Image moved to the top */}
-              <div className="thumb">
+            <motion.article
+              className="item carlisting-popular-vehicles"
+              layout
+              whileHover={{ y: -10, transition: { duration: 0.25 } }}
+              whileTap={{ scale: 0.98 }}
+            >
+              <motion.div
+                className="thumb"
+                whileHover={{ scale: 1.02 }}
+                transition={{ type: "spring", stiffness: 260, damping: 24 }}
+              >
                 <Image
                   width={640}
                   height={420}
-                  style={{
-                    width: "100%",
-                    height: "100%",
-                    objectFit: "cover",
-                  }}
                   sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
-                  quality={80}
+                  quality={85}
                   src={listing.image}
                   alt={listing.title}
                 />
-              </div>
+                <span className="popular-vehicle-badge">Featured</span>
+              </motion.div>
 
-              {/* Details follow the image */}
-              <div className="details text-center" style={{ paddingTop: '20px' }}>
+              <div className="details text-center">
                 <div className="wrapper">
                   <h5 className="price text-thm4">
                     ${Number(listing.price).toLocaleString()}
@@ -75,7 +77,7 @@ const PopularVehicles = ({ category = "automobile" }) => {
                     </Link>
                   </h6>
                   <div className="listign_review">
-                    <ul className="mb0" style={{ listStyle: 'none', padding: 0 }}>
+                    <ul className="mb0">
                       {[...Array(5)].map((_, i) => (
                         <li key={i} className="list-inline-item">
                           <i className="fa fa-star" />
@@ -86,9 +88,9 @@ const PopularVehicles = ({ category = "automobile" }) => {
                     </ul>
                   </div>
                 </div>
-                
+
                 <div className="listing_footer mt-3">
-                  <ul className="mb0" style={{ listStyle: 'none', padding: 0 }}>
+                  <ul className="mb0">
                     <li className="list-inline-item">
                       <span className="flaticon-road-perspective me-2" />
                       {listing.mileage}
@@ -104,7 +106,7 @@ const PopularVehicles = ({ category = "automobile" }) => {
                   </ul>
                 </div>
               </div>
-            </div>
+            </motion.article>
           </SwiperSlide>
         ))}
       </Swiper>

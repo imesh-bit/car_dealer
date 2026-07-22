@@ -189,7 +189,7 @@ const Home_1 = async ({ searchParams }) => {
       {/* End Our Popular Listing */}
 
       {/* Popular Vehicles */}
-      <section className="popular-listing trending-listings-section pt80 pb110">
+      <section className="popular-listing home4-popular-showcase trending-listings-section pt80 pb110">
         <div className="container-fluid px-2 px-md-3">
           <div className="row">
             <div className="col-lg-6 offset-lg-3">
