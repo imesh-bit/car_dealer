@@ -10,28 +10,28 @@ const WeBestBlock = () => {
     {
       icon: "flaticon-user-1",
       iconClass: "one",
-      titleKey: "home.highlySecured",
-      descriptionKey: "home.featureDescription",
+      titleKey: "home.verifiedSourcing",
+      descriptionKey: "home.verifiedSourcingDescription",
     },
     {
       icon: "flaticon-high-five",
-      titleKey: "home.trustedAgents",
+      titleKey: "home.exportReadyInventory",
       iconClass: "two",
-      descriptionKey: "home.featureDescription",
+      descriptionKey: "home.exportReadyInventoryDescription",
       marginClass: "mt60 mt0-lg",
     },
     {
       icon: "flaticon-megaphone",
-      titleKey: "home.getAnOffer",
+      titleKey: "home.globalLogistics",
       iconClass: "three",
-      descriptionKey: "home.featureDescription",
+      descriptionKey: "home.globalLogisticsDescription",
     },
     {
       icon: "flaticon-headphones",
-      titleKey: "home.freeSupport",
+      titleKey: "home.tradeSupport",
       iconClass: "four",
       marginClass: "mt60 mt0-lg",
-      descriptionKey: "home.featureDescription",
+      descriptionKey: "home.tradeSupportDescription",
     },
   ];
 
