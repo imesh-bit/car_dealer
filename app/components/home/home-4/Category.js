@@ -37,6 +37,22 @@ const CustomIcons = {
   rawMaterials: <Icons8Icon name="ingredients" alt="Industrial Raw Materials" />,
 };
 
+const categoryBackgrounds = {
+  Cars: "/images/listing/1.jpg",
+  Bikes: "/images/listing/3.jpg",
+  Trucks: "/images/listing/4.jpg",
+  Machinery: "/images/listing/jcb-backhoe1.jpg",
+  Engine: "/images/listing/auto-parts/bosch.jpg",
+  Cooling: "/images/listing/auto-parts/bosch.jpg",
+  Electrical: "/images/listing/auto-parts/bosch.jpg",
+  Brakes: "/images/listing/auto-parts/bosch.jpg",
+  Suspension: "/images/listing/auto-parts/bosch.jpg",
+  "Processed Food Items": "/images/listing/7.jpg",
+  "Dry Goods & Spices": "/images/listing/8.jpg",
+  "Household & Daily Essentials": "/images/listing/9.jpg",
+  "Industrial Raw Materials": "/images/listing/10.jpg",
+};
+
 const categoryGroups = {
   automobile: [
     { customIcon: "car", title: "Cars", value: "Cars", queryKey: "type" },
@@ -101,7 +117,10 @@ const Category = ({ category = "automobile" }) => {
             key={`${item.title}-${index}`}
             suppressHydrationWarning
           >
-            <div className="category_item home4_style mt0-md">
+            <div
+              className="category_item category_card_mobile home4_style mt0-md"
+              style={{ "--category-image": `url(${categoryBackgrounds[item.value]})` }}
+            >
               <div className="icon">{CustomIcons[item.customIcon]}</div>
               <div className="details">
                 <p className="title">

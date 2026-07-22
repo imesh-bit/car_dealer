@@ -72,6 +72,14 @@ const Home_1 = async ({ searchParams }) => {
       {/* Car Category */}
       <section className="car-category mobile_space bgc-f9 pb100 pt0 pt120-md">
         <div className="container">
+          <div className="row d-md-none">
+            <div className="col-lg-8 m-auto">
+              <div className="main-title text-center">
+                <h2>Top Categories</h2>
+              </div>
+            </div>
+          </div>
+
           <div className="row mb90">
             <div className="col-xl-9 m-auto">
               <div className="row">
