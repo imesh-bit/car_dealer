@@ -37,22 +37,6 @@ const CustomIcons = {
   rawMaterials: <Icons8Icon name="ingredients" alt="Industrial Raw Materials" />,
 };
 
-const categoryBackgrounds = {
-  Cars: "/images/listing/car.jpg",
-  Bikes: "/images/listing/bike.jpg",
-  Trucks: "/images/listing/truck.jpg",
-  Machinery: "/images/listing/jcb-backhoe1.jpg",
-  Engine: "/images/listing/engine.jpg",
-  Cooling: "/images/listing/cooling.jpg",
-  Electrical: "/images/listing/electrical.jpg",
-  Brakes: "/images/listing/brakes.jpg",
-  Suspension: "/images/listing/suspension.jpg",
-  "Processed Food Items": "/images/listing/processed.jpg",
-  "Dry Goods & Spices": "/images/listing/dryfoods.jpg",
-  "Household & Daily Essentials": "/images/listing/daily.jpg",
-  "Industrial Raw Materials": "/images/listing/drum.jpg",
-};
-
 const categoryGroups = {
   automobile: [
     { customIcon: "car", title: "Cars", value: "Cars", queryKey: "type" },
@@ -118,8 +102,7 @@ const Category = ({ category = "automobile" }) => {
             suppressHydrationWarning
           >
             <div
-              className="category_item category_card_mobile home4_style mt0-md"
-              style={{ "--category-image": `url(${categoryBackgrounds[item.value]})` }}
+              className="category_item home4_style mt0-md"
             >
               <div className="icon">{CustomIcons[item.customIcon]}</div>
               <div className="details">
