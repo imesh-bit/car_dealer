@@ -305,12 +305,20 @@ const CarItems = ({
 
               <div className={listing.category === "species" ? "listing_footer merchandise-meta" : "listing_footer"}>
                 {listing.category === "species" ? (
-                  <ul className="mb0">
-                    <li className="list-inline-item">{listing.productCategory}</li>
-                    <li className="list-inline-item">{listing.packagingType}</li>
-                    <li className="list-inline-item">{listing.orderScale}</li>
-                    <li className="list-inline-item">MOQ: {listing.minimumOrderQuantity || "N/A"}</li>
-                  </ul>
+                  <>
+                    <ul className="mb0">
+                      <li className="list-inline-item">{listing.productCategory}</li>
+                      <li className="list-inline-item">{listing.packagingType}</li>
+                      <li className="list-inline-item">{listing.orderScale}</li>
+                      <li className="list-inline-item">MOQ: {listing.minimumOrderQuantity || "N/A"}</li>
+                    </ul>
+                    <Link
+                      href={`/listing-single-v1/${listing.id}`}
+                      className="btn btn-thm mt15 w-100"
+                    >
+                      Request Quote
+                    </Link>
+                  </>
                 ) : (
                   <ul className="mb0">
                     <li className="list-inline-item">

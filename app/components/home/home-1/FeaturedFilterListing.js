@@ -292,24 +292,32 @@ const FeaturedFilterListing = ({ category = "automobile" }) => {
                 </div>{" "}
                 <div className={listing.category === "species" || listing.category === "auto-part" ? "listing_footer merchandise-meta" : "listing_footer"}>
                   {listing.category === "species" ? (
-                    <ul className="mb0">
-                      <li className="list-inline-item">
-                        <i className="fa fa-cube me-2" />
-                        {listing.productCategory}
-                      </li>
-                      <li className="list-inline-item">
-                        <i className="fa fa-box me-2" />
-                        {listing.packagingType}
-                      </li>
-                      <li className="list-inline-item">
-                        <i className="fa fa-truck me-2" />
-                        {listing.orderScale}
-                      </li>
-                      <li className="list-inline-item">
-                        <i className="fa fa-layer-group me-2" />
-                        MOQ: {listing.minimumOrderQuantity || "N/A"}
-                      </li>
-                    </ul>
+                    <>
+                      <ul className="mb0">
+                        <li className="list-inline-item">
+                          <i className="fa fa-cube me-2" />
+                          {listing.productCategory}
+                        </li>
+                        <li className="list-inline-item">
+                          <i className="fa fa-box me-2" />
+                          {listing.packagingType}
+                        </li>
+                        <li className="list-inline-item">
+                          <i className="fa fa-truck me-2" />
+                          {listing.orderScale}
+                        </li>
+                        <li className="list-inline-item">
+                          <i className="fa fa-layer-group me-2" />
+                          MOQ: {listing.minimumOrderQuantity || "N/A"}
+                        </li>
+                      </ul>
+                      <Link
+                        href={`/listing-single-v1/${listing.id}`}
+                        className="btn btn-thm mt15 w-100"
+                      >
+                        Request Quote
+                      </Link>
+                    </>
                   ) : listing.category === "auto-part" ? (
                     <ul className="mb0">
                       <li className="list-inline-item">
