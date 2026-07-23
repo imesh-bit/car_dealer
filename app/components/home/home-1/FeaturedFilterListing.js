@@ -326,20 +326,28 @@ const FeaturedFilterListing = ({ category = "automobile" }) => {
                       </li>
                     </ul>
                   ) : (
-                    <ul className="mb0">
-                      <li className="list-inline-item">
-                        <span className="flaticon-road-perspective me-2" />
-                        {listing.mileage}
-                      </li>
-                      <li className="list-inline-item">
-                        <span className="flaticon-gas-station me-2" />
-                        {listing.fuelType}
-                      </li>
-                      <li className="list-inline-item">
-                        <span className="flaticon-gear me-2" />
-                        {listing.transmission}
-                      </li>
-                    </ul>
+                    <>
+                      <ul className="mb0">
+                        <li className="list-inline-item">
+                          <span className="flaticon-road-perspective me-2" />
+                          {listing.mileage}
+                        </li>
+                        <li className="list-inline-item">
+                          <span className="flaticon-gas-station me-2" />
+                          {listing.fuelType}
+                        </li>
+                        <li className="list-inline-item">
+                          <span className="flaticon-gear me-2" />
+                          {listing.transmission}
+                        </li>
+                      </ul>
+                      <Link
+                        href={`/listing-single-v1/${listing.id}`}
+                        className="btn btn-thm mt15 w-100"
+                      >
+                        Request Quote
+                      </Link>
+                    </>
                   )}
                 </div>
               </div>
