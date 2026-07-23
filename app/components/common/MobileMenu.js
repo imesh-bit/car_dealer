@@ -431,7 +431,15 @@ const MobileMenu = () => {
                     </div>
                     {/* End pro-header */}
 
-                    <LanguageSwitcher variant="mobile" />
+                    <div className="mobile-menu-controls mb-4">
+                        <div className="mobile-menu-controls__item">
+                            <LanguageSwitcher variant="mobile" />
+                        </div>
+                        <div className="mobile-menu-controls__item mobile-menu-time">
+                            <Clock3 className="mobile-menu__contact-icon" size={17} strokeWidth={1.8} />
+                            <JapanTimeDisplay compact />
+                        </div>
+                    </div>
 
                     {/* mobile menu items start */}
                     <div className="custom-mobile-menu">
