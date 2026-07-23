@@ -1,0 +1,17 @@
+{
+  "Sri Lanka": [
+    { "name": "Colombo", "price": 4379 },
+    { "name": "Hambantota", "price": 4799 },
+    { "name": "Galle", "price": 4599 }
+  ],
+  "South Africa": [
+    { "name": "Durban", "price": 6850 },
+    { "name": "Cape Town", "price": 7200 },
+    { "name": "Port Elizabeth", "price": 6980 }
+  ],
+  "Japan": [
+    { "name": "Yokohama", "price": 9050 },
+    { "name": "Kobe", "price": 9200 },
+    { "name": "Nagoya", "price": 9400 }
+  ]
+}

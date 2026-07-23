@@ -15,6 +15,7 @@ import Map from "@/app/components/common/Map";
 import ConsumerReviews from "@/app/components/listing/listing-single/ConsumerReviews";
 import ReviewBox from "@/app/components/listing/listing-single/ReviewBox";
 import ContactSeller from "@/app/components/listing/listing-single/sidebar/ContactSeller";
+import OrderInquiryGeneral from "@/app/components/listing/listing-single/sidebar/OrderInquiryGeneral";
 import QuoteInquiry from "@/app/components/listing/listing-single/sidebar/QuoteInquiry";
 import SellerDetail from "@/app/components/listing/listing-single/sidebar/SellerDetail";
 import Link from "next/link";
@@ -114,7 +115,7 @@ const ListingSingleV1 = async ({ params }) => {
                       </a>
                     </li>
                   </ul>
-                  <h1 className="title text-truncate">{car.title}</h1>
+                  <h1 className="title">{car.title}</h1>
                 </div>
               </div>
             </div>
@@ -141,11 +142,15 @@ const ListingSingleV1 = async ({ params }) => {
               <ProductGallery car={car} />
               {/* End Car Gallery */}
 
-              <div className="d-block d-lg-none mb30">
+              <div className="d-block d-lg-none mt30 mb30">
                 <div className="opening_hour_widgets p25 shadow-sm rounded-4 border">
                   <div className="wrapper">
                     <h4 className="title mb20">Free Quote / Inquiry</h4>
-                    <QuoteInquiry hideTitle />
+                    {car.category === "species" ? (
+                      <OrderInquiryGeneral hideTitle car={car} />
+                    ) : (
+                      <QuoteInquiry hideTitle baseFobPrice={car.price} />
+                    )}
                   </div>
                 </div>
               </div>
@@ -229,7 +234,7 @@ const ListingSingleV1 = async ({ params }) => {
               <div className="sidebar_seller_wrapper sticky">
                 <div className="sidebar_seller_contact d-none d-lg-block opening_hour_widgets p25 shadow-sm rounded-4 border">
                   <div className="wrapper">
-                    <QuoteInquiry hideTitle />
+                    <QuoteInquiry hideTitle baseFobPrice={car.price} />
                   </div>
                 </div>
                 <div className="sidebar_seller_contact mt30">

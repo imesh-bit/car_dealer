@@ -3,14 +3,17 @@
 import { useMemo, useState } from "react";
 import rates from "@/data/orderInquiryRates.json";
 
-const QuoteInquiry = ({ hideTitle, baseFobPrice = 10000 }) => {
+const OrderInquiryGeneral = ({ hideTitle, car, baseFobPrice = 10000 }) => {
   const countries = Object.keys(rates);
+  const defaultCountry = countries[0];
   const [formData, setFormData] = useState({
-    country: countries[0],
-    port: rates[countries[0]][0].name,
-    portPrice: rates[countries[0]][0].price,
+    country: defaultCountry,
+    port: rates[defaultCountry][0].name,
+    portPrice: rates[defaultCountry][0].price,
     inspection: true,
     insurance: false,
+    orderQuantity: "",
+    specialInstructions: "",
     fullName: "",
     email: "",
     phone: "",
@@ -55,12 +58,22 @@ const QuoteInquiry = ({ hideTitle, baseFobPrice = 10000 }) => {
     });
   };
 
+  const handlePortPriceChange = (e) => {
+    const value = Number(e.target.value || 0);
+    setFormData((prev) => ({
+      ...prev,
+      portPrice: value,
+      port: prev.port,
+    }));
+  };
+
+  const actualFobPrice = car?.price || baseFobPrice;
+
   const getCifPrice = () => {
     const inspectionFee = formData.inspection ? 250 : 0;
     const insuranceFee = formData.insurance ? 200 : 0;
     const portFee = Number(formData.portPrice || 0);
-    const cif = baseFobPrice + portFee + inspectionFee + insuranceFee;
-    return cif;
+    return actualFobPrice + portFee + inspectionFee + insuranceFee;
   };
 
   const formatCurrency = (value) => `¥ ${Number(value).toLocaleString()}`;
@@ -70,14 +83,21 @@ const QuoteInquiry = ({ hideTitle, baseFobPrice = 10000 }) => {
 
     const text = [
       "Hello,",
-      "I would like an order inquiry.",
+      "I would like a general order inquiry.",
+      `Listing: ${car?.title ?? "General Listing"}`,
+      `Product Category: ${car?.productCategory ?? "N/A"}`,
+      `Packaging Type: ${car?.packagingType ?? "N/A"}`,
+      `Order Scale: ${car?.orderScale ?? "N/A"}`,
+      `Minimum Order Quantity: ${car?.minimumOrderQuantity ?? "N/A"}`,
       `Country: ${formData.country}`,
       `Port: ${formData.port}`,
-      `FOB Base Price: ${formatCurrency(baseFobPrice)}`,
+      `FOB Base Price: ${formatCurrency(actualFobPrice)}`,
       `Port Price: ${formatCurrency(formData.portPrice)}`,
       `Inspection: ${formData.inspection ? "Yes" : "No"}`,
       `Insurance: ${formData.insurance ? "Yes" : "No"}`,
       `Total CIF Price: ${formatCurrency(getCifPrice())}`,
+      `Order Quantity: ${formData.orderQuantity}`,
+      `Special Instructions: ${formData.specialInstructions}`,
       `Full Name: ${formData.fullName}`,
       `Email: ${formData.email}`,
       `Phone: ${formData.phone}`,
@@ -98,11 +118,31 @@ const QuoteInquiry = ({ hideTitle, baseFobPrice = 10000 }) => {
         {!hideTitle && (
           <div className="col-12 mb20">
             <div className="d-flex justify-content-between align-items-center">
-              <h4 className="mb0 fz14 fw-semibold">Free Quote / Inquiry</h4>
+              <h4 className="mb0 fz14 fw-semibold">Order Inquiry</h4>
               <span className="fz12 text-danger">*Required fields</span>
             </div>
           </div>
         )}
+
+        <div className="col-12 mb20">
+          <div className="bgc-grey p20 bdrs10 border">
+            <p className="mb10 fz12 fw-semibold">Listing Details</p>
+            <div className="row gx-2 gy-2">
+              <div className="col-6 fz12">
+                <strong>Product Category:</strong> {car?.productCategory ?? "-"}
+              </div>
+              <div className="col-6 fz12">
+                <strong>Packaging:</strong> {car?.packagingType ?? "-"}
+              </div>
+              <div className="col-6 fz12">
+                <strong>Order Scale:</strong> {car?.orderScale ?? "-"}
+              </div>
+              <div className="col-6 fz12">
+                <strong>MOQ:</strong> {car?.minimumOrderQuantity ?? "-"}
+              </div>
+            </div>
+          </div>
+        </div>
 
         <div className="col-md-6">
           <div className="form-group mb15">
@@ -142,6 +182,35 @@ const QuoteInquiry = ({ hideTitle, baseFobPrice = 10000 }) => {
           </div>
         </div>
 
+        <div className="col-md-6">
+          <div className="form-group mb15">
+            <label className="form-label fz13 fw-semibold">Port Price</label>
+            <input
+              className="form-control form-control-sm"
+              type="number"
+              min="0"
+              name="portPrice"
+              value={formData.portPrice}
+              onChange={handlePortPriceChange}
+              required
+            />
+          </div>
+        </div>
+
+        <div className="col-md-6">
+          <div className="form-group mb15">
+            <label className="form-label fz13 fw-semibold">Order Quantity</label>
+            <input
+              className="form-control form-control-sm"
+              type="text"
+              name="orderQuantity"
+              placeholder="e.g. 100 units"
+              value={formData.orderQuantity}
+              onChange={handleChange}
+            />
+          </div>
+        </div>
+
         <div className="col-12">
           <div className="d-flex flex-wrap gap-3 mb15">
             <div className="form-check">
@@ -170,6 +239,20 @@ const QuoteInquiry = ({ hideTitle, baseFobPrice = 10000 }) => {
                 Insurance
               </label>
             </div>
+          </div>
+        </div>
+
+        <div className="col-12">
+          <div className="form-group mb15">
+            <label className="form-label fz13 fw-semibold">Special Instructions</label>
+            <textarea
+              className="form-control form-control-sm"
+              name="specialInstructions"
+              rows={3}
+              value={formData.specialInstructions}
+              onChange={handleChange}
+              placeholder="e.g. preferred shipment date, packaging requests"
+            />
           </div>
         </div>
 
@@ -239,7 +322,7 @@ const QuoteInquiry = ({ hideTitle, baseFobPrice = 10000 }) => {
               {formatCurrency(getCifPrice())}
             </h3>
             <p className="mb0 fz12 color-grey mt5">
-              FOB Base: {formatCurrency(baseFobPrice)}, Port: {formatCurrency(formData.portPrice)}
+              FOB Base: {formatCurrency(actualFobPrice)}, Port: {formatCurrency(formData.portPrice)}
             </p>
           </div>
         </div>
@@ -268,4 +351,4 @@ const QuoteInquiry = ({ hideTitle, baseFobPrice = 10000 }) => {
   );
 };
 
-export default QuoteInquiry;
+export default OrderInquiryGeneral;
