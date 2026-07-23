@@ -53,6 +53,8 @@ const ListingSingleV1 = async ({ params }) => {
       ? "BRAND NEW - IN STOCK"
       : `${car.condition.toUpperCase()} - IN STOCK`;
 
+  const formatCurrency = (value) => `¥${Number(value).toLocaleString()}`;
+
   return (
     <div className="wrapper">
       <CarJsonLd car={car} />
@@ -81,7 +83,7 @@ const ListingSingleV1 = async ({ params }) => {
       {/* Agent Single Grid View */}
       <section className="our-agent-single bgc-f9 pb90 mt70-992 pt30">
         <div className="container">
-          <div className="row mb30">
+          <div className="row mb20">
             <div className="col-xl-12">
               <div className="breadcrumb_content style2">
                 <BreadCrumb car={car} />
@@ -112,7 +114,6 @@ const ListingSingleV1 = async ({ params }) => {
                     </li>
                   </ul>
                   <h1 className="title">{car.title}</h1>
-                  <p className="para">{car.tagline}</p>
                 </div>
               </div>
             </div>
@@ -121,16 +122,11 @@ const ListingSingleV1 = async ({ params }) => {
             <div className="col-lg-5 col-xl-4">
               <div className="single_page_heading_content text-start text-lg-end">
                 <div className="share_content">
-                  <ShareMeta car={car} />
+                  <ShareMeta />
                 </div>
                 <div className="price_content">
-                  <div className="price mt60 mb10 mt10-md">
-                    <h3>
-                      <small className="mr15">
-                        <del>¥{car.originalPrice}</del>
-                      </small>
-                      RS{car.price}
-                    </h3>
+                  <div className="price mt30 mb10 mt10-md">
+                    <h3>{formatCurrency(car.price)}</h3>
                   </div>
                 </div>
               </div>

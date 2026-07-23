@@ -2,29 +2,28 @@ const ShareMeta = () => {
   const shareOptions = [
     {
       iconClassName: "flaticon-email",
-      label: "EMAIL",
+      label: "Email",
     },
     {
       iconClassName: "flaticon-printer",
-      label: "PRINT",
+      label: "Print",
     },
     {
       iconClassName: "flaticon-heart",
-      label: "SAVE",
+      label: "Save",
     },
     {
       iconClassName: "flaticon-share",
-      label: "SHARE",
+      label: "Share",
     },
   ];
 
   return (
-    <ul>
+    <ul className="list-inline share_buttons">
       {shareOptions.map((option, index) => (
         <li className="list-inline-item" key={index}>
-          <a href="#">
+          <a className="share_button" href="#" aria-label={option.label} title={option.label}>
             <span className={option.iconClassName} />
-            {option.label}
           </a>
         </li>
       ))}
