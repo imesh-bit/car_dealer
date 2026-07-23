@@ -15,6 +15,7 @@ import Map from "@/app/components/common/Map";
 import ConsumerReviews from "@/app/components/listing/listing-single/ConsumerReviews";
 import ReviewBox from "@/app/components/listing/listing-single/ReviewBox";
 import ContactSeller from "@/app/components/listing/listing-single/sidebar/ContactSeller";
+import QuoteInquiry from "@/app/components/listing/listing-single/sidebar/QuoteInquiry";
 import SellerDetail from "@/app/components/listing/listing-single/sidebar/SellerDetail";
 import Link from "next/link";
 import ReleatedCar from "@/app/components/listing/listing-single/ReleatedCar";
@@ -140,6 +141,15 @@ const ListingSingleV1 = async ({ params }) => {
               <ProductGallery car={car} />
               {/* End Car Gallery */}
 
+              <div className="d-block d-lg-none mb30">
+                <div className="opening_hour_widgets p25 shadow-sm rounded-4 border">
+                  <div className="wrapper">
+                    <h4 className="title mb20">Free Quote / Inquiry</h4>
+                    <QuoteInquiry hideTitle />
+                  </div>
+                </div>
+              </div>
+
               <div className="opening_hour_widgets p30 mt30">
                 <div className="wrapper">
                   <h4 className="title">General Info</h4>
@@ -216,10 +226,17 @@ const ListingSingleV1 = async ({ params }) => {
               </div>
               {/* End offer_btn
                */}
-              <div className="sidebar_seller_contact">
-                <SellerDetail car={car} />
-                <h4 className="mb30">Contact Seller</h4>
-                <ContactSeller car={car} />
+              <div className="sidebar_seller_wrapper sticky">
+                <div className="sidebar_seller_contact d-none d-lg-block opening_hour_widgets p25 shadow-sm rounded-4 border">
+                  <div className="wrapper">
+                    <QuoteInquiry hideTitle />
+                  </div>
+                </div>
+                <div className="sidebar_seller_contact mt30">
+                  <SellerDetail car={car} />
+                  <h4 className="mb30">Contact Seller</h4>
+                  <ContactSeller car={car} />
+                </div>
               </div>
 
               {/* End .col-xl-4 */}
