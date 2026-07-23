@@ -272,23 +272,34 @@ const CarItems = ({
                     {listing.title}
                   </Link>
                 </h6>
-                <div className="listign_review">
-                  <ul className="mb0">
-                    {[...Array(5)].map((_, index) => (
-                      <li key={index} className="list-inline-item">
-                        <a href="#">
-                          <i className="fa fa-star" />
-                        </a>
+                {listing.category === "species" ? (
+                  <div className="listign_review">
+                    <ul className="mb0">
+                      <li className="list-inline-item text-success fw-semibold">
+                        <i className="fa fa-check-circle me-2" />
+                        Verified supplier
                       </li>
-                    ))}
-                    <li className="list-inline-item">
-                      <a href="#">{listing.rating}</a>
-                    </li>
-                    <li className="list-inline-item">
-                      ({listing.reviewsCount} reviews)
-                    </li>
-                  </ul>
-                </div>
+                    </ul>
+                  </div>
+                ) : (
+                  <div className="listign_review">
+                    <ul className="mb0">
+                      {[...Array(5)].map((_, index) => (
+                        <li key={index} className="list-inline-item">
+                          <a href="#">
+                            <i className="fa fa-star" />
+                          </a>
+                        </li>
+                      ))}
+                      <li className="list-inline-item">
+                        <a href="#">{listing.rating}</a>
+                      </li>
+                      <li className="list-inline-item">
+                        ({listing.reviewsCount} reviews)
+                      </li>
+                    </ul>
+                  </div>
+                )}
               </div>
               {/* End wrapper */}
 
@@ -298,6 +309,7 @@ const CarItems = ({
                     <li className="list-inline-item">{listing.productCategory}</li>
                     <li className="list-inline-item">{listing.packagingType}</li>
                     <li className="list-inline-item">{listing.orderScale}</li>
+                    <li className="list-inline-item">MOQ: {listing.minimumOrderQuantity || "N/A"}</li>
                   </ul>
                 ) : (
                   <ul className="mb0">

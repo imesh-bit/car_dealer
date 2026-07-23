@@ -253,36 +253,77 @@ const FeaturedFilterListing = ({ category = "automobile" }) => {
               </div>
               <div className="details">
                 <div className="wrapper">
-                  <h5 className="price">¥{listing.price}</h5>
+                  {listing.category !== "species" && (
+                    <h5 className="price">¥{listing.price}</h5>
+                  )}
                   <h6 className="title">
                     <Link href={`/listing-single-v1/${listing.id}`}>
                       {listing.title}
                     </Link>
                   </h6>
-                  <div className="listign_review">
-                    <ul className="mb0">
-                      {[...Array(5)].map((_, index) => (
-                        <li key={index} className="list-inline-item">
-                          <a href="#">
-                            <i className="fa fa-star" />
-                          </a>
+                  {listing.category === "species" ? (
+                    <div className="listign_review">
+                      <ul className="mb0">
+                        <li className="list-inline-item text-success fw-semibold">
+                          <i className="fa fa-check-circle me-2" />
+                          Verified supplier
                         </li>
-                      ))}
-                      <li className="list-inline-item">
-                        <a href="#">{listing.rating}</a>
-                      </li>
-                      <li className="list-inline-item">
-                        ({listing.reviewsCount} reviews)
-                      </li>
-                    </ul>
-                  </div>
+                      </ul>
+                    </div>
+                  ) : (
+                    <div className="listign_review">
+                      <ul className="mb0">
+                        {[...Array(5)].map((_, index) => (
+                          <li key={index} className="list-inline-item">
+                            <a href="#">
+                              <i className="fa fa-star" />
+                            </a>
+                          </li>
+                        ))}
+                        <li className="list-inline-item">
+                          <a href="#">{listing.rating}</a>
+                        </li>
+                        <li className="list-inline-item">
+                          ({listing.reviewsCount} reviews)
+                        </li>
+                      </ul>
+                    </div>
+                  )}
                 </div>{" "}
-                <div className={listing.category === "species" ? "listing_footer merchandise-meta" : "listing_footer"}>
+                <div className={listing.category === "species" || listing.category === "auto-part" ? "listing_footer merchandise-meta" : "listing_footer"}>
                   {listing.category === "species" ? (
                     <ul className="mb0">
-                      <li className="list-inline-item">{listing.productCategory}</li>
-                      <li className="list-inline-item">{listing.packagingType}</li>
-                      <li className="list-inline-item">{listing.orderScale}</li>
+                      <li className="list-inline-item">
+                        <i className="fa fa-cube me-2" />
+                        {listing.productCategory}
+                      </li>
+                      <li className="list-inline-item">
+                        <i className="fa fa-box me-2" />
+                        {listing.packagingType}
+                      </li>
+                      <li className="list-inline-item">
+                        <i className="fa fa-truck me-2" />
+                        {listing.orderScale}
+                      </li>
+                      <li className="list-inline-item">
+                        <i className="fa fa-layer-group me-2" />
+                        MOQ: {listing.minimumOrderQuantity || "N/A"}
+                      </li>
+                    </ul>
+                  ) : listing.category === "auto-part" ? (
+                    <ul className="mb0">
+                      <li className="list-inline-item">
+                        <i className="fa fa-cogs me-2" />
+                        {listing.partCategory}
+                      </li>
+                      <li className="list-inline-item">
+                        <i className="fa fa-tag me-2" />
+                        {listing.brand}
+                      </li>
+                      <li className="list-inline-item">
+                        <i className="fa fa-check-circle me-2" />
+                        {listing.condition}
+                      </li>
                     </ul>
                   ) : (
                     <ul className="mb0">

@@ -94,7 +94,7 @@ const ReleatedCar = () => {
                 </div>
                 <div className="details">
                   <div className="wrapper">
-                    <h5 className="price">${listing.price}</h5>
+                    <h5 className="price">¥{Number(listing.price).toLocaleString()}</h5>
                     <h6 className="title">
                       <Link href="/listing-single-v1">{listing.title}</Link>
                     </h6>

@@ -47,31 +47,43 @@ const Overview = ({ car }) => {
             value: car?.packagingType || "N/A",
           },
           {
-            label: "Order Scale (MOQ)",
+            label: "Order Scale (Tier)",
             value: car?.orderScale || "N/A",
+          },
+          {
+            label: "MOQ",
+            value: car?.minimumOrderQuantity || "N/A",
           },
           { label: "Condition", value: car?.condition || "N/A" },
           { label: "Year", value: car?.year || "N/A" },
           { label: "Listing Type", value: "General" },
         ]
-      : [
-          { label: "Make", value: car?.make || "N/A" },
-          { label: "Model", value: car?.model || "N/A" },
-          { label: "Color", value: car?.color || "N/A" },
-          { label: "Drive Type", value: car?.drivetrain || "N/A" },
-          { label: "Transmission", value: car?.transmission || "N/A" },
-          { label: "Condition", value: car?.condition || "N/A" },
-          { label: "Year", value: car?.year || "N/A" },
-          {
-            label: "Mileage",
-            value: car?.mileage ? `${Number(car.mileage).toLocaleString()} mi` : "N/A",
-          },
-          { label: "Fuel Type", value: car?.fuelType || "N/A" },
-          { label: "Engine Size", value: car?.engineSize || "N/A" },
-          { label: "Doors", value: car?.doors || "N/A" },
-          { label: "Cylinders", value: car?.cylinders || "N/A" },
-          { label: "VIN", value: car?.vin || "N/A" },
-        ];
+      : car?.category === "auto-part"
+        ? [
+            { label: "Part Category", value: car?.partCategory || "N/A" },
+            { label: "Brand", value: car?.brand || "N/A" },
+            { label: "Condition", value: car?.condition || "N/A" },
+            { label: "Year", value: car?.year || "N/A" },
+            { label: "Listing Type", value: "Auto Part" },
+          ]
+        : [
+            { label: "Make", value: car?.make || "N/A" },
+            { label: "Model", value: car?.model || "N/A" },
+            { label: "Color", value: car?.color || "N/A" },
+            { label: "Drive Type", value: car?.drivetrain || "N/A" },
+            { label: "Transmission", value: car?.transmission || "N/A" },
+            { label: "Condition", value: car?.condition || "N/A" },
+            { label: "Year", value: car?.year || "N/A" },
+            {
+              label: "Mileage",
+              value: car?.mileage ? `${Number(car.mileage).toLocaleString()} mi` : "N/A",
+            },
+            { label: "Fuel Type", value: car?.fuelType || "N/A" },
+            { label: "Engine Size", value: car?.engineSize || "N/A" },
+            { label: "Doors", value: car?.doors || "N/A" },
+            { label: "Cylinders", value: car?.cylinders || "N/A" },
+            { label: "VIN", value: car?.vin || "N/A" },
+          ];
 
   return (
     <ul className="list-group">

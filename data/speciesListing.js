@@ -51,6 +51,7 @@ module.exports = [
     productCategory: "Processed Food Items",
     packagingType: "Canned / Tinned Units",
     orderScale: "Small Wholesale",
+    minimumOrderQuantity: "20 units",
   },
   {
     id: 9,
@@ -96,6 +97,7 @@ module.exports = [
     productCategory: "Dry Goods & Spices",
     packagingType: "Standard Wholesale Cartons",
     orderScale: "Medium Bulk",
+    minimumOrderQuantity: "50 units",
   },
   {
     id: 10,
@@ -141,6 +143,7 @@ module.exports = [
     productCategory: "Household & Daily Essentials",
     packagingType: "Vacuum Sealed Packs",
     orderScale: "Small Wholesale",
+    minimumOrderQuantity: "20 units",
   },
   {
     id: 11,
@@ -186,5 +189,6 @@ module.exports = [
     productCategory: "Industrial Raw Materials",
     packagingType: "Bulk / Industrial Drums",
     orderScale: "Full Container Load (FCL)",
+    minimumOrderQuantity: "1 container",
   },
 ];
