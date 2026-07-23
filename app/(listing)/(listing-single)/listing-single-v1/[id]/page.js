@@ -114,7 +114,7 @@ const ListingSingleV1 = async ({ params }) => {
                       </a>
                     </li>
                   </ul>
-                  <h1 className="title">{car.title}</h1>
+                  <h1 className="title text-truncate">{car.title}</h1>
                 </div>
               </div>
             </div>
@@ -122,7 +122,7 @@ const ListingSingleV1 = async ({ params }) => {
 
             <div className="col-lg-5 col-xl-4">
               <div className="single_page_heading_content text-start text-lg-end">
-                <div className="share_content">
+                <div className="share_content d-none d-lg-block">
                   <ShareMeta />
                 </div>
                 <div className="price_content">

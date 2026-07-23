@@ -40682,6 +40682,16 @@ input.quantity-num[type=number]::-webkit-outer-spin-button {
   margin-right: 30px;
 }
 
+@media only screen and (max-width: 767px) {
+  .car_single_content_wrapper .title.text-truncate {
+    display: inline-block;
+    max-width: calc(100vw - 40px);
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+}
+
 .share_content ul li a {
   color: #5f6973;
   font-size: 13px;
