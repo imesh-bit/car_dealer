@@ -40623,6 +40623,15 @@ input.quantity-num[type=number]::-webkit-outer-spin-button {
   letter-spacing: 0em;
 }
 
+@media only screen and (max-width: 767px) {
+  .car_single_content_wrapper .title {
+    font-size: 28px;
+    line-height: 34px;
+    white-space: normal;
+    word-break: break-word;
+  }
+}
+
 .car_single_content_wrapper .para {
   color: #1a3760;
   font-size: 13px;
