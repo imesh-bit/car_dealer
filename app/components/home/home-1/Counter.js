@@ -1,17 +1,13 @@
 "use client";
 import React, { useEffect, useRef, useState } from "react";
 import CountUp from "react-countup";
-import { CarFront, ShieldCheck, Star, Users } from "lucide-react";
-import { useTranslation } from "@/hooks/useTranslation";
 
 const Counter = () => {
-  const { t } = useTranslation();
-
   const counters = [
-    { number: 27600, labelKey: "home.carsForSale", delay: 100, icon: CarFront },
-    { number: 6500, labelKey: "home.dealerReviews", delay: 200, icon: Star },
-    { number: 8230, labelKey: "home.visitorsPerDay", delay: 300, icon: Users },
-    { number: 5250, labelKey: "home.verifiedDealers", delay: 400, icon: ShieldCheck },
+    { number: 45, label: "Active Listings", delay: 100, icon: "📦" },
+    { number: 12, label: "Verified Suppliers", delay: 200, icon: "✅" },
+    { number: 18, label: "Countries Served", delay: 300, icon: "🌍" },
+    { number: 320, label: "Successful Shipments", delay: 400, icon: "🚚" },
   ];
 
   return (
@@ -19,20 +15,33 @@ const Counter = () => {
       {counters.map((counter, index) => (
         <div
           key={index}
-          className="col-sm-6 col-lg-3 home1-counter-item"
+          className="col-12 col-sm-6 col-lg-3 home1-counter-item"
           data-aos="fade-up"
           data-wow-delay={counter.delay}
           suppressHydrationWarning
+          style={{ display: "flex", justifyContent: "center" }}
         >
-          <div className="funfact_one home1-counter-card">
+          <div
+            className="funfact_one home1-counter-card"
+            style={{
+              width: "100%",
+              maxWidth: "360px",
+              margin: "0 auto",
+              display: "flex",
+              flexDirection: "column",
+              alignItems: "center",
+              justifyContent: "center",
+              textAlign: "center",
+            }}
+          >
             <div className="home1-counter-icon" aria-hidden="true">
-              <counter.icon size={22} strokeWidth={2.2} />
+              <span>{counter.icon}</span>
             </div>
             <div className="details">
               <div className="timer">
                 <CounterWithAnimation end={counter.number} />
               </div>
-              <p className="para">{t(counter.labelKey)}</p>
+              <p className="para">{counter.label}</p>
             </div>
           </div>
         </div>

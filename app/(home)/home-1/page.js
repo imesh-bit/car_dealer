@@ -230,7 +230,7 @@ const Home_1 = async ({ searchParams }) => {
       {/* <!-- Funfact --> */}
       <section className="our-funfact home1-counter-section pt50 pb30">
         <div className="container">
-          <div className="row">
+          <div className="row justify-content-center">
             <Counter />
           </div>
         </div>

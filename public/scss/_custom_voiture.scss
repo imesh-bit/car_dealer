@@ -16,22 +16,53 @@
     row-gap: 20px;
 }
 
-.home1-counter-item {
-    display: flex;
-}
+@media (max-width: 575.98px) {
+    .home1-counter-section .row {
+        justify-content: center !important;
+    }
 
-.home1-counter-card {
-    align-items: flex-start;
-    background: rgba(255, 255, 255, 0.82);
-    border: 1px solid #e7ebef;
-    border-radius: 16px;
-    box-shadow: 0 8px 24px rgba(26, 55, 96, 0.05);
-    display: flex;
-    flex: 1;
-    gap: 18px;
-    margin-bottom: 0;
-    padding: 24px;
-    transition: box-shadow 0.25s ease, transform 0.25s ease;
+    .home1-counter-item {
+        display: flex !important;
+        justify-content: center !important;
+        float: none !important;
+        margin: 0 auto !important;
+        padding-left: 0 !important;
+        padding-right: 0 !important;
+        width: 100% !important;
+        max-width: 360px !important;
+    }
+
+    .home1-counter-card {
+        display: flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+        text-align: center !important;
+        flex-direction: column !important;
+        width: 100% !important;
+        max-width: 360px !important;
+        margin: 0 auto !important;
+    }
+
+    .home1-counter-card .details {
+        width: 100% !important;
+        text-align: center !important;
+        display: flex !important;
+        flex-direction: column !important;
+        align-items: center !important;
+        justify-content: center !important;
+    }
+
+    .home1-counter-card .details .timer,
+    .home1-counter-card .details .para {
+        margin-left: auto !important;
+        margin-right: auto !important;
+    }
+
+    .home1-counter-card .home1-counter-icon,
+    .funfact_one .icon {
+        float: none !important;
+        margin: 0 auto 15px !important;
+    }
 }
 
 .home1-counter-card:hover {
