@@ -8,6 +8,7 @@ import HeaderTop from "@/app/components/home/home-1/HeaderTop";
 import MobileHeaderTop from "@/app/components/home/home-1/MobileHeaderTop";
 import HeaderSidebar from "@/app/components/common/HeaderSidebar";
 import Header from "@/app/components/home/home-1/Header";
+import MobileAnnouncementBar from "@/app/components/common/MobileAnnouncementBar";
 import MobileMenu from "@/app/components/common/MobileMenu";
 import FeaturedFilterListing from "@/app/components/home/home-1/FeaturedFilterListing";
 import Hero from "@/app/components/home/home-1/Hero";
@@ -57,6 +58,8 @@ const Home_1 = async ({ searchParams }) => {
       <Header />
       {/* End Main Header Nav */}
 
+      {/* Mobile utility bar */}
+      <MobileAnnouncementBar />
       {/* Main Header Nav For Mobile */}
       <MobileHeaderTop />
       <MobileMenu />
