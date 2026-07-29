@@ -6,6 +6,17 @@ export default function ClientInitializer() {
   useEffect(() => {
     let cancelled = false;
 
+    const hidePreloader = () => {
+      const preloader = document.getElementById("global-preloader");
+      if (preloader) {
+        preloader.style.opacity = "0";
+        preloader.style.transition = "opacity 180ms ease-in-out";
+        window.setTimeout(() => {
+          preloader.style.display = "none";
+        }, 180);
+      }
+    };
+
     const initEnhancements = async () => {
       const hasAnimatedElements = document.querySelector("[data-aos]");
       const hasBootstrapComponents = document.querySelector(
@@ -31,6 +42,8 @@ export default function ClientInitializer() {
 
       await Promise.all(tasks);
     };
+
+    hidePreloader();
 
     const scheduleEnhancements = () => {
       window.setTimeout(() => {

@@ -68,6 +68,7 @@ export default async function RootLayout({ children }) {
         <Providers initialLocale={initialLocale}>
           <OrganizationJsonLd />
           <ClientInitializer />
+          <div id="global-preloader" className="preloader" aria-hidden="true" />
           {children}
           <ScrollToTop />
         </Providers>
