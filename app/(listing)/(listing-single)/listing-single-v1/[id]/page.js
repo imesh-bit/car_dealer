@@ -19,6 +19,7 @@ import OrderInquiryGeneral from "@/app/components/listing/listing-single/sidebar
 import QuoteInquiry from "@/app/components/listing/listing-single/sidebar/QuoteInquiry";
 import SellerDetail from "@/app/components/listing/listing-single/sidebar/SellerDetail";
 import Link from "next/link";
+import MobileStickyCta from "@/app/components/common/MobileStickyCta";
 import ReleatedCar from "@/app/components/listing/listing-single/ReleatedCar";
 import listingsData from "@/data/listingCar";
 import { CarJsonLd } from "@/app/components/common/JsonLd";
@@ -254,7 +255,7 @@ const ListingSingleV1 = async ({ params }) => {
       {/* End Agent Single Grid View */}
 
       {/* Car For Rent */}
-      <section className="car-for-rent bb1">
+      <section className="car-for-rent bb1" style={{ paddingBottom: "6rem" }}>
         <div className="container">
           <div className="row">
             <div className="col-sm-6">
@@ -297,6 +298,8 @@ const ListingSingleV1 = async ({ params }) => {
       {/* Our Footer */}
       <Footer />
       {/* End Our Footer */}
+
+      <MobileStickyCta car={car} />
 
       {/* Modal */}
       <div
