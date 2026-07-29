@@ -234,8 +234,6 @@ import { isParentActive } from "@/utils/isMenuActive";
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import LanguageSwitcher from "./LanguageSwitcher";
-import JapanTimeDisplay from "./JapanTimeDisplay";
 import { useTranslation } from "@/hooks/useTranslation";
 import {
     Calculator,
@@ -253,6 +251,9 @@ import {
 
 const menuIconByPath = {
     "/": House,
+    "/home-automobile": House,
+    "/home-auto-part": Globe2,
+    "/home-species": FileText,
     "/about-us": Info,
     "/loan-calculator": Calculator,
     "/contact": Send,
@@ -268,7 +269,7 @@ const MenuIcon = ({ item }) => {
 };
 
 const CustomMenuItem = ({ item, path }) => {
-    const [isOpen, setIsOpen] = useState(item.subMenu ? isParentActive(item.subMenu, path) : false);
+    const [isOpen, setIsOpen] = useState(item.subMenu ? true : false);
     if (item.subMenu) {
         return (
             <li className={`nav-item custom-submenu ${isOpen ? "open" : ""}`}>
@@ -431,16 +432,6 @@ const MobileMenu = () => {
                     </div>
                     {/* End pro-header */}
 
-                    <div className="mobile-menu-controls mb-4">
-                        <div className="mobile-menu-controls__item">
-                            <LanguageSwitcher variant="mobile" />
-                        </div>
-                        <div className="mobile-menu-controls__item mobile-menu-time">
-                            <Clock3 className="mobile-menu__contact-icon" size={17} strokeWidth={1.8} />
-                            <JapanTimeDisplay compact />
-                        </div>
-                    </div>
-
                     {/* mobile menu items start */}
                     <div className="custom-mobile-menu">
                         <ul className="list-unstyled">
@@ -464,10 +455,6 @@ const MobileMenu = () => {
                                         <a href="#">{info.text}</a>
                                     </span>
                                 ))}
-                                <span className="phone-num mobile-japan-time">
-                                    <Clock3 className="mobile-menu__contact-icon" size={17} strokeWidth={1.8} />
-                                    <JapanTimeDisplay compact />
-                                </span>
                             </div>
 
                             <div className="social-links">
