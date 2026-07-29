@@ -7,6 +7,9 @@ const nextConfig = {
     silenceDeprecations: ["legacy-js-api", "import", "global-builtin", "color-functions"],
     quietDeps: true,
   },
+  images: {
+    qualities: [75, 80],
+  },
 };
 
 module.exports = nextConfig;

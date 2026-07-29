@@ -160,19 +160,22 @@ const Header = () => {
         .brand-logo-wrap {
           display: flex;
           align-items: center;
+          background-color: transparent !important;
         }
         .brand-logo-chip {
           display: inline-flex;
           align-items: center;
-          background: rgba(10, 12, 20, 0.65);
+          background: transparent !important;
           border-radius: 10px;
           padding: 6px 14px;
+          box-shadow: none !important;
         }
         .brand-logo {
           height: 40px;
           width: auto;
           object-fit: contain;
           display: block;
+          background-color: transparent !important;
         }
         @media (max-width: 575px) {
           .brand-logo {

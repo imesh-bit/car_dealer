@@ -187,8 +187,8 @@ const DefaultHeader = () => {
               <Image
                 width={175}
                 height={40}
-                className="img-fluid brand-logo"
-                src="/images/header-logo.png"
+                className="img-fluid brand-logo brand-logo-dark"
+                src="/images/header-logo-dark.png"
                 alt="RAIKO GROUP"
                 priority
               />
@@ -222,19 +222,37 @@ const DefaultHeader = () => {
         .brand-logo-wrap {
           display: flex;
           align-items: center;
+          background-color: transparent !important;
         }
         .brand-logo-chip {
           display: inline-flex;
           align-items: center;
-          background: rgba(10, 12, 20, 0.65);
+          background: transparent !important;
           border-radius: 10px;
           padding: 6px 14px;
+          box-shadow: none !important;
         }
         .brand-logo {
           height: 40px;
           width: auto;
           object-fit: contain;
           display: block;
+          background-color: transparent !important;
+        }
+        /* show light logo on mobile, dark logo on desktop (web) */
+        .brand-logo-dark {
+          display: none;
+        }
+        .brand-logo-light {
+          display: block;
+        }
+        @media (min-width: 576px) {
+          .brand-logo-light {
+            display: none;
+          }
+          .brand-logo-dark {
+            display: block;
+          }
         }
         @media (max-width: 575px) {
           .brand-logo {

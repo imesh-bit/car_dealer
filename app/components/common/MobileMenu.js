@@ -238,7 +238,6 @@ import { useTranslation } from "@/hooks/useTranslation";
 import {
     Calculator,
     ChevronDown,
-    Clock3,
     FileText,
     Globe2,
     Headphones,
@@ -360,8 +359,8 @@ const MobileMenu = () => {
             text: "+81 90-6360-9950",
         },
         {
-            icon: Clock3,
-            text: "Mon - Fri 8:00 - 18:00",
+            icon: "flag",
+            text: "Japan",
         },
     ];
 
@@ -451,7 +450,13 @@ const MobileMenu = () => {
                             <div className="mmenu-contact-info">
                                 {contactInfo.map((info, index) => (
                                     <span className="phone-num" key={index}>
-                                        <info.icon className="mobile-menu__contact-icon" size={17} strokeWidth={1.8} />
+                                        {typeof info.icon === "string" && info.icon === "flag" ? (
+                                            <span className="mobile-flag" aria-hidden>
+                                                🇯🇵
+                                            </span>
+                                        ) : (
+                                            <info.icon className="mobile-menu__contact-icon" size={17} strokeWidth={1.8} />
+                                        )}
                                         <a href="#">{info.text}</a>
                                     </span>
                                 ))}
@@ -488,6 +493,12 @@ const MobileMenu = () => {
                 }
                 .mobile-japan-time i {
                     margin-right: 0.5rem;
+                }
+                .mobile-flag {
+                    font-size: 18px;
+                    display: inline-block;
+                    margin-right: 0.5rem;
+                    line-height: 1;
                 }
             `}</style>
         </>
