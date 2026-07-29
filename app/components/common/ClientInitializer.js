@@ -1,18 +1,21 @@
 "use client";
 
 import { useEffect } from "react";
-import { useNavigation } from "next/navigation";
 
 export default function ClientInitializer() {
-  const navigation = useNavigation();
-
   useEffect(() => {
     let cancelled = false;
+    let hideTimeout = null;
+    let originalPushState = null;
+    let originalReplaceState = null;
 
     const preloader = document.getElementById("global-preloader");
 
     const showPreloader = () => {
       if (!preloader) return;
+      if (hideTimeout) {
+        window.clearTimeout(hideTimeout);
+      }
       preloader.style.display = "block";
       preloader.style.opacity = "1";
       preloader.style.transition = "opacity 180ms ease-in-out";
@@ -22,7 +25,10 @@ export default function ClientInitializer() {
       if (!preloader) return;
       preloader.style.opacity = "0";
       preloader.style.transition = "opacity 180ms ease-in-out";
-      window.setTimeout(() => {
+      if (hideTimeout) {
+        window.clearTimeout(hideTimeout);
+      }
+      hideTimeout = window.setTimeout(() => {
         if (preloader) preloader.style.display = "none";
       }, 180);
     };
@@ -53,43 +59,65 @@ export default function ClientInitializer() {
       await Promise.all(tasks);
     };
 
-    const handleAnchorClick = (event) => {
-      const anchor = event.target.closest("a[href]");
-      if (!anchor) return;
-
+    const isInternalAnchor = (anchor) => {
+      if (!anchor) return false;
       const href = anchor.getAttribute("href");
-      if (
-        !href ||
-        href.startsWith("#") ||
-        href.startsWith("mailto:") ||
-        href.startsWith("tel:") ||
-        anchor.target === "_blank" ||
-        anchor.hasAttribute("download")
-      ) {
-        return;
+      if (!href) return false;
+      return (
+        !href.startsWith("#") &&
+        !href.startsWith("mailto:") &&
+        !href.startsWith("tel:") &&
+        anchor.target !== "_blank" &&
+        !anchor.hasAttribute("download")
+      );
+    };
+
+    const handleClick = (event) => {
+      if (event.defaultPrevented) return;
+
+      const anchor = event.target.closest("a[href]");
+      if (anchor && isInternalAnchor(anchor)) {
+        showPreloader();
       }
+    };
 
+    const handleSubmit = (event) => {
+      if (event.defaultPrevented) return;
       showPreloader();
     };
 
-    const handleFormSubmit = (event) => {
-      if (!event.target.closest("form")) return;
-      showPreloader();
-    };
-
-    const handleBeforeUnload = () => {
-      showPreloader();
-    };
-
-    if (navigation.state !== "idle") {
-      showPreloader();
-    } else {
+    const handleRouteChange = () => {
       hidePreloader();
-    }
+    };
 
-    window.addEventListener("click", handleAnchorClick, true);
-    window.addEventListener("submit", handleFormSubmit, true);
-    window.addEventListener("beforeunload", handleBeforeUnload);
+    const setupHistoryListeners = () => {
+      if (!window.history || !window.history.pushState) return;
+
+      originalPushState = window.history.pushState;
+      originalReplaceState = window.history.replaceState;
+
+      window.history.pushState = function (...args) {
+        const result = originalPushState.apply(this, args);
+        window.dispatchEvent(new Event("routechange"));
+        return result;
+      };
+
+      window.history.replaceState = function (...args) {
+        const result = originalReplaceState.apply(this, args);
+        window.dispatchEvent(new Event("routechange"));
+        return result;
+      };
+    };
+
+    hidePreloader();
+    window.addEventListener("click", handleClick, true);
+    window.addEventListener("submit", handleSubmit, true);
+    window.addEventListener("beforeunload", showPreloader);
+    window.addEventListener("load", hidePreloader);
+    window.addEventListener("routechange", handleRouteChange);
+    window.addEventListener("popstate", handleRouteChange);
+
+    setupHistoryListeners();
 
     const scheduleEnhancements = () => {
       window.setTimeout(() => {
@@ -101,11 +129,24 @@ export default function ClientInitializer() {
 
     return () => {
       cancelled = true;
-      window.removeEventListener("click", handleAnchorClick, true);
-      window.removeEventListener("submit", handleFormSubmit, true);
-      window.removeEventListener("beforeunload", handleBeforeUnload);
+      if (hideTimeout) {
+        window.clearTimeout(hideTimeout);
+      }
+      window.removeEventListener("click", handleClick, true);
+      window.removeEventListener("submit", handleSubmit, true);
+      window.removeEventListener("beforeunload", showPreloader);
+      window.removeEventListener("load", hidePreloader);
+      window.removeEventListener("routechange", handleRouteChange);
+      window.removeEventListener("popstate", handleRouteChange);
+
+      if (originalPushState) {
+        window.history.pushState = originalPushState;
+      }
+      if (originalReplaceState) {
+        window.history.replaceState = originalReplaceState;
+      }
     };
-  }, [navigation.state]);
+  }, []);
 
   return null;
 }
