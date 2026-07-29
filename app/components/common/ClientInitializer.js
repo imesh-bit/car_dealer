@@ -1,20 +1,30 @@
 "use client";
 
 import { useEffect } from "react";
+import { useNavigation } from "next/navigation";
 
 export default function ClientInitializer() {
+  const navigation = useNavigation();
+
   useEffect(() => {
     let cancelled = false;
 
+    const preloader = document.getElementById("global-preloader");
+
+    const showPreloader = () => {
+      if (!preloader) return;
+      preloader.style.display = "block";
+      preloader.style.opacity = "1";
+      preloader.style.transition = "opacity 180ms ease-in-out";
+    };
+
     const hidePreloader = () => {
-      const preloader = document.getElementById("global-preloader");
-      if (preloader) {
-        preloader.style.opacity = "0";
-        preloader.style.transition = "opacity 180ms ease-in-out";
-        window.setTimeout(() => {
-          preloader.style.display = "none";
-        }, 180);
-      }
+      if (!preloader) return;
+      preloader.style.opacity = "0";
+      preloader.style.transition = "opacity 180ms ease-in-out";
+      window.setTimeout(() => {
+        if (preloader) preloader.style.display = "none";
+      }, 180);
     };
 
     const initEnhancements = async () => {
@@ -43,7 +53,43 @@ export default function ClientInitializer() {
       await Promise.all(tasks);
     };
 
-    hidePreloader();
+    const handleAnchorClick = (event) => {
+      const anchor = event.target.closest("a[href]");
+      if (!anchor) return;
+
+      const href = anchor.getAttribute("href");
+      if (
+        !href ||
+        href.startsWith("#") ||
+        href.startsWith("mailto:") ||
+        href.startsWith("tel:") ||
+        anchor.target === "_blank" ||
+        anchor.hasAttribute("download")
+      ) {
+        return;
+      }
+
+      showPreloader();
+    };
+
+    const handleFormSubmit = (event) => {
+      if (!event.target.closest("form")) return;
+      showPreloader();
+    };
+
+    const handleBeforeUnload = () => {
+      showPreloader();
+    };
+
+    if (navigation.state !== "idle") {
+      showPreloader();
+    } else {
+      hidePreloader();
+    }
+
+    window.addEventListener("click", handleAnchorClick, true);
+    window.addEventListener("submit", handleFormSubmit, true);
+    window.addEventListener("beforeunload", handleBeforeUnload);
 
     const scheduleEnhancements = () => {
       window.setTimeout(() => {
@@ -55,8 +101,11 @@ export default function ClientInitializer() {
 
     return () => {
       cancelled = true;
+      window.removeEventListener("click", handleAnchorClick, true);
+      window.removeEventListener("submit", handleFormSubmit, true);
+      window.removeEventListener("beforeunload", handleBeforeUnload);
     };
-  }, []);
+  }, [navigation.state]);
 
   return null;
 }
