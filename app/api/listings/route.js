@@ -65,6 +65,7 @@ export async function POST(request) {
         fuelType: formData.get("fuelType")?.toString() || "Petrol",
         transmission: formData.get("transmission")?.toString() || "Automatic",
         condition: formData.get("condition")?.toString() || "Used",
+        auctionGrade: formData.get("auctionGrade")?.toString() || "",
         make: formData.get("make")?.toString() || "",
         model: formData.get("model")?.toString() || "",
         year: Number(formData.get("year")?.toString() || 0),
@@ -80,6 +81,14 @@ export async function POST(request) {
         longitude: formData.get("longitude")?.toString() || "",
         description: formData.get("description")?.toString() || "",
         videoLink: formData.get("videoLink")?.toString() || "",
+        auctionGrade: formData.get("auctionGrade")?.toString() || "",
+        partCategory: formData.get("partCategory")?.toString() || "",
+        brand: formData.get("brand")?.toString() || "",
+        productCategory: formData.get("productCategory")?.toString() || "",
+        packagingType: formData.get("packagingType")?.toString() || "",
+        orderScale: formData.get("orderScale")?.toString() || "",
+        minimumOrderQuantity: formData.get("minimumOrderQuantity")?.toString() || "",
+        featured: formData.get("featured")?.toString() || "0",
       };
     } else {
       const rawBody = await request.text();
@@ -110,7 +119,7 @@ export async function POST(request) {
 
     const listing = {
       id: Date.now(),
-      featured: false,
+      featured: (body.featured === true) || body.featured === "1" || body.featured === "true" || false,
       category: body.category || "automobile",
       image: savedImages[0] || body.image || "/images/listing/1.jpg",
       gallery: savedImages.map((imageUrl) => ({ imageSrc: imageUrl, videoId: null })),
@@ -125,7 +134,10 @@ export async function POST(request) {
       mileage: body.mileage || "",
       fuelType: body.fuelType || "Petrol",
       transmission: body.transmission || "Automatic",
-      tags: [(body.condition || "Used").toLowerCase() === "new" ? "new" : "used"],
+      tags: [
+        body.category || "automobile",
+        (body.condition || "Used").toLowerCase() === "new" ? "new" : "used",
+      ],
       make: body.make || "",
       model: body.model || "",
       year: Number(body.year) || 0,
@@ -147,6 +159,12 @@ export async function POST(request) {
       latitude: body.latitude || "",
       longitude: body.longitude || "",
       videoLink: body.videoLink || "",
+      partCategory: body.partCategory || "",
+      brand: body.brand || "",
+      productCategory: body.productCategory || "",
+      packagingType: body.packagingType || "",
+      orderScale: body.orderScale || "",
+      minimumOrderQuantity: body.minimumOrderQuantity || "",
     };
 
     const storedListings = await readStoredListings();

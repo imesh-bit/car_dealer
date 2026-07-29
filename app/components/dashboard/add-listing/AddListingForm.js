@@ -30,6 +30,12 @@ const initialListingForm = {
   imageUrl: "",
   description: "",
   features: [],
+  partCategory: "",
+  brand: "",
+  productCategory: "",
+  packagingType: "",
+  orderScale: "",
+  minimumOrderQuantity: "",
 };
 
 const categoryBodyTypeMap = {
@@ -38,10 +44,22 @@ const categoryBodyTypeMap = {
   species: "General",
 };
 
-const AddListingForm = () => {
+const categoryLabelMap = {
+  automobile: "Automobile",
+  "auto-part": "Auto Part",
+  species: "General",
+};
+
+const AddListingForm = ({ initialCategory = "automobile", compact = false }) => {
   const router = useRouter();
-  const [formData, setFormData] = useState(initialListingForm);
+  const [formData, setFormData] = useState({
+    ...initialListingForm,
+    category: initialCategory,
+    bodyType: categoryBodyTypeMap[initialCategory] || initialListingForm.bodyType,
+  });
   const [imageFiles, setImageFiles] = useState([]);
+  const [featured, setFeatured] = useState(false);
+  const [showCategorySelector] = useState(false);
   const [errors, setErrors] = useState({});
   const [status, setStatus] = useState("");
   const [statusType, setStatusType] = useState("success");
@@ -60,7 +78,11 @@ const AddListingForm = () => {
   };
 
   const clearForm = () => {
-    setFormData({ ...initialListingForm });
+    setFormData({
+      ...initialListingForm,
+      category: initialCategory,
+      bodyType: categoryBodyTypeMap[initialCategory] || initialListingForm.bodyType,
+    });
     setImageFiles([]);
   };
 
@@ -139,12 +161,15 @@ const AddListingForm = () => {
       validationErrors.title = "Listing title is required.";
     }
 
-    if (!formData.make?.trim()) {
-      validationErrors.make = "Make is required.";
-    }
+    // Require make/model only for automobile listings
+    if ((formData.category || initialCategory) === "automobile") {
+      if (!formData.make?.trim()) {
+        validationErrors.make = "Make is required.";
+      }
 
-    if (!formData.model?.trim()) {
-      validationErrors.model = "Model is required.";
+      if (!formData.model?.trim()) {
+        validationErrors.model = "Model is required.";
+      }
     }
 
     if (!formData.price || Number(formData.price) <= 0) {
@@ -157,6 +182,27 @@ const AddListingForm = () => {
 
     if (!formData.description?.trim()) {
       validationErrors.description = "Description is required.";
+    }
+
+    if (formData.category === "auto-part") {
+      if (!formData.partCategory?.trim()) {
+        validationErrors.partCategory = "Part category is required.";
+      }
+      if (!formData.brand?.trim()) {
+        validationErrors.brand = "Brand is required.";
+      }
+    }
+
+    if (formData.category === "species") {
+      if (!formData.productCategory?.trim()) {
+        validationErrors.productCategory = "Product category is required.";
+      }
+      if (!formData.packagingType?.trim()) {
+        validationErrors.packagingType = "Packaging type is required.";
+      }
+      if (!formData.minimumOrderQuantity?.trim()) {
+        validationErrors.minimumOrderQuantity = "Minimum order quantity is required.";
+      }
     }
 
     if (formData.imageUrl?.trim() && !/^https?:\/\//i.test(formData.imageUrl.trim())) {
@@ -217,7 +263,14 @@ const AddListingForm = () => {
         formPayload.append("description", formData.description || "");
         formPayload.append("videoLink", formData.videoLink || "");
         formPayload.append("imageUrl", formData.imageUrl || "");
+        formPayload.append("partCategory", formData.partCategory || "");
+        formPayload.append("brand", formData.brand || "");
+        formPayload.append("productCategory", formData.productCategory || "");
+        formPayload.append("packagingType", formData.packagingType || "");
+        formPayload.append("orderScale", formData.orderScale || "");
+        formPayload.append("minimumOrderQuantity", formData.minimumOrderQuantity || "");
         formPayload.append("features", JSON.stringify(formData.features || []));
+        formPayload.append("featured", featured ? "1" : "0");
 
         imageFiles.forEach((file) => {
           formPayload.append("images", file);
@@ -257,7 +310,14 @@ const AddListingForm = () => {
           description: formData.description || "",
           videoLink: formData.videoLink || "",
           imageUrl: formData.imageUrl || "",
+          partCategory: formData.partCategory || "",
+          brand: formData.brand || "",
+          productCategory: formData.productCategory || "",
+          packagingType: formData.packagingType || "",
+          orderScale: formData.orderScale || "",
+          minimumOrderQuantity: formData.minimumOrderQuantity || "",
           features: formData.features || [],
+          featured: featured ? true : false,
         };
 
         requestOptions = {
@@ -278,13 +338,23 @@ const AddListingForm = () => {
       }
 
       setStatusType("success");
-      setStatus("Listing saved successfully. Redirecting to the listing page...");
+      setStatus("Listing saved successfully. Redirecting...");
       if (typeof window !== "undefined") {
         window.dispatchEvent(new Event("voiture:listings-updated"));
         window.localStorage.setItem("voiture:listings-updated", String(Date.now()));
       }
-      router.push(`/listing-single-v1/${result.id}`);
+      // If the saved listing is a species (general) listing, redirect to home filtered by category
+      const savedCategory = result?.category || formData.category;
+      const savedFeatured = result?.featured || featured;
+      if (savedCategory === "species") {
+        // add featured query so homepage can highlight featured species listings if needed
+        const query = savedFeatured ? "?category=species&featured=1" : "?category=species";
+        router.push(`/${query}`);
+      } else {
+        router.push(`/listing-single-v1/${result.id}`);
+      }
       clearForm();
+      setFeatured(false);
     } catch (error) {
       setStatusType("error");
       if (error.name === "AbortError") {
@@ -300,6 +370,198 @@ const AddListingForm = () => {
   };
 
   const errorMessages = Object.values(errors).filter(Boolean);
+
+  // Compact per-category forms: Auto Part and General (species)
+  if (compact && formData.category === "auto-part") {
+    return (
+      <form onSubmit={handleSubmit} className="contact_form">
+        {errorMessages.length > 0 && (
+          <div className="alert alert-danger mb30" role="alert" aria-live="polite">
+            <strong>Please fix the following required fields:</strong>
+            <ul className="mb0 mt15">
+              {errorMessages.map((message, index) => (
+                <li key={index}>{message}</li>
+              ))}
+            </ul>
+          </div>
+        )}
+
+        <div className="row">
+          <div className="col-lg-12">
+            <div className="breadcrumb_content mb30">
+              <h4 className="title">Add Auto Part Listing</h4>
+            </div>
+          </div>
+
+          <div className="col-sm-6 col-md-4">
+            <div className="mb20">
+              <label className="form-label">Listing Title <span className="text-danger">*</span></label>
+              <input name="title" className={`form-control form_control ${errors.title ? "is-invalid" : ""}`} type="text" placeholder="Title" value={formData.title} onChange={handleChange} />
+              {errors.title && <div className="text-danger mt15">{errors.title}</div>}
+            </div>
+          </div>
+
+          <div className="col-sm-6 col-md-4">
+            <div className="mb20">
+              <label className="form-label">Part Category <span className="text-danger">*</span></label>
+              <input name="partCategory" className={`form-control form_control ${errors.partCategory ? "is-invalid" : ""}`} type="text" placeholder="Part Category" value={formData.partCategory} onChange={handleChange} />
+              {errors.partCategory && <div className="text-danger mt15">{errors.partCategory}</div>}
+            </div>
+          </div>
+
+          <div className="col-sm-6 col-md-4">
+            <div className="mb20">
+              <label className="form-label">Brand <span className="text-danger">*</span></label>
+              <input name="brand" className={`form-control form_control ${errors.brand ? "is-invalid" : ""}`} type="text" placeholder="Brand" value={formData.brand} onChange={handleChange} />
+              {errors.brand && <div className="text-danger mt15">{errors.brand}</div>}
+            </div>
+          </div>
+
+          <div className="col-sm-6 col-md-4">
+            <div className="mb20">
+              <label className="form-label">Price (USD) <span className="text-danger">*</span></label>
+              <input name="price" className={`form-control form_control ${errors.price ? "is-invalid" : ""}`} type="number" placeholder="Price" value={formData.price} onChange={handleChange} />
+              {errors.price && <div className="text-danger mt15">{errors.price}</div>}
+            </div>
+          </div>
+
+          <div className="col-lg-12">
+            <div className="mb20">
+              <label className="form-label">Description <span className="text-danger">*</span></label>
+              <textarea name="description" className={`form-control ${errors.description ? "is-invalid" : ""}`} rows={4} placeholder="Description" value={formData.description} onChange={handleChange} />
+              {errors.description && <div className="text-danger mt15">{errors.description}</div>}
+            </div>
+          </div>
+
+          <div className="col-lg-12">
+            <div className="mb20">
+              <label className="form-label">Upload Images</label>
+              <input type="file" className="form-control form_control" accept="image/*" multiple onChange={handleImageUpload} />
+              {imageFiles.length > 0 && <div className="small text-muted mt10">Selected: {imageFiles.map((f) => f.name).join(', ')}</div>}
+            </div>
+          </div>
+
+          <div className="col-lg-12">
+            <div className="mb20">
+              <label className="form-label me-3">Featured</label>
+              <label className="form-check-label">
+                <input type="checkbox" className="form-check-input ms-2" checked={featured} onChange={(e) => setFeatured(e.target.checked)} />
+                <span className="ms-2">Mark as featured listing</span>
+              </label>
+            </div>
+          </div>
+
+          <div className="col-lg-12">
+            <button type="submit" className="btn btn-thm" disabled={submitting}>{submitting ? 'Saving listing...' : 'Save Listing'}</button>
+            {status && <div className={`alert mt15 ${statusType === 'success' ? 'alert-success' : 'alert-danger'}`} role="alert">{status}</div>}
+          </div>
+        </div>
+      </form>
+    );
+  }
+
+  if (compact && formData.category === "species") {
+    return (
+      <form onSubmit={handleSubmit} className="contact_form">
+        {errorMessages.length > 0 && (
+          <div className="alert alert-danger mb30" role="alert" aria-live="polite">
+            <strong>Please fix the following required fields:</strong>
+            <ul className="mb0 mt15">
+              {errorMessages.map((message, index) => (
+                <li key={index}>{message}</li>
+              ))}
+            </ul>
+          </div>
+        )}
+
+        <div className="row">
+          <div className="col-lg-12">
+            <div className="breadcrumb_content mb30">
+              <h4 className="title">Add General Listing</h4>
+            </div>
+          </div>
+
+          <div className="col-sm-6 col-md-4">
+            <div className="mb20">
+              <label className="form-label">Listing Title <span className="text-danger">*</span></label>
+              <input name="title" className={`form-control form_control ${errors.title ? "is-invalid" : ""}`} type="text" placeholder="Title" value={formData.title} onChange={handleChange} />
+              {errors.title && <div className="text-danger mt15">{errors.title}</div>}
+            </div>
+          </div>
+
+          <div className="col-sm-6 col-md-4">
+            <div className="mb20">
+              <label className="form-label">Product Category <span className="text-danger">*</span></label>
+              <input name="productCategory" className={`form-control form_control ${errors.productCategory ? "is-invalid" : ""}`} type="text" placeholder="Product Category" value={formData.productCategory} onChange={handleChange} />
+              {errors.productCategory && <div className="text-danger mt15">{errors.productCategory}</div>}
+            </div>
+          </div>
+
+          <div className="col-sm-6 col-md-4">
+            <div className="mb20">
+              <label className="form-label">Packaging Type <span className="text-danger">*</span></label>
+              <input name="packagingType" className={`form-control form_control ${errors.packagingType ? "is-invalid" : ""}`} type="text" placeholder="Packaging Type" value={formData.packagingType} onChange={handleChange} />
+              {errors.packagingType && <div className="text-danger mt15">{errors.packagingType}</div>}
+            </div>
+          </div>
+
+          <div className="col-sm-6 col-md-4">
+            <div className="mb20">
+              <label className="form-label">Order Scale</label>
+              <input name="orderScale" className="form-control form_control" type="text" placeholder="Order Scale" value={formData.orderScale} onChange={handleChange} />
+            </div>
+          </div>
+
+          <div className="col-sm-6 col-md-4">
+            <div className="mb20">
+              <label className="form-label">Minimum Order Quantity <span className="text-danger">*</span></label>
+              <input name="minimumOrderQuantity" className={`form-control form_control ${errors.minimumOrderQuantity ? "is-invalid" : ""}`} type="text" placeholder="MOQ" value={formData.minimumOrderQuantity} onChange={handleChange} />
+              {errors.minimumOrderQuantity && <div className="text-danger mt15">{errors.minimumOrderQuantity}</div>}
+            </div>
+          </div>
+
+          <div className="col-sm-6 col-md-4">
+            <div className="mb20">
+              <label className="form-label">Price (USD) <span className="text-danger">*</span></label>
+              <input name="price" className={`form-control form_control ${errors.price ? "is-invalid" : ""}`} type="number" placeholder="Price" value={formData.price} onChange={handleChange} />
+              {errors.price && <div className="text-danger mt15">{errors.price}</div>}
+            </div>
+          </div>
+
+          <div className="col-lg-12">
+            <div className="mb20">
+              <label className="form-label">Description <span className="text-danger">*</span></label>
+              <textarea name="description" className={`form-control ${errors.description ? "is-invalid" : ""}`} rows={4} placeholder="Description" value={formData.description} onChange={handleChange} />
+              {errors.description && <div className="text-danger mt15">{errors.description}</div>}
+            </div>
+          </div>
+
+          <div className="col-lg-12">
+            <div className="mb20">
+              <label className="form-label">Upload Images</label>
+              <input type="file" className="form-control form_control" accept="image/*" multiple onChange={handleImageUpload} />
+              {imageFiles.length > 0 && <div className="small text-muted mt10">Selected: {imageFiles.map((f) => f.name).join(', ')}</div>}
+            </div>
+          </div>
+
+          <div className="col-lg-12">
+            <div className="mb20">
+              <label className="form-label me-3">Featured</label>
+              <label className="form-check-label">
+                <input type="checkbox" className="form-check-input ms-2" checked={featured} onChange={(e) => setFeatured(e.target.checked)} />
+                <span className="ms-2">Mark as featured listing</span>
+              </label>
+            </div>
+          </div>
+
+          <div className="col-lg-12">
+            <button type="submit" className="btn btn-thm" disabled={submitting}>{submitting ? 'Saving listing...' : 'Save Listing'}</button>
+            {status && <div className={`alert mt15 ${statusType === 'success' ? 'alert-success' : 'alert-danger'}`} role="alert">{status}</div>}
+          </div>
+        </div>
+      </form>
+    );
+  }
 
   return (
     <form onSubmit={handleSubmit} className="contact_form">
@@ -327,21 +589,23 @@ const AddListingForm = () => {
 
         <div className="col-lg-12">
           <div className="row">
-            <div className="col-sm-6 col-md-4">
-              <div className="mb20">
-                <label className="form-label">Category</label>
-                <select
-                  name="category"
-                  className="form-select"
-                  value={formData.category}
-                  onChange={handleChange}
-                >
-                  <option value="automobile">Automobile</option>
-                  <option value="auto-part">Auto Part</option>
-                  <option value="species">General</option>
-                </select>
+            {showCategorySelector && (
+              <div className="col-sm-6 col-md-4">
+                <div className="mb20">
+                  <label className="form-label">Category</label>
+                  <select
+                    name="category"
+                    className="form-select"
+                    value={formData.category}
+                    onChange={handleChange}
+                  >
+                    <option value="automobile">Automobile</option>
+                    <option value="auto-part">Auto Part</option>
+                    <option value="species">General</option>
+                  </select>
+                </div>
               </div>
-            </div>
+            )}
 
             <div className="col-sm-6 col-md-4">
               <div className="mb20">
@@ -434,6 +698,124 @@ const AddListingForm = () => {
                 {errors.model && <div id="modelError" className="text-danger mt15">{errors.model}</div>}
               </div>
             </div>
+
+            {formData.category === "auto-part" && (
+              <>
+                <div className="col-sm-6 col-md-4">
+                  <div className="mb20">
+                    <label className="form-label">Part Category <span className="text-danger">*</span></label>
+                    <input
+                      id="partCategory"
+                      name="partCategory"
+                      className={`form-control form_control ${errors.partCategory ? "is-invalid" : ""}`}
+                      type="text"
+                      placeholder="Part Category"
+                      value={formData.partCategory}
+                      onChange={handleChange}
+                      required
+                      aria-invalid={Boolean(errors.partCategory)}
+                      aria-describedby={errors.partCategory ? "partCategoryError" : undefined}
+                    />
+                    {errors.partCategory && <div id="partCategoryError" className="text-danger mt15">{errors.partCategory}</div>}
+                  </div>
+                </div>
+
+                <div className="col-sm-6 col-md-4">
+                  <div className="mb20">
+                    <label className="form-label">Brand <span className="text-danger">*</span></label>
+                    <input
+                      id="brand"
+                      name="brand"
+                      className={`form-control form_control ${errors.brand ? "is-invalid" : ""}`}
+                      type="text"
+                      placeholder="Brand"
+                      value={formData.brand}
+                      onChange={handleChange}
+                      required
+                      aria-invalid={Boolean(errors.brand)}
+                      aria-describedby={errors.brand ? "brandError" : undefined}
+                    />
+                    {errors.brand && <div id="brandError" className="text-danger mt15">{errors.brand}</div>}
+                  </div>
+                </div>
+              </>
+            )}
+
+            {formData.category === "species" && (
+              <>
+                <div className="col-sm-6 col-md-4">
+                  <div className="mb20">
+                    <label className="form-label">Product Category <span className="text-danger">*</span></label>
+                    <input
+                      id="productCategory"
+                      name="productCategory"
+                      className={`form-control form_control ${errors.productCategory ? "is-invalid" : ""}`}
+                      type="text"
+                      placeholder="Product Category"
+                      value={formData.productCategory}
+                      onChange={handleChange}
+                      required
+                      aria-invalid={Boolean(errors.productCategory)}
+                      aria-describedby={errors.productCategory ? "productCategoryError" : undefined}
+                    />
+                    {errors.productCategory && <div id="productCategoryError" className="text-danger mt15">{errors.productCategory}</div>}
+                  </div>
+                </div>
+
+                <div className="col-sm-6 col-md-4">
+                  <div className="mb20">
+                    <label className="form-label">Packaging Type <span className="text-danger">*</span></label>
+                    <input
+                      id="packagingType"
+                      name="packagingType"
+                      className={`form-control form_control ${errors.packagingType ? "is-invalid" : ""}`}
+                      type="text"
+                      placeholder="Packaging Type"
+                      value={formData.packagingType}
+                      onChange={handleChange}
+                      required
+                      aria-invalid={Boolean(errors.packagingType)}
+                      aria-describedby={errors.packagingType ? "packagingTypeError" : undefined}
+                    />
+                    {errors.packagingType && <div id="packagingTypeError" className="text-danger mt15">{errors.packagingType}</div>}
+                  </div>
+                </div>
+
+                <div className="col-sm-6 col-md-4">
+                  <div className="mb20">
+                    <label className="form-label">Order Scale</label>
+                    <input
+                      id="orderScale"
+                      name="orderScale"
+                      className="form-control form_control"
+                      type="text"
+                      placeholder="Order Scale"
+                      value={formData.orderScale}
+                      onChange={handleChange}
+                    />
+                  </div>
+                </div>
+
+                <div className="col-sm-6 col-md-4">
+                  <div className="mb20">
+                    <label className="form-label">Minimum Order Quantity <span className="text-danger">*</span></label>
+                    <input
+                      id="minimumOrderQuantity"
+                      name="minimumOrderQuantity"
+                      className={`form-control form_control ${errors.minimumOrderQuantity ? "is-invalid" : ""}`}
+                      type="text"
+                      placeholder="Minimum Order Quantity"
+                      value={formData.minimumOrderQuantity}
+                      onChange={handleChange}
+                      required
+                      aria-invalid={Boolean(errors.minimumOrderQuantity)}
+                      aria-describedby={errors.minimumOrderQuantity ? "minimumOrderQuantityError" : undefined}
+                    />
+                    {errors.minimumOrderQuantity && <div id="minimumOrderQuantityError" className="text-danger mt15">{errors.minimumOrderQuantity}</div>}
+                  </div>
+                </div>
+              </>
+            )}
 
             <div className="col-sm-6 col-md-4">
               <div className="mb20">
@@ -766,6 +1148,7 @@ const AddListingForm = () => {
                   type="file"
                   className="form-control form_control"
                   accept="image/*"
+                  multiple
                   onChange={handleImageUpload}
                 />
                 {imageFiles.length > 0 && (
@@ -773,6 +1156,21 @@ const AddListingForm = () => {
                     Selected file: {imageFiles.map((file) => file.name).join(", ")}
                   </div>
                 )}
+              </div>
+            </div>
+
+            <div className="col-lg-12">
+              <div className="mb20">
+                <label className="form-label me-3">Featured</label>
+                <label className="form-check-label">
+                  <input
+                    type="checkbox"
+                    className="form-check-input ms-2"
+                    checked={featured}
+                    onChange={(e) => setFeatured(e.target.checked)}
+                  />
+                  <span className="ms-2">Mark as featured listing</span>
+                </label>
               </div>
             </div>
 

@@ -33,6 +33,16 @@ const DashboardSidebarMenu = () => {
             path: "/add-listings",
         },
         {
+            icon: "flaticon-plus",
+            label: "Add Auto Part",
+            path: "/add-listings/auto-part",
+        },
+        {
+            icon: "flaticon-plus",
+            label: "Add General",
+            path: "/add-listings/general",
+        },
+        {
             icon: "flaticon-message",
             label: "Messages",
             path: "/messages",

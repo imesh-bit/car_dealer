@@ -151,21 +151,30 @@
 import Image from "next/image";
 import Link from "next/link";
 import { useState } from "react";
+import { useSearchParams } from "next/navigation";
 import { useMergedListings } from "@/hooks/useMergedListings";
 
 const FeaturedFilterListing = ({ category = "automobile" }) => {
   const [filter, setFilter] = useState("*");
   const isAutomobileView = category === "automobile";
   const mergedListings = useMergedListings();
+  const searchParams = useSearchParams();
+  const featuredParam = searchParams?.get ? searchParams.get("featured") : null;
 
   const visibleListings = mergedListings.filter(
     (item) => (item.category || "automobile") === category
   );
 
+  // If ?featured=1 is present, show only featured listings
+  const onlyFeatured = featuredParam === "1" || featuredParam === "true";
+  const listingsForDisplay = onlyFeatured
+    ? visibleListings.filter((l) => l.featured)
+    : visibleListings;
+
   const filteredItems =
     filter === "*"
-      ? visibleListings.slice(0, 8)
-      : visibleListings.filter((item) => item.tags.includes(filter)).slice(0, 8);
+      ? listingsForDisplay.slice(0, 8)
+      : listingsForDisplay.filter((item) => item.tags.includes(filter)).slice(0, 8);
 
   return (
     <div className="popular_listing_sliders ">
