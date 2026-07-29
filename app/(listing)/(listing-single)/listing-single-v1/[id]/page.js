@@ -214,24 +214,6 @@ const ListingSingleV1 = async ({ params }) => {
             {/* End .col-xl-8 */}
 
             <div className="col-lg-4 col-xl-4">
-              <div className="offer_btns">
-                <div className="text-end">
-                  <button className="btn btn-thm ofr_btn1 btn-block mt0 mb20">
-                    <span className="flaticon-coin mr10 fz18 vam" />
-                    {car.category === "species"
-                      ? "Request quote"
-                      : "Make an Offer Price"}
-                  </button>
-                  {car.category === "automobile" && (
-                    <button className="btn ofr_btn2 btn-block mt0 mb20">
-                      <span className="flaticon-profit-report mr10 fz18 vam" />
-                      View VIN Report
-                    </button>
-                  )}
-                </div>
-              </div>
-              {/* End offer_btn
-               */}
               <div className="sidebar_seller_wrapper sticky">
                 <div className="sidebar_seller_contact d-none d-lg-block opening_hour_widgets p25 shadow-sm rounded-4 border">
                   <div className="wrapper">

@@ -203,104 +203,50 @@ const Home_1 = async ({ searchParams }) => {
       </section>
       {/* End Our Popular Listing */}
 
-      {/* Popular Vehicles */}
-      {/* <section className="popular-listing home4-popular-showcase trending-listings-section pt80 pb110">
-        <div className="container-fluid px-2 px-md-3">
-          <div className="row">
-            <div className="col-lg-6 offset-lg-3">
-              <div className="main-title text-center mb-4 mb-lg-5">
-                <TranslatedHeading messageKey="home.trendingListings" />
+      {activeCategory === "species" && (
+        <>
+          {/* Our Blog */}
+          <section className="our-blog pb90">
+            <div className="container">
+              <div className="row">
+                <div className="col-lg-6 offset-lg-3">
+                  <div className="main-title text-center">
+                    <TranslatedHeading messageKey="home.recentArticles" />
+                  </div>
+                </div>
               </div>
-            </div>
-          </div>
+              {/* End .row */}
 
-          <div className="col-lg-12">
-            <div
-              className="home1_popular_listing home4_style px-0 px-md-3"
-              data-aos="fade"
-              data-aos-delay="100"
-              suppressHydrationWarning
-            >
-              <div className="listing_item_car_grid_slider trending-slider">
-                <PopularVehicles category={activeCategory} />
+              <div className="row">
+                <Blog />
               </div>
+              {/* End .row */}
             </div>
-          </div>
-        </div>
-      </section> */}
-      {/* End Popular Vehicles */}
+          </section>
+          {/* End Our Blog */}
+        </>
+      )}
 
-      {/* <!-- Funfact --> */}
-      <section className="our-funfact home1-counter-section pt50 pb30">
+      {/* Our Contact */}
+      <section className="popular-listing pb90">
         <div className="container">
-          <div className="row justify-content-center">
-            <Counter />
+          <div className="row">
+            <div className="col-lg-6 m-auto">
+              <div className="main-title text-center">
+                <h2>How To Find Us</h2>
+              </div>
+            </div>
+          </div>
+          {/* End .row */}
+
+          <div className="row">
+            <Address />
           </div>
         </div>
       </section>
-      {/* <!-- End Funfact --> */}
+      {/* End Our Contact */}
 
-      {/* Testimonials  */}
-      {/* <section className="our-testimonials-home1 pt120 pb120">
-        <div className="container">
-          <div className="row justify-content-center">
-            <div className="col-lg-8">
-              <div className="main-title text-center">
-                <h2>Testimonials</h2>
-              </div>
-            </div>
-          </div>
-          <div className="row">
-            <div className="col-lg-12">
-              <div className="testimonial_slider_home1">
-                <Testimonial />
-              </div>
-            </div>
-          </div>
-        </div>
-      </section> */}
-      {/* End Testimonials  */}
-
-      {/* Our Blog */}
-            <section className="our-blog pb90">
-              <div className="container">
-                <div className="row">
-                  <div className="col-lg-6 offset-lg-3">
-                    <div className="main-title text-center">
-                      <TranslatedHeading messageKey="home.recentArticles" />
-                    </div>
-                  </div>
-                </div>
-                {/* End .row */}
-      
-                <div className="row">
-                  <Blog />
-                </div>
-                {/* End .row */}
-              </div>
-            </section>
-            {/* End Our Blog */}
-
-      {/* Our Contact */}
-            <section className="popular-listing pb90">
-              <div className="container">
-                <div className="row">
-                  <div className="col-lg-6 m-auto">
-                    <div className="main-title text-center">
-                      <h2>How To Find Us</h2>
-                    </div>
-                  </div>
-                </div>
-                {/* End .row */}
-      
-                <div className="row">
-                  <Address />
-                </div>
-              </div>
-            </section>
-            {/* End Our Contact */}
-      
-       {/* Delivery Divider */}
+      {/* Delivery Divider */}
       {/* <section className="deliver-divider bg-img1 home1_car_intro_section">
         <img
           className="home1_car_intro_image object-cover"
@@ -314,7 +260,6 @@ const Home_1 = async ({ searchParams }) => {
         </div>
       </section> */}
       {/* End Delivery Divider */}
-      
 
       {/* Our Footer */}
       <Footer />

@@ -73,7 +73,7 @@ const HeaderTop = () => {
                 <li className="list-inline-item">
                   <LanguageSwitcher variant="compact" />
                 </li>
-                <li className="list-inline-item">
+                {/* <li className="list-inline-item">
                   <a
                     href="#"
                     data-bs-toggle="modal"
@@ -81,8 +81,8 @@ const HeaderTop = () => {
                   >
                     {t("header.login")}
                   </a>
-                </li>
-                <li className="list-inline-item">
+                </li> */}
+                {/* <li className="list-inline-item">
                   <a
                     href="#"
                     data-bs-toggle="modal"
@@ -90,7 +90,7 @@ const HeaderTop = () => {
                   >
                     {t("header.register")}
                   </a>
-                </li>
+                </li> */}
               </ul>
             </div>
           </div>
