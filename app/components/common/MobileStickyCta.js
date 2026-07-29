@@ -10,6 +10,7 @@ const MobileStickyCta = ({ car }) => {
 
   return (
     <div
+      className="mobile-sticky-cta"
       role="contentinfo"
       aria-label="Quick inquiry bar"
       style={{

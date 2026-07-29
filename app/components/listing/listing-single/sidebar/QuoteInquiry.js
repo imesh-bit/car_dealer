@@ -94,7 +94,7 @@ const QuoteInquiry = ({ hideTitle, baseFobPrice = 10000 }) => {
 
   return (
     <form className="contact_form" onSubmit={handleSubmit}>
-      <div className="row">
+      <div className="row quote-inquiry-form">
         {!hideTitle && (
           <div className="col-12 mb20">
             <div className="d-flex justify-content-between align-items-center">
@@ -233,12 +233,12 @@ const QuoteInquiry = ({ hideTitle, baseFobPrice = 10000 }) => {
         </div>
 
         <div className="col-12">
-          <div className="quote_total_price p20 mb15 bgc-white bdrs10 border">
-            <p className="mb5 fz12 body-color">Total CIF Price</p>
-            <h3 className="mb0 fz18 fw-semibold text-thm">
+          <div className="quote_total_price">
+            <p className="quote_total_label">Total CIF Price</p>
+            <h3 className="quote_total_amount">
               {formatCurrency(getCifPrice())}
             </h3>
-            <p className="mb0 fz12 color-grey mt5">
+            <p className="quote_total_subtext">
               FOB Base: {formatCurrency(baseFobPrice)}, Port: {formatCurrency(formData.portPrice)}
             </p>
           </div>
