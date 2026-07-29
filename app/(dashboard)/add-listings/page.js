@@ -5,10 +5,7 @@ import DashboardSidebarMobileMenu from "@/app/components/common/DashboardSidebar
 import HeaderSidebar from "@/app/components/common/HeaderSidebar";
 import MobileMenu from "@/app/components/common/MobileMenu";
 import LoginSignupModal from "@/app/components/common/login-signup";
-import Additional from "@/app/components/dashboard/add-listing/Additional";
-import CarFeatures from "@/app/components/dashboard/add-listing/CarFeatures";
-import LocationInfo from "@/app/components/dashboard/add-listing/LocationInfo";
-import Gallery from "@/app/components/dashboard/add-listing/Gallery";
+import AddListingForm from "@/app/components/dashboard/add-listing/AddListingForm";
 
 export const metadata = {
   title: "Add Listing || Voiture - Automotive & Car Dealer NextJS Template",
@@ -74,69 +71,12 @@ const AddListings = () => {
               <div className="row">
                 <div className="col-lg-12">
                   <div className="new_property_form">
-                    <h4 className="title mb30">Additional</h4>
-                    <Additional />
+                    <h4 className="title mb30">Upload New Listing</h4>
+                    <AddListingForm />
                   </div>
                 </div>
-                {/* End col-12 Additional */}
+                {/* End col-12 AddListingForm */}
 
-                <div className="col-lg-12">
-                  <div className="new_property_form">
-                    <div className="row">
-                      <div className="col-lg-12">
-                        <h4 className="title mb30">Select Your Car Features</h4>
-                      </div>
-                      <CarFeatures />
-                    </div>
-                  </div>
-                </div>
-                {/* End col-12 CarFeatures */}
-
-                <div className="col-lg-12">
-                  <div className="new_property_form">
-                    <div className="row">
-                      <div className="col-lg-12">
-                        <h4 className="title mb30">Gallery</h4>
-                      </div>
-                      {/* End .col-12 */}
-
-                      <div className="col-lg-12">
-                        <label className="form-label">Featured Image</label>
-                        <Gallery />
-                      </div>
-                      {/* End .col-12 */}
-
-                      <div className="col-md-12">
-                        <div className="mb20">
-                          <label className="form-label">
-                            Video - copy any online video link e.g. YouTube,
-                            Facebook, Instagram or .mp4
-                          </label>
-                          <input
-                            name="form_name"
-                            className="form-control form_control"
-                            type="text"
-                            placeholder="Video Link"
-                          />
-                        </div>
-                      </div>
-                      {/* End .col-12 */}
-                    </div>
-                  </div>
-                </div>
-                {/* End col-12 gallery */}
-
-                <div className="col-lg-12">
-                  <div className="new_property_form">
-                    <div className="row">
-                      <div className="col-lg-12">
-                        <h4 className="title mb30">Location</h4>
-                      </div>
-                      <LocationInfo />
-                    </div>
-                  </div>
-                </div>
-                {/* End col-12 loction info */}
               </div>
               {/* End .row */}
             </div>

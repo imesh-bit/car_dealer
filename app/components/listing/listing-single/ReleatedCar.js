@@ -2,11 +2,13 @@
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Pagination } from "swiper";
 import "swiper/swiper-bundle.css";
-import listingCar from "@/data/listingCar";
 import Link from "next/link";
 import Image from "next/image";
+import { useMergedListings } from "@/hooks/useMergedListings";
 
 const ReleatedCar = () => {
+  const mergedListings = useMergedListings();
+
   return (
     <>
       <Swiper
@@ -34,7 +36,7 @@ const ReleatedCar = () => {
           },
         }}
       >
-        {listingCar.slice(0, 6).map((listing) => (
+        {mergedListings.slice(0, 6).map((listing) => (
           <SwiperSlide key={listing.id}>
             <div className="item">
               <div className="car-listing">

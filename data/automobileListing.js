@@ -29,18 +29,24 @@ module.exports = [
     color: "Ice White",
     drivetrain: "AWD",
     condition: "Used",
-    engineSize: "2.0L T8 Hybrid",
+    // FIXED: was "2.0L T8 Hybrid" — a Volvo T8 plug-in hybrid designation, not a Wagon R spec
+    engineSize: "0.66L Hybrid",
     doors: 5,
     cylinders: 4,
-    vin: "YV1XZ8DZ8P1000001",
+    // FIXED: was "YV1XZ8DZ8P1000001" — YV1 is Volvo's WMI prefix, mismatched with make "Suzuki"
+    vin: "JS3XZ8DZ8P1000001",
     bodyType: "Cars",
     interiorColor: "Beige",
-    tagline: "2.0L T8 AWD Inscription 5dr",
+    // FIXED: was "2.0L T8 AWD Inscription 5dr" — Volvo trim naming, not a Suzuki Wagon R tagline
+    tagline: "0.66L Hybrid AWD 5dr",
     postedAgo: "1 day ago",
     views: 13102,
+    // FIXED: previous copy described a Volvo XC90 ("plug-in hybrid," "Volvo's latest
+    // infotainment system," "this XC90 has been well cared for... seating for up to seven
+    // passengers") — rewritten to actually describe the Suzuki Wagon R listed here.
     description: [
-      "with a plug-in hybrid powertrain, giving you strong performance without sacrificing efficiency. Inside, the cabin is finished with premium materials and Volvo's latest infotainment system.",
-      "With low mileage and a full service history, this XC90 has been well cared for and is ready for its next owner. It comes equipped with advanced safety technology and comfortable seating for up to seven passengers.",
+      "This Suzuki Wagon R pairs a fuel-efficient hybrid powertrain with the practical, upright cabin the Wagon R is known for. Inside, you'll find a clean, well-kept interior finished with easy-to-use controls and Suzuki's standard infotainment display.",
+      "With low mileage and a full service history, this Wagon R has been well cared for and is ready for its next owner. It comes equipped with a solid set of safety features and comfortable seating for everyday city and highway driving.",
     ],
     features: [
       {
@@ -78,16 +84,20 @@ module.exports = [
     featured: true,
     category: "automobile",
     image: "/images/listing/2.jpg",
+    // FIXED: all 5 gallery entries pointed to the same image (lsp1-v5.jpg).
+    // Cycled through v1-v5 to match the pattern used by listing #1.
     gallery: [
-      { imageSrc: "/images/listing/lsp1-v5.jpg", videoId: "VWrJkx6O0L8" },
-      { imageSrc: "/images/listing/lsp1-v5.jpg", videoId: "TLEyLGWvjII" },
-      { imageSrc: "/images/listing/lsp1-v5.jpg", videoId: "BS2jGGYC60c" },
-      { imageSrc: "/images/listing/lsp1-v5.jpg", videoId: "8PiZNUCexrA" },
+      { imageSrc: "/images/listing/lsp1-v1.jpg", videoId: "VWrJkx6O0L8" },
+      { imageSrc: "/images/listing/lsp1-v2.jpg", videoId: "TLEyLGWvjII" },
+      { imageSrc: "/images/listing/lsp1-v3.jpg", videoId: "BS2jGGYC60c" },
+      { imageSrc: "/images/listing/lsp1-v4.jpg", videoId: "8PiZNUCexrA" },
       { imageSrc: "/images/listing/lsp1-v5.jpg", videoId: "m4ZGuAbUMg8" },
     ],
     photosCount: 33,
     videosCount: 4,
     title: "Mercedes-Benz S 560 - 2021",
+    // TODO(business): price/originalPrice (56 / 63) look truncated/wrong-scale for an S-Class.
+    // Left as-is — needs confirmation of the real FOB price rather than a guessed value.
     price: 56,
     originalPrice: 63,
     rating: 4.7,
@@ -155,6 +165,7 @@ module.exports = [
     photosCount: 55,
     videosCount: 3,
     title: "BMW M8 Gran Coupe Base - 2023",
+    // TODO(business): price/originalPrice (230 / 258) look truncated/wrong-scale — confirm real FOB price.
     price: 230,
     originalPrice: 258,
     rating: 4.7,
@@ -217,7 +228,9 @@ module.exports = [
     image: "/images/listing/4.jpg",
     photosCount: 12,
     videosCount: 3,
-    title: "Nissan Qasqai - Sky Pack",
+    // FIXED: was "Nissan Qasqai - Sky Pack" — typo, model field below already says "Qashqai"
+    title: "Nissan Qashqai - Sky Pack",
+    // TODO(business): price/originalPrice (478 / 535) look truncated/wrong-scale — confirm real FOB price.
     price: 478,
     originalPrice: 535,
     rating: 4.7,
@@ -228,6 +241,7 @@ module.exports = [
     transmission: "Automatic",
     tags: ["used"],
     make: "Nissan",
+    // NOTE: title above says "Qasqai" (typo) while model field correctly says "Qashqai" — fix title too.
     model: "Qashqai Sky Pack",
     year: 2022,
     color: "Storm White",
@@ -280,6 +294,7 @@ module.exports = [
     photosCount: 15,
     videosCount: 2,
     title: "JCB 3CX Backhoe Loader - 2023",
+    // TODO(business): price/originalPrice (85 / 95) look truncated/wrong-scale — confirm real FOB price.
     price: 85,
     originalPrice: 95,
     rating: 4.8,

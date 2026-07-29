@@ -1,4 +1,6 @@
 import { notFound } from "next/navigation";
+import { promises as fs } from "fs";
+import path from "path";
 import Footer from "@/app/components/common/Footer";
 import DefaultHeader from "@/app/components/common/DefaultHeader";
 import HeaderSidebar from "@/app/components/common/HeaderSidebar";
@@ -25,15 +27,34 @@ import listingsData from "@/data/listingCar";
 import { CarJsonLd } from "@/app/components/common/JsonLd";
 import { createListingMetadata } from "@/lib/metadata";
 
+const DATA_FILE = path.join(process.cwd(), "data", "uploaded-listings.json");
+
+const readUploadedListings = async () => {
+  try {
+    const content = await fs.readFile(DATA_FILE, "utf8");
+    const parsed = JSON.parse(content);
+    return Array.isArray(parsed) ? parsed : [];
+  } catch (error) {
+    return [];
+  }
+};
+
+const getAllListings = async () => {
+  const uploadedListings = await readUploadedListings();
+  return [...uploadedListings, ...listingsData];
+};
+
 // Pre-render a page for every car at build time
 export async function generateStaticParams() {
-  return listingsData.map((car) => ({ id: String(car.id) }));
+  const allListings = await getAllListings();
+  return allListings.map((car) => ({ id: String(car.id) }));
 }
 
 // Dynamic <title> per car
 export async function generateMetadata({ params }) {
   const { id } = await params;
-  const car = listingsData.find((item) => String(item.id) === id);
+  const allListings = await getAllListings();
+  const car = allListings.find((item) => String(item.id) === id);
 
   if (!car) {
     return { title: "Listing Not Found" };
@@ -44,7 +65,8 @@ export async function generateMetadata({ params }) {
 
 const ListingSingleV1 = async ({ params }) => {
   const { id } = await params;
-  const car = listingsData.find((item) => String(item.id) === id);
+  const allListings = await getAllListings();
+  const car = allListings.find((item) => String(item.id) === id);
 
   // No matching car for this id -> Next.js not-found page
   if (!car) {

@@ -148,16 +148,17 @@
 // export default FeaturedFilterListing;
 
 "use client";
-import listingsData from "@/data/listingCar";
 import Image from "next/image";
 import Link from "next/link";
 import { useState } from "react";
+import { useMergedListings } from "@/hooks/useMergedListings";
 
 const FeaturedFilterListing = ({ category = "automobile" }) => {
   const [filter, setFilter] = useState("*");
   const isAutomobileView = category === "automobile";
+  const mergedListings = useMergedListings();
 
-  const visibleListings = listingsData.filter(
+  const visibleListings = mergedListings.filter(
     (item) => (item.category || "automobile") === category
   );
 

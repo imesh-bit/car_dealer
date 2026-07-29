@@ -1,16 +1,17 @@
 "use client";
-import listingsData from "@/data/listingCar";
 import Image from "next/image";
 import Link from "next/link";
 import { useState } from "react";
+import { useMergedListings } from "@/hooks/useMergedListings";
 
 const FeaturedFilterListing = () => {
   const [filter, setFilter] = useState("*");
+  const mergedListings = useMergedListings();
 
   const filteredItems =
     filter === "*"
-      ? listingsData.slice(0, 8)
-      : listingsData.slice(0, 8).filter((item) => item.tags.includes(filter));
+      ? mergedListings.slice(0, 8)
+      : mergedListings.slice(0, 8).filter((item) => item.tags.includes(filter));
 
   return (
     <div className="popular_listing_sliders ">

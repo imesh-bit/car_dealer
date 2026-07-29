@@ -1,6 +1,8 @@
-import listingCar from "@/data/listingCar";
+"use client";
+import { useEffect, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
+import { useMergedListings } from "@/hooks/useMergedListings";
 
 const matchesHeroAutomobileCategory = (listing, filterType) => {
   const normalizedType = (filterType || "").toLowerCase();
@@ -56,12 +58,14 @@ const CarItems = ({
   productCategory,
   packagingType,
   orderScale,
-  view,}) => {
+  view,
+}) => {
   const selectedFeatures = features ? features.split(",") : [];
   const selectedCategory = category || "automobile";
   const isListView = String(view || "grid").toLowerCase() === "list";
+  const mergedListings = useMergedListings();
 
-  let filteredListings = listingCar.filter((listing) => {
+  let filteredListings = mergedListings.filter((listing) => {
     const listingCategory = listing.category || "automobile";
 
     if (selectedCategory && selectedCategory !== "all") {

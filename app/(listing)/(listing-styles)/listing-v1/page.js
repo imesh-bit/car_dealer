@@ -1,3 +1,5 @@
+import { promises as fs } from "fs";
+import path from "path";
 import Footer from "@/app/components/common/Footer";
 import DefaultHeader from "@/app/components/common/DefaultHeader";
 import HeaderSidebar from "@/app/components/common/HeaderSidebar";
@@ -10,6 +12,18 @@ import ListGridFilter from "@/app/components/listing/ListGridFilter";
 import CarItems from "@/app/components/listing/listing-styles/listing-v1/CarItems";
 import listingCar from "@/data/listingCar";
 import { createPageMetadata } from "@/lib/metadata";
+
+const DATA_FILE = path.join(process.cwd(), "data", "uploaded-listings.json");
+
+const readUploadedListings = async () => {
+    try {
+        const content = await fs.readFile(DATA_FILE, "utf8");
+        const parsed = JSON.parse(content);
+        return Array.isArray(parsed) ? parsed : [];
+    } catch (error) {
+        return [];
+    }
+};
 
 export const metadata = createPageMetadata({
     title: "Cars for Sale",
@@ -56,7 +70,9 @@ const ListingV1 = async ({ searchParams }) => {
         species: "General",
     };
 
-    const visibleListings = listingCar.filter(
+    const uploadedListings = await readUploadedListings();
+    const mergedListings = [...uploadedListings, ...listingCar];
+    const visibleListings = mergedListings.filter(
         (item) => (item.category || "automobile") === activeCategory
     );
     const totalCount = visibleListings.length;
