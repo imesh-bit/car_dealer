@@ -34,8 +34,14 @@ const saveImageBuffer = async (file, imageName, index) => {
   const buffer = Buffer.from(await file.arrayBuffer());
   const ext = path.extname(file.name || "") || ".png";
   const extension = ext.replace(/^[.]/, "").toLowerCase();
-  const baseName = path.basename(file.name || "listing", ext) || "listing";
-  const safeBaseName = `${Date.now()}-${index}-${(imageName || baseName || "listing")
+  const rawName = imageName || file.name || "listing";
+  let normalizedName = path.basename(rawName, path.extname(rawName));
+
+  if (normalizedName.toLowerCase().endsWith(`.${extension}`)) {
+    normalizedName = normalizedName.slice(0, -extension.length - 1);
+  }
+
+  const safeBaseName = `${Date.now()}-${index}-${(normalizedName || "listing")
     .replace(/[^a-z0-9.-]+/gi, "-")
     .replace(/-+/g, "-")
     .replace(/^-|-$/g, "")
