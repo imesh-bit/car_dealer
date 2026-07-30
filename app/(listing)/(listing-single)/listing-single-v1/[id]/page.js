@@ -27,7 +27,7 @@ import listingsData from "@/data/listingCar";
 import { CarJsonLd } from "@/app/components/common/JsonLd";
 import { createListingMetadata } from "@/lib/metadata";
 
-import { DATA_FILE } from "@/lib/storage";
+import { getDataFile } from "@/lib/storage";
 
 const readUploadedListings = async () => {
   try {
