@@ -32,9 +32,15 @@ const saveImageBuffer = async (file, imageName, index) => {
   }
 
   const buffer = Buffer.from(await file.arrayBuffer());
-  const extension = (file.name.split(".").pop() || "png").toLowerCase();
-  const safeName = `${Date.now()}-${index}-${(imageName || "listing").replace(/[^a-z0-9.-]+/gi, "-").toLowerCase()}`;
-  const filename = `${safeName}.${extension}`;
+  const ext = path.extname(file.name || "") || ".png";
+  const extension = ext.replace(/^[.]/, "").toLowerCase();
+  const baseName = path.basename(file.name || "listing", ext) || "listing";
+  const safeBaseName = `${Date.now()}-${index}-${(imageName || baseName || "listing")
+    .replace(/[^a-z0-9.-]+/gi, "-")
+    .replace(/-+/g, "-")
+    .replace(/^-|-$/g, "")
+    .toLowerCase()}`;
+  const filename = `${safeBaseName}.${extension}`;
   const uploadDir = await getUploadDir();
   const filePath = path.join(uploadDir, filename);
 
