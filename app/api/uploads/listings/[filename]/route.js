@@ -15,7 +15,7 @@ const MIME_TYPES = {
 };
 
 export async function GET(request, { params }) {
-  const { filename } = params || {};
+  const { filename } = await params;   // <-- was: const { filename } = params || {};
   if (!filename) {
     return NextResponse.json({ message: "Filename required" }, { status: 400 });
   }
