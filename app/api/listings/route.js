@@ -38,6 +38,10 @@ const saveImageBuffer = async (file, imageName, index) => {
   const uploadDir = await getUploadDir();
   const filePath = path.join(uploadDir, filename);
 
+  console.log("[saveImageBuffer] uploadDir=", uploadDir);
+  console.log("[saveImageBuffer] filePath=", filePath);
+  console.log("[saveImageBuffer] filename=", filename);
+
   await ensureDir(uploadDir);
   await fs.writeFile(filePath, buffer);
   return getUploadPublicUrl(filename);
