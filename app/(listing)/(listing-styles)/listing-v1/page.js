@@ -1,4 +1,5 @@
 import { promises as fs } from "fs";
+import { DATA_FILE } from "@/lib/storage";
 import path from "path";
 import Footer from "@/app/components/common/Footer";
 import DefaultHeader from "@/app/components/common/DefaultHeader";
@@ -12,8 +13,6 @@ import ListGridFilter from "@/app/components/listing/ListGridFilter";
 import CarItems from "@/app/components/listing/listing-styles/listing-v1/CarItems";
 import listingCar from "@/data/listingCar";
 import { createPageMetadata } from "@/lib/metadata";
-
-const DATA_FILE = path.join(process.cwd(), "data", "uploaded-listings.json");
 
 const readUploadedListings = async () => {
     try {

@@ -1,9 +1,7 @@
 import { promises as fs } from "fs";
 import path from "path";
 import { NextResponse } from "next/server";
-
-const DATA_FILE = path.join(process.cwd(), "data", "uploaded-listings.json");
-const UPLOAD_DIR = path.join(process.cwd(), "public", "uploads", "listings");
+import { DATA_FILE, UPLOAD_DIR, getUploadPublicUrl } from "@/lib/storage";
 
 const ensureDir = async (dirPath) => {
   await fs.mkdir(dirPath, { recursive: true });
@@ -39,7 +37,7 @@ const saveImageBuffer = async (file, imageName, index) => {
 
   await ensureDir(UPLOAD_DIR);
   await fs.writeFile(filePath, buffer);
-  return `/uploads/listings/${filename}`;
+  return getUploadPublicUrl(filename);
 };
 
 export async function GET() {

@@ -27,7 +27,7 @@ import listingsData from "@/data/listingCar";
 import { CarJsonLd } from "@/app/components/common/JsonLd";
 import { createListingMetadata } from "@/lib/metadata";
 
-const DATA_FILE = path.join(process.cwd(), "data", "uploaded-listings.json");
+import { DATA_FILE } from "@/lib/storage";
 
 const readUploadedListings = async () => {
   try {
@@ -39,16 +39,12 @@ const readUploadedListings = async () => {
   }
 };
 
+export const dynamic = "force-dynamic";
+
 const getAllListings = async () => {
   const uploadedListings = await readUploadedListings();
   return [...uploadedListings, ...listingsData];
 };
-
-// Pre-render a page for every car at build time
-export async function generateStaticParams() {
-  const allListings = await getAllListings();
-  return allListings.map((car) => ({ id: String(car.id) }));
-}
 
 // Dynamic <title> per car
 export async function generateMetadata({ params }) {
