@@ -1,13 +1,14 @@
 import { promises as fs } from "fs";
 import path from "path";
 import { NextResponse } from "next/server";
-import { DATA_FILE, UPLOAD_DIR, getUploadPublicUrl } from "@/lib/storage";
+import { getDataFile, getUploadDir, getUploadPublicUrl } from "@/lib/storage";
 
 const ensureDir = async (dirPath) => {
   await fs.mkdir(dirPath, { recursive: true });
 };
 
 const readStoredListings = async () => {
+  const DATA_FILE = await getDataFile();
   try {
     const content = await fs.readFile(DATA_FILE, "utf8");
     return JSON.parse(content);
@@ -20,6 +21,7 @@ const readStoredListings = async () => {
 };
 
 const writeStoredListings = async (listings) => {
+  const DATA_FILE = await getDataFile();
   await ensureDir(path.dirname(DATA_FILE));
   await fs.writeFile(DATA_FILE, JSON.stringify(listings, null, 2));
 };
@@ -33,9 +35,10 @@ const saveImageBuffer = async (file, imageName, index) => {
   const extension = (file.name.split(".").pop() || "png").toLowerCase();
   const safeName = `${Date.now()}-${index}-${(imageName || "listing").replace(/[^a-z0-9.-]+/gi, "-").toLowerCase()}`;
   const filename = `${safeName}.${extension}`;
-  const filePath = path.join(UPLOAD_DIR, filename);
+  const uploadDir = await getUploadDir();
+  const filePath = path.join(uploadDir, filename);
 
-  await ensureDir(UPLOAD_DIR);
+  await ensureDir(uploadDir);
   await fs.writeFile(filePath, buffer);
   return getUploadPublicUrl(filename);
 };

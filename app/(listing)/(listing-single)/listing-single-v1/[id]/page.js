@@ -31,6 +31,7 @@ import { DATA_FILE } from "@/lib/storage";
 
 const readUploadedListings = async () => {
   try {
+    const DATA_FILE = await getDataFile();
     const content = await fs.readFile(DATA_FILE, "utf8");
     const parsed = JSON.parse(content);
     return Array.isArray(parsed) ? parsed : [];

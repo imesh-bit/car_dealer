@@ -1,5 +1,5 @@
 import { promises as fs } from "fs";
-import { DATA_FILE } from "@/lib/storage";
+import { getDataFile } from "@/lib/storage";
 import path from "path";
 import Footer from "@/app/components/common/Footer";
 import DefaultHeader from "@/app/components/common/DefaultHeader";
@@ -16,6 +16,7 @@ import { createPageMetadata } from "@/lib/metadata";
 
 const readUploadedListings = async () => {
     try {
+        const DATA_FILE = await getDataFile();
         const content = await fs.readFile(DATA_FILE, "utf8");
         const parsed = JSON.parse(content);
         return Array.isArray(parsed) ? parsed : [];
