@@ -45,9 +45,14 @@ const getAllListings = async () => {
   return readUploadedListings();
 };
 
+const resolveRouteId = async (params) => {
+  const resolvedParams = params && typeof params.then === "function" ? await params : params;
+  return resolvedParams?.id;
+};
+
 // Dynamic <title> per car
 export async function generateMetadata({ params }) {
-  const { id } = await params;
+  const id = await resolveRouteId(params);
   const allListings = await getAllListings();
   const car = allListings.find((item) => String(item.id) === id);
 
@@ -59,7 +64,7 @@ export async function generateMetadata({ params }) {
 }
 
 const ListingSingleV1 = async ({ params }) => {
-  const { id } = await params;
+  const id = await resolveRouteId(params);
   const allListings = await getAllListings();
   const car = allListings.find((item) => String(item.id) === id);
 

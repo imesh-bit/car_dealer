@@ -54,8 +54,13 @@ const deleteListingImages = async (listing) => {
   );
 };
 
+const resolveRouteId = async (params) => {
+  const resolvedParams = params && typeof params.then === "function" ? await params : params;
+  return resolvedParams?.id;
+};
+
 export async function GET(request, { params }) {
-  const { id } = await params;
+  const id = await resolveRouteId(params);
   const listings = await readStoredListings();
   const targetId = Number.isNaN(Number(id)) ? id : Number(id);
   const listing = listings.find((item) => item.id === targetId);
@@ -68,7 +73,7 @@ export async function GET(request, { params }) {
 }
 
 export async function DELETE(request, { params }) {
-  const { id } = await params;
+  const id = await resolveRouteId(params);
 
   if (!id) {
     return NextResponse.json({ message: "Listing id required" }, { status: 400 });
