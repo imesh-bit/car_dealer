@@ -1,38 +1,49 @@
+"use client";
 import Image from "next/image";
+import { useState } from "react";
+import { useMergedListings } from "@/hooks/useMergedListings";
 
 const ListingContent = () => {
-  const carListings = [
-    {
-      id: 1,
-      make: "Volvo",
-      model: "XC90",
-      year: 2020,
-      transmission: "Automatic",
-      fuelType: "Diesel",
-      price: "$129",
-      imageSrc: "/images/listing/1.jpg",
-    },
-    {
-      id: 2,
-      make: "Audi",
-      model: "A8 L 55",
-      year: 2021,
-      transmission: "Automatic",
-      fuelType: "Diesel",
-      price: "$129",
-      imageSrc: "/images/listing/5.jpg",
-    },
-    {
-      id: 3,
-      make: "Bentley",
-      model: "Bentayga V8",
-      year: 2020,
-      transmission: "Automatic",
-      fuelType: "Diesel",
-      price: "$129",
-      imageSrc: "/images/listing/7.jpg",
-    },
-  ];
+  const mergedListings = useMergedListings();
+  const [deletingId, setDeletingId] = useState(null);
+  const [deletedIds, setDeletedIds] = useState(new Set());
+
+  const carListings = mergedListings
+    .filter((listing) => !deletedIds.has(listing.id))
+    .slice(0, 8)
+    .map((listing) => ({
+      id: listing.id,
+      make: listing.make || "Unknown",
+      model: listing.model || listing.title || "Listing",
+      year: listing.year || "N/A",
+      transmission: listing.transmission || "N/A",
+      fuelType: listing.fuelType || "N/A",
+      price: listing.price ? `$${listing.price.toLocaleString()}` : "Contact",
+      imageSrc: listing.image || "/images/listing/1.jpg",
+    }));
+
+  const handleDelete = async (id) => {
+    if (!window.confirm("Are you sure you want to delete this listing?")) return;
+
+    setDeletingId(id);
+    try {
+      const res = await fetch(`/api/listings/${id}`, {
+        method: "DELETE",
+      });
+
+      if (!res.ok) {
+        throw new Error(`Failed to delete listing (status ${res.status})`);
+      }
+
+      // Optimistically remove from the UI
+      setDeletedIds((prev) => new Set(prev).add(id));
+    } catch (err) {
+      console.error("Delete failed:", err);
+      alert("Something went wrong deleting this listing. Please try again.");
+    } finally {
+      setDeletingId(null);
+    }
+  };
 
   return (
     <div className="col-lg-12">
@@ -106,7 +117,18 @@ const ListingContent = () => {
                       </a>
                     </li>
                     <li className="list-inline-item mb-1">
-                      <a href="#" title="Delete">
+                      <a
+                        href="#"
+                        title="Delete"
+                        onClick={(e) => {
+                          e.preventDefault();
+                          if (deletingId !== car.id) handleDelete(car.id);
+                        }}
+                        style={{
+                          pointerEvents: deletingId === car.id ? "none" : "auto",
+                          opacity: deletingId === car.id ? 0.5 : 1,
+                        }}
+                      >
                         <span className="flaticon-trash"></span>
                       </a>
                     </li>
