@@ -4,9 +4,22 @@ import { useRouter } from "next/navigation";
 
 const AddListingFormGeneral = () => {
   const router = useRouter();
+
+  const categoryBodyTypeMap = {
+    automobile: "Cars",
+    "auto-part": "Auto Parts",
+    species: "General",
+  };
+
+  const categoryOptions = [
+    { value: "automobile", label: "Automobile" },
+    { value: "auto-part", label: "Auto Part" },
+    { value: "species", label: "General" },
+  ];
+
   const [formData, setFormData] = useState({
     category: "species",
-    bodyType: "General",
+    bodyType: categoryBodyTypeMap["species"],
     title: "",
     productCategory: "",
     packagingType: "",
@@ -23,7 +36,11 @@ const AddListingFormGeneral = () => {
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setFormData((p) => ({ ...p, [name]: value }));
+    setFormData((p) => ({
+      ...p,
+      [name]: value,
+      ...(name === "category" ? { bodyType: categoryBodyTypeMap[value] || p.bodyType } : {}),
+    }));
     setErrors((p) => ({ ...p, [name]: undefined }));
   };
 
@@ -64,8 +81,8 @@ const AddListingFormGeneral = () => {
       const useMultipart = imageFiles.length > 0;
       if (useMultipart) {
         const fd = new FormData();
-        fd.append("category", "species");
-        fd.append("bodyType", formData.bodyType || "General");
+        fd.append("category", formData.category || "species");
+        fd.append("bodyType", categoryBodyTypeMap[formData.category] || formData.bodyType || "General");
         fd.append("title", formData.title || "New Listing");
         fd.append("productCategory", formData.productCategory || "");
         fd.append("packagingType", formData.packagingType || "");
@@ -77,7 +94,11 @@ const AddListingFormGeneral = () => {
         imageFiles.forEach((f) => fd.append("images", f));
         response = await fetch("/api/listings", { method: "POST", body: fd });
       } else {
-        const payload = { ...formData, featured, bodyType: formData.bodyType };
+        const payload = {
+          ...formData,
+          featured,
+          bodyType: categoryBodyTypeMap[formData.category] || formData.bodyType,
+        };
         response = await fetch("/api/listings", { method: "POST", headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload) });
       }
 
@@ -100,6 +121,15 @@ const AddListingFormGeneral = () => {
     <form onSubmit={handleSubmit} className="contact_form">
       {status && <div className="alert alert-danger">{status}</div>}
       <div className="row">
+        <div className="col-sm-6 col-md-4">
+          <label className="form-label">Category</label>
+          <select name="category" value={formData.category} onChange={handleChange} className="form-select">
+            {categoryOptions.map((option) => (
+              <option key={option.value} value={option.value}>{option.label}</option>
+            ))}
+          </select>
+        </div>
+
         <div className="col-sm-6 col-md-4">
           <label className="form-label">Listing Title <span className="text-danger">*</span></label>
           <input name="title" value={formData.title} onChange={handleChange} className={`form-control ${errors.title ? 'is-invalid' : ''}`} />

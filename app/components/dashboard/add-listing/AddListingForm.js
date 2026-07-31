@@ -59,7 +59,7 @@ const AddListingForm = ({ initialCategory = "automobile", compact = false }) => 
   });
   const [imageFiles, setImageFiles] = useState([]);
   const [featured, setFeatured] = useState(false);
-  const [showCategorySelector] = useState(false);
+  const [showCategorySelector] = useState(true);
   const [errors, setErrors] = useState({});
   const [status, setStatus] = useState("");
   const [statusType, setStatusType] = useState("success");
@@ -70,6 +70,7 @@ const AddListingForm = ({ initialCategory = "automobile", compact = false }) => 
     setFormData((previous) => ({
       ...previous,
       [name]: value,
+      ...(name === "category" ? { bodyType: categoryBodyTypeMap[value] || previous.bodyType } : {}),
     }));
     setErrors((previous) => ({
       ...previous,

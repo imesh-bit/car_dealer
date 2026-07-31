@@ -12,9 +12,21 @@ const AddListingFormAutoPart = () => {
     { imgSrc: "/images/category-item/5.png", title: "Coupe", type: "Coupe", delay: 500 },
   ];
 
+  const categoryBodyTypeMap = {
+    automobile: "Cars",
+    "auto-part": "Auto Parts",
+    species: "General",
+  };
+
+  const categoryOptions = [
+    { value: "automobile", label: "Automobile" },
+    { value: "auto-part", label: "Auto Part" },
+    { value: "species", label: "General" },
+  ];
+
   const [formData, setFormData] = useState({
     category: "auto-part",
-    bodyType: categories[0].type,
+    bodyType: categoryBodyTypeMap["auto-part"],
     title: "",
     partCategory: "",
     brand: "",
@@ -29,7 +41,11 @@ const AddListingFormAutoPart = () => {
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setFormData((p) => ({ ...p, [name]: value }));
+    setFormData((p) => ({
+      ...p,
+      [name]: value,
+      ...(name === "category" ? { bodyType: categoryBodyTypeMap[value] || p.bodyType } : {}),
+    }));
     setErrors((p) => ({ ...p, [name]: undefined }));
   };
 
@@ -72,8 +88,8 @@ const AddListingFormAutoPart = () => {
       let response;
       if (useMultipart) {
         const fd = new FormData();
-        fd.append("category", "auto-part");
-        fd.append("bodyType", formData.bodyType || "Compact");
+        fd.append("category", formData.category || "auto-part");
+        fd.append("bodyType", categoryBodyTypeMap[formData.category] || formData.bodyType || "Auto Parts");
         fd.append("title", formData.title || "New Listing");
         fd.append("partCategory", formData.partCategory || "");
         fd.append("brand", formData.brand || "");
@@ -83,7 +99,11 @@ const AddListingFormAutoPart = () => {
         imageFiles.forEach((f) => fd.append("images", f));
         response = await fetch("/api/listings", { method: "POST", body: fd });
       } else {
-        const payload = { ...formData, featured, bodyType: formData.bodyType };
+        const payload = {
+          ...formData,
+          featured,
+          bodyType: categoryBodyTypeMap[formData.category] || formData.bodyType,
+        };
         response = await fetch("/api/listings", { method: "POST", headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload) });
       }
 
@@ -112,9 +132,9 @@ const AddListingFormAutoPart = () => {
         </div>
         <div className="col-sm-6 col-md-4">
           <label className="form-label">Category</label>
-          <select name="bodyType" value={formData.bodyType} onChange={handleChange} className="form-select">
-            {categories.map((c) => (
-              <option key={c.type} value={c.type}>{c.title}</option>
+          <select name="category" value={formData.category} onChange={handleChange} className="form-select">
+            {categoryOptions.map((option) => (
+              <option key={option.value} value={option.value}>{option.label}</option>
             ))}
           </select>
         </div>
