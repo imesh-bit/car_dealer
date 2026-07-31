@@ -7,7 +7,7 @@ const initialListingForm = {
   bodyType: "Cars",
   title: "",
   condition: "Used",
-  type: "Select Type",
+  type: "Cars",
   make: "",
   model: "",
   year: "2023",
@@ -50,6 +50,13 @@ const categoryLabelMap = {
   species: "General",
 };
 
+const automobileTypeOptions = [
+  { value: "Cars", label: "Cars" },
+  { value: "Bikes", label: "Bikes" },
+  { value: "Trucks", label: "Trucks" },
+  { value: "Machinery", label: "Machinery" },
+];
+
 const AddListingForm = ({ initialCategory = "automobile", compact = false }) => {
   const router = useRouter();
   const [formData, setFormData] = useState({
@@ -70,7 +77,10 @@ const AddListingForm = ({ initialCategory = "automobile", compact = false }) => 
     setFormData((previous) => ({
       ...previous,
       [name]: value,
-      ...(name === "category" ? { bodyType: categoryBodyTypeMap[value] || previous.bodyType } : {}),
+      ...(name === "category"
+        ? { bodyType: categoryBodyTypeMap[value] || previous.bodyType }
+        : {}),
+      ...(name === "type" ? { bodyType: value || previous.bodyType } : {}),
     }));
     setErrors((previous) => ({
       ...previous,
@@ -239,7 +249,7 @@ const AddListingForm = ({ initialCategory = "automobile", compact = false }) => 
       if (useMultipart) {
         const formPayload = new FormData();
         formPayload.append("category", formData.category || "automobile");
-        formPayload.append("bodyType", categoryBodyTypeMap[formData.category] || formData.bodyType || "Cars");
+        formPayload.append("bodyType", formData.type || categoryBodyTypeMap[formData.category] || formData.bodyType || "Cars");
         formPayload.append("image", formData.imageUrl || "/images/listing/1.jpg");
         formPayload.append("title", formData.title || "New Listing");
         formPayload.append("price", String(Number(formData.price) || 0));
@@ -286,7 +296,7 @@ const AddListingForm = ({ initialCategory = "automobile", compact = false }) => 
       } else {
         const payload = {
           category: formData.category || "automobile",
-          bodyType: categoryBodyTypeMap[formData.category] || formData.bodyType || "Cars",
+          bodyType: formData.type || categoryBodyTypeMap[formData.category] || formData.bodyType || "Cars",
           image: formData.imageUrl || "/images/listing/1.jpg",
           title: formData.title || "New Listing",
           price: Number(formData.price) || 0,
@@ -590,19 +600,21 @@ const AddListingForm = ({ initialCategory = "automobile", compact = false }) => 
 
         <div className="col-lg-12">
           <div className="row">
-            {showCategorySelector && (
+            {formData.category === "automobile" && (
               <div className="col-sm-6 col-md-4">
                 <div className="mb20">
-                  <label className="form-label">Category</label>
+                  <label className="form-label">Type</label>
                   <select
-                    name="category"
+                    name="type"
                     className="form-select"
-                    value={formData.category}
+                    value={formData.type}
                     onChange={handleChange}
                   >
-                    <option value="automobile">Automobile</option>
-                    <option value="auto-part">Auto Part</option>
-                    <option value="species">General</option>
+                    {automobileTypeOptions.map((option) => (
+                      <option key={option.value} value={option.value}>
+                        {option.label}
+                      </option>
+                    ))}
                   </select>
                 </div>
               </div>

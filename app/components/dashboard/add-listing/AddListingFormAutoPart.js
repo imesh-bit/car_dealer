@@ -4,13 +4,6 @@ import { useRouter } from "next/navigation";
 
 const AddListingFormAutoPart = () => {
   const router = useRouter();
-  const categories = [
-    { imgSrc: "/images/category-item/1.jpg", title: "Compact", type: "Compact", delay: 50 },
-    { imgSrc: "/images/category-item/2.png", title: "Sedan", type: "Sedan", delay: 200 },
-    { imgSrc: "/images/category-item/3.png", title: "SUV", type: "SUV", delay: 300 },
-    { imgSrc: "/images/category-item/4.png", title: "Convertible", type: "Convertible", delay: 400 },
-    { imgSrc: "/images/category-item/5.png", title: "Coupe", type: "Coupe", delay: 500 },
-  ];
 
   const categoryBodyTypeMap = {
     automobile: "Cars",
@@ -24,11 +17,19 @@ const AddListingFormAutoPart = () => {
     { value: "species", label: "General" },
   ];
 
+  const autoPartCategoryOptions = [
+    { value: "Engine", label: "Engine" },
+    { value: "Cooling", label: "Cooling" },
+    { value: "Electrical", label: "Electrical" },
+    { value: "Brakes", label: "Brakes" },
+    { value: "Suspension", label: "Suspension" },
+  ];
+
   const [formData, setFormData] = useState({
     category: "auto-part",
     bodyType: categoryBodyTypeMap["auto-part"],
     title: "",
-    partCategory: "",
+    partCategory: "Engine",
     brand: "",
     price: "",
     description: "",
@@ -65,7 +66,7 @@ const AddListingFormAutoPart = () => {
   };
 
   const clearForm = () => {
-    setFormData({ category: "auto-part", title: "", partCategory: "", brand: "", price: "", description: "" });
+    setFormData({ category: "auto-part", title: "", partCategory: "Engine", brand: "", price: "", description: "" });
     setImageFiles([]);
     setFeatured(false);
     setErrors({});
@@ -131,16 +132,12 @@ const AddListingFormAutoPart = () => {
           {errors.title && <div className="text-danger mt15">{errors.title}</div>}
         </div>
         <div className="col-sm-6 col-md-4">
-          <label className="form-label">Category</label>
-          <select name="category" value={formData.category} onChange={handleChange} className="form-select">
-            {categoryOptions.map((option) => (
+          <label className="form-label">Part Category <span className="text-danger">*</span></label>
+          <select name="partCategory" value={formData.partCategory} onChange={handleChange} className={`form-select ${errors.partCategory ? 'is-invalid' : ''}`}>
+            {autoPartCategoryOptions.map((option) => (
               <option key={option.value} value={option.value}>{option.label}</option>
             ))}
           </select>
-        </div>
-        <div className="col-sm-6 col-md-4">
-          <label className="form-label">Part Category <span className="text-danger">*</span></label>
-          <input name="partCategory" value={formData.partCategory} onChange={handleChange} className={`form-control ${errors.partCategory ? 'is-invalid' : ''}`} />
           {errors.partCategory && <div className="text-danger mt15">{errors.partCategory}</div>}
         </div>
         <div className="col-sm-6 col-md-4">

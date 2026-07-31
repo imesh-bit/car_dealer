@@ -17,11 +17,18 @@ const AddListingFormGeneral = () => {
     { value: "species", label: "General" },
   ];
 
+  const generalCategoryOptions = [
+    { value: "Processed Food Items", label: "Processed Food Items" },
+    { value: "Dry Goods & Spices", label: "Dry Goods & Spices" },
+    { value: "Household & Daily Essentials", label: "Household & Daily Essentials" },
+    { value: "Industrial Raw Materials", label: "Industrial Raw Materials" },
+  ];
+
   const [formData, setFormData] = useState({
     category: "species",
     bodyType: categoryBodyTypeMap["species"],
     title: "",
-    productCategory: "",
+    productCategory: "Processed Food Items",
     packagingType: "",
     orderScale: "",
     minimumOrderQuantity: "",
@@ -58,7 +65,7 @@ const AddListingFormGeneral = () => {
   };
 
   const clearForm = () => {
-    setFormData({ category: "species", title: "", productCategory: "", packagingType: "", orderScale: "", minimumOrderQuantity: "", price: "", description: "" });
+    setFormData({ category: "species", title: "", productCategory: "Processed Food Items", packagingType: "", orderScale: "", minimumOrderQuantity: "", price: "", description: "" });
     setImageFiles([]);
     setFeatured(false);
     setErrors({});
@@ -122,15 +129,6 @@ const AddListingFormGeneral = () => {
       {status && <div className="alert alert-danger">{status}</div>}
       <div className="row">
         <div className="col-sm-6 col-md-4">
-          <label className="form-label">Category</label>
-          <select name="category" value={formData.category} onChange={handleChange} className="form-select">
-            {categoryOptions.map((option) => (
-              <option key={option.value} value={option.value}>{option.label}</option>
-            ))}
-          </select>
-        </div>
-
-        <div className="col-sm-6 col-md-4">
           <label className="form-label">Listing Title <span className="text-danger">*</span></label>
           <input name="title" value={formData.title} onChange={handleChange} className={`form-control ${errors.title ? 'is-invalid' : ''}`} />
           {errors.title && <div className="text-danger mt15">{errors.title}</div>}
@@ -138,7 +136,11 @@ const AddListingFormGeneral = () => {
 
         <div className="col-sm-6 col-md-4">
           <label className="form-label">Product Category <span className="text-danger">*</span></label>
-          <input name="productCategory" value={formData.productCategory} onChange={handleChange} className={`form-control ${errors.productCategory ? 'is-invalid' : ''}`} />
+          <select name="productCategory" value={formData.productCategory} onChange={handleChange} className={`form-select ${errors.productCategory ? 'is-invalid' : ''}`}>
+            {generalCategoryOptions.map((option) => (
+              <option key={option.value} value={option.value}>{option.label}</option>
+            ))}
+          </select>
           {errors.productCategory && <div className="text-danger mt15">{errors.productCategory}</div>}
         </div>
 
