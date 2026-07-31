@@ -1,11 +1,13 @@
-import listingCar from "@/data/listingCar";
+import { useMergedListings } from "@/hooks/useMergedListings";
 import Image from "next/image";
 import Link from "next/link";
 
 const CarItems = () => {
+  const mergedListings = useMergedListings();
+
   return (
     <>
-      {listingCar.slice(0, 6).map((listing) => (
+      {mergedListings.slice(0, 6).map((listing) => (
         <div className="col-sm-6 col-xl-12 col-xxl-6" key={listing.id}>
           <div className="car-listing list_style">
             <div className="thumb">

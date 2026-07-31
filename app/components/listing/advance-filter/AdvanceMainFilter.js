@@ -90,38 +90,40 @@
 
 "use client";
 import { useMemo } from "react";
-import listingsData from "@/data/listingCar";
+import { useMergedListings } from "@/hooks/useMergedListings";
 
 const uniqueSorted = (values) => [...new Set(values.filter(Boolean))].sort();
 
 const AdvanceMainFilter = ({ filters, updateFilter }) => {
+  const mergedListings = useMergedListings();
+
   const yearOptions = useMemo(
-    () => uniqueSorted(listingsData.map((car) => car.year)).reverse(),
-    []
+    () => uniqueSorted(mergedListings.map((car) => car.year)).reverse(),
+    [mergedListings]
   );
   const fuelTypeOptions = useMemo(
-    () => uniqueSorted(listingsData.map((car) => car.fuelType)),
-    []
+    () => uniqueSorted(mergedListings.map((car) => car.fuelType)),
+    [mergedListings]
   );
   const transmissionOptions = useMemo(
-    () => uniqueSorted(listingsData.map((car) => car.transmission)),
-    []
+    () => uniqueSorted(mergedListings.map((car) => car.transmission)),
+    [mergedListings]
   );
   const doorsOptions = useMemo(
-    () => uniqueSorted(listingsData.map((car) => car.doors)),
-    []
+    () => uniqueSorted(mergedListings.map((car) => car.doors)),
+    [mergedListings]
   );
   const interiorColorOptions = useMemo(
-    () => uniqueSorted(listingsData.map((car) => car.interiorColor)),
-    []
+    () => uniqueSorted(mergedListings.map((car) => car.interiorColor)),
+    [mergedListings]
   );
   const exteriorColorOptions = useMemo(
-    () => uniqueSorted(listingsData.map((car) => car.color)),
-    []
+    () => uniqueSorted(mergedListings.map((car) => car.color)),
+    [mergedListings]
   );
   const cylinderOptions = useMemo(
-    () => uniqueSorted(listingsData.map((car) => car.cylinders)),
-    []
+    () => uniqueSorted(mergedListings.map((car) => car.cylinders)),
+    [mergedListings]
   );
 
   // "Listing Status" (Active/Pending/Disable) from the original template

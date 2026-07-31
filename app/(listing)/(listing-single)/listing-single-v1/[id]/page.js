@@ -23,7 +23,6 @@ import SellerDetail from "@/app/components/listing/listing-single/sidebar/Seller
 import Link from "next/link";
 import MobileStickyCta from "@/app/components/common/MobileStickyCta";
 import ReleatedCar from "@/app/components/listing/listing-single/ReleatedCar";
-import listingsData from "@/data/listingCar";
 import { CarJsonLd } from "@/app/components/common/JsonLd";
 import { createListingMetadata } from "@/lib/metadata";
 
@@ -43,8 +42,7 @@ const readUploadedListings = async () => {
 export const dynamic = "force-dynamic";
 
 const getAllListings = async () => {
-  const uploadedListings = await readUploadedListings();
-  return [...uploadedListings, ...listingsData];
+  return readUploadedListings();
 };
 
 // Dynamic <title> per car

@@ -1,4 +1,5 @@
-import listingCar from "@/data/listingCar";
+"use client";
+import { useMergedListings } from "@/hooks/useMergedListings";
 import Image from "next/image";
 import Link from "next/link";
 

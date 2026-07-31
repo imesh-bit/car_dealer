@@ -69,15 +69,17 @@
 
 "use client";
 import { useMemo } from "react";
-import listingsData from "@/data/listingCar";
+import { useMergedListings } from "@/hooks/useMergedListings";
 
 const CheckBoxFilter = ({ selectedFeatures, onToggle }) => {
+  const mergedListings = useMergedListings();
+
   // Flatten every car's feature items into one list, count how many cars
   // have each one, and surface the most common ones as checkboxes.
   const popularFeatures = useMemo(() => {
     const counts = {};
 
-    listingsData.forEach((car) => {
+    mergedListings.forEach((car) => {
       (car.features || []).forEach((category) => {
         category.items.forEach((item) => {
           counts[item] = (counts[item] || 0) + 1;
@@ -89,7 +91,7 @@ const CheckBoxFilter = ({ selectedFeatures, onToggle }) => {
       .sort((a, b) => b[1] - a[1])
       .slice(0, 6)
       .map(([label, count]) => ({ label, count }));
-  }, []);
+  }, [mergedListings]);
 
   const firstHalf = popularFeatures.slice(0, Math.ceil(popularFeatures.length / 2));
   const secondHalf = popularFeatures.slice(Math.ceil(popularFeatures.length / 2));

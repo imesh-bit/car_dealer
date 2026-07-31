@@ -70,7 +70,7 @@
 "use client";
 import { useMemo, useState } from "react";
 import { useRouter } from "next/navigation";
-import listingsData from "@/data/listingCar";
+import { useMergedListings } from "@/hooks/useMergedListings";
 import AdvanceMainFilter from "./AdvanceMainFilter";
 import CheckBoxFilter from "./CheckBoxFilter";
 import MainFilter from "./MainFilter";
@@ -102,14 +102,16 @@ const emptyFilters = {
 const AdvanceFilter = ({ category = "automobile" }) => {
   const router = useRouter();
 
+  const mergedListings = useMergedListings();
+
   // Real min/max price straight from the data, used as the slider bounds
   const priceBounds = useMemo(() => {
-    const prices = listingsData.map((car) => car.price).filter(Boolean);
+    const prices = mergedListings.map((car) => car.price).filter(Boolean);
     return {
       min: Math.min(...prices),
       max: Math.max(...prices),
     };
-  }, []);
+  }, [mergedListings]);
 
   const [filters, setFilters] = useState(emptyFilters);
   const [priceRange, setPriceRange] = useState({

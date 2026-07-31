@@ -1,5 +1,6 @@
+"use client";
 import Link from "next/link";
-import listingCar from "@/data/listingCar";
+import { useMergedListings } from "@/hooks/useMergedListings";
 
 const categories = [
   {
@@ -30,9 +31,10 @@ const categories = [
 ];
 
 const Category = () => {
+  const mergedListings = useMergedListings();
   const categoryCounts = categories.map((category) => ({
     ...category,
-    listing: listingCar.filter(
+    listing: mergedListings.filter(
       (item) => item.bodyType?.toLowerCase() === category.type.toLowerCase()
     ).length,
   }));

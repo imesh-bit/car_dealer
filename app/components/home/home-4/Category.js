@@ -1,5 +1,6 @@
+"use client";
 import Link from "next/link";
-import listingCar from "@/data/listingCar";
+import { useMergedListings } from "@/hooks/useMergedListings";
 
 // icons8 "ios" style, white — used for every category icon
 const iconWrapStyle = {
@@ -69,11 +70,12 @@ const getAutomobileHeroCategory = (listing) => {
 };
 
 const Category = ({ category = "automobile" }) => {
+  const mergedListings = useMergedListings();
   const categories = categoryGroups[category] || categoryGroups.automobile;
 
   const categoryCounts = categories.map((item) => ({
     ...item,
-    listing: listingCar.filter((listing) => {
+    listing: mergedListings.filter((listing) => {
       if (category === "auto-part") {
         return (listing.partCategory || "").toLowerCase() === item.value.toLowerCase();
       }
