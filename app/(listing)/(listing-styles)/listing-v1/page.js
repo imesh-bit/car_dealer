@@ -11,7 +11,6 @@ import AdvanceFilter from "@/app/components/listing/advance-filter";
 import Pagination from "@/app/components/common/Pagination";
 import ListGridFilter from "@/app/components/listing/ListGridFilter";
 import CarItems from "@/app/components/listing/listing-styles/listing-v1/CarItems";
-import listingCar from "@/data/listingCar";
 import { createPageMetadata } from "@/lib/metadata";
 
 const readUploadedListings = async () => {
@@ -71,8 +70,7 @@ const ListingV1 = async ({ searchParams }) => {
     };
 
     const uploadedListings = await readUploadedListings();
-    const mergedListings = [...uploadedListings, ...listingCar];
-    const visibleListings = mergedListings.filter(
+    const visibleListings = uploadedListings.filter(
         (item) => (item.category || "automobile") === activeCategory
     );
     const totalCount = visibleListings.length;

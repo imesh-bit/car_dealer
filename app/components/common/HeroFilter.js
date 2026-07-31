@@ -866,7 +866,7 @@
 "use client";
 import { useRouter } from "next/navigation";
 import { useMemo, useState } from "react";
-import listingsData from "@/data/listingCar";
+import { useMergedListings } from "@/hooks/useMergedListings";
 
 const tabs = ["Automobiles", "Auto Parts", "General"];
 
@@ -905,28 +905,30 @@ const HeroFilter = () => {
     "Select Order Scale (MOQ)"
   );
 
+  const mergedListings = useMergedListings();
+
   const automobileListings = useMemo(
     () =>
-      listingsData.filter(
+      mergedListings.filter(
         (listing) => (listing.category || "automobile") === "automobile"
       ),
-    []
+    [mergedListings]
   );
 
   const autoPartListings = useMemo(
     () =>
-      listingsData.filter(
+      mergedListings.filter(
         (listing) => (listing.category || "automobile") === "auto-part"
       ),
-    []
+    [mergedListings]
   );
 
   const speciesListings = useMemo(
     () =>
-      listingsData.filter(
+      mergedListings.filter(
         (listing) => (listing.category || "automobile") === "species"
       ),
-    []
+    [mergedListings]
   );
 
   const activeListings = useMemo(() => {

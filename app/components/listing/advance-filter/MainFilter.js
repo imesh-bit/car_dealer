@@ -2,10 +2,11 @@
 
 "use client";
 import { useMemo } from "react";
-import listingsData from "@/data/listingCar";
+import { useMergedListings } from "@/hooks/useMergedListings";
 
 const MainFilter = ({ filters, updateFilter, category = "automobile" }) => {
   const activeCategory = category || "automobile";
+  const mergedListings = useMergedListings();
 
   const makeOptions = useMemo(() => {
     const makes = [
@@ -22,8 +23,8 @@ const MainFilter = ({ filters, updateFilter, category = "automobile" }) => {
   const modelOptions = useMemo(() => {
     const relevantCars =
       filters.make === "Select Makes"
-        ? listingsData.filter((item) => (item.category || "automobile") === "automobile")
-        : listingsData.filter(
+        ? mergedListings.filter((item) => (item.category || "automobile") === "automobile")
+        : mergedListings.filter(
             (item) =>
               (item.category || "automobile") === "automobile" &&
               item.make === filters.make
@@ -35,9 +36,9 @@ const MainFilter = ({ filters, updateFilter, category = "automobile" }) => {
 
   const bodyTypeOptions = useMemo(() => {
     return [
-      ...new Set(listingsData.map((car) => car.bodyType).filter(Boolean)),
+      ...new Set(mergedListings.map((car) => car.bodyType).filter(Boolean)),
     ].sort();
-  }, []);
+  }, [mergedListings]);
 
   const partCategoryOptions = useMemo(() => {
     return [
@@ -48,7 +49,7 @@ const MainFilter = ({ filters, updateFilter, category = "automobile" }) => {
           .filter(Boolean)
       ),
     ].sort();
-  }, []);
+  }, [mergedListings]);
 
   const brandOptions = useMemo(() => {
     return [
@@ -59,7 +60,7 @@ const MainFilter = ({ filters, updateFilter, category = "automobile" }) => {
           .filter(Boolean)
       ),
     ].sort();
-  }, []);
+  }, [mergedListings]);
 
   const productCategoryOptions = useMemo(() => {
     return [
@@ -70,7 +71,7 @@ const MainFilter = ({ filters, updateFilter, category = "automobile" }) => {
           .filter(Boolean)
       ),
     ].sort();
-  }, []);
+  }, [mergedListings]);
 
   const packagingTypeOptions = useMemo(() => {
     return [
@@ -81,7 +82,7 @@ const MainFilter = ({ filters, updateFilter, category = "automobile" }) => {
           .filter(Boolean)
       ),
     ].sort();
-  }, []);
+  }, [mergedListings]);
 
   const orderScaleOptions = useMemo(() => {
     return [
