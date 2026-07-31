@@ -70,6 +70,7 @@
 "use client";
 import { useMemo, useState } from "react";
 import { useRouter } from "next/navigation";
+import listingCar from "@/data/listingCar";
 import { useMergedListings } from "@/hooks/useMergedListings";
 import AdvanceMainFilter from "./AdvanceMainFilter";
 import CheckBoxFilter from "./CheckBoxFilter";
@@ -104,9 +105,18 @@ const AdvanceFilter = ({ category = "automobile" }) => {
 
   const mergedListings = useMergedListings();
 
-  // Real min/max price straight from the data, used as the slider bounds
+  // Real min/max price straight from the data, used as the slider bounds.
+  // Fall back to the static catalog when the merged upload list has not loaded yet.
   const priceBounds = useMemo(() => {
-    const prices = mergedListings.map((car) => car.price).filter(Boolean);
+    const sourceListings = mergedListings.length > 0 ? mergedListings : listingCar;
+    const prices = sourceListings
+      .map((car) => Number(car.price))
+      .filter((price) => Number.isFinite(price) && price > 0);
+
+    if (prices.length === 0) {
+      return { min: 0, max: 100000 };
+    }
+
     return {
       min: Math.min(...prices),
       max: Math.max(...prices),
