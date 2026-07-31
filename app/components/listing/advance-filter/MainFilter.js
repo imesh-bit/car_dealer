@@ -11,14 +11,14 @@ const MainFilter = ({ filters, updateFilter, category = "automobile" }) => {
   const makeOptions = useMemo(() => {
     const makes = [
       ...new Set(
-        listingsData
+        mergedListings
           .filter((item) => (item.category || "automobile") === "automobile")
           .map((car) => car.make)
           .filter(Boolean)
       ),
     ].sort();
     return makes;
-  }, []);
+  }, [mergedListings]);
 
   const modelOptions = useMemo(() => {
     const relevantCars =
@@ -43,7 +43,7 @@ const MainFilter = ({ filters, updateFilter, category = "automobile" }) => {
   const partCategoryOptions = useMemo(() => {
     return [
       ...new Set(
-        listingsData
+        mergedListings
           .filter((item) => (item.category || "automobile") === "auto-part")
           .map((item) => item.partCategory)
           .filter(Boolean)
@@ -54,7 +54,7 @@ const MainFilter = ({ filters, updateFilter, category = "automobile" }) => {
   const brandOptions = useMemo(() => {
     return [
       ...new Set(
-        listingsData
+        mergedListings
           .filter((item) => (item.category || "automobile") === "auto-part")
           .map((item) => item.brand)
           .filter(Boolean)
@@ -65,7 +65,7 @@ const MainFilter = ({ filters, updateFilter, category = "automobile" }) => {
   const productCategoryOptions = useMemo(() => {
     return [
       ...new Set(
-        listingsData
+        mergedListings
           .filter((item) => (item.category || "automobile") === "species")
           .map((item) => item.productCategory)
           .filter(Boolean)
@@ -76,7 +76,7 @@ const MainFilter = ({ filters, updateFilter, category = "automobile" }) => {
   const packagingTypeOptions = useMemo(() => {
     return [
       ...new Set(
-        listingsData
+        mergedListings
           .filter((item) => (item.category || "automobile") === "species")
           .map((item) => item.packagingType)
           .filter(Boolean)
@@ -87,13 +87,13 @@ const MainFilter = ({ filters, updateFilter, category = "automobile" }) => {
   const orderScaleOptions = useMemo(() => {
     return [
       ...new Set(
-        listingsData
+        mergedListings
           .filter((item) => (item.category || "automobile") === "species")
           .map((item) => item.orderScale)
           .filter(Boolean)
       ),
     ].sort();
-  }, []);
+  }, [mergedListings]);
 
   // NOTE: this dropdown was originally labeled "Condition" but its values
   // ("Most Recent", "Best Selling", "Old Review"...) are sort options, not

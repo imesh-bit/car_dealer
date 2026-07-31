@@ -147,7 +147,7 @@ const AddListingFormAutoPart = () => {
         </div>
 
         <div className="col-sm-6 col-md-4">
-          <label className="form-label">Price (USD) <span className="text-danger">*</span></label>
+          <label className="form-label">Price (¥)<span className="text-danger">*</span></label>
           <input name="price" type="number" value={formData.price} onChange={handleChange} className={`form-control ${errors.price ? 'is-invalid' : ''}`} />
           {errors.price && <div className="text-danger mt15">{errors.price}</div>}
         </div>

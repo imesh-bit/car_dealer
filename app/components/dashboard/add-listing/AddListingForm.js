@@ -430,7 +430,7 @@ const AddListingForm = ({ initialCategory = "automobile", compact = false }) => 
 
           <div className="col-sm-6 col-md-4">
             <div className="mb20">
-              <label className="form-label">Price (USD) <span className="text-danger">*</span></label>
+              <label className="form-label"> <span className="text-danger">*</span></label>
               <input name="price" className={`form-control form_control ${errors.price ? "is-invalid" : ""}`} type="number" placeholder="Price" value={formData.price} onChange={handleChange} />
               {errors.price && <div className="text-danger mt15">{errors.price}</div>}
             </div>
