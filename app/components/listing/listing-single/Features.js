@@ -56,40 +56,11 @@
 // export default Features;
 
 const Features = ({ car }) => {
-  const defaultFeatureCategories = [
-    {
-      title: "Convenience",
-      items: [
-        "Heated Seats",
-        "Heated Steering Wheel",
-        "Navigation System",
-        "Power Liftgate",
-      ],
-    },
-    {
-      title: "Entertainment",
-      items: ["Apple CarPlay/Android Auto", "Bluetooth", "HomeLink"],
-    },
-    {
-      title: "Exterior",
-      items: ["Alloy Wheels", "Sunroof/Moonroof"],
-    },
-    {
-      title: "Safety",
-      items: [
-        "Backup Camera",
-        "Blind Spot Monitor",
-        "Brake Assist",
-        "LED Headlights",
-        "Stability Control",
-      ],
-    },
-  ];
+  const featureCategories = Array.isArray(car?.features) ? car.features : [];
 
-  const featureCategories =
-    car?.features && car.features.length > 0
-      ? car.features
-      : defaultFeatureCategories;
+  if (featureCategories.length === 0) {
+    return null;
+  }
 
   return (
     <>
