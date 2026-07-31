@@ -3,12 +3,13 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation, Autoplay } from "swiper";
 import "swiper/css";
 import "swiper/css/navigation";
-import listingCar from "@/data/listingCar";
 import Image from "next/image";
 import Link from "next/link";
+import { useMergedListings } from "@/hooks/useMergedListings";
 
 const PopularListings = ({ category = "automobile" }) => {
-  const visibleListings = listingCar.filter(
+  const mergedListings = useMergedListings();
+  const visibleListings = mergedListings.filter(
     (item) => (item.category || "automobile") === category
   );
 
