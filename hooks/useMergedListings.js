@@ -1,6 +1,5 @@
 "use client";
 import { useCallback, useEffect, useMemo, useState } from "react";
-import listingCar from "@/data/listingCar";
 
 const REFRESH_EVENT = "voiture:listings-updated";
 
@@ -47,5 +46,5 @@ export const useMergedListings = () => {
     };
   }, [loadListings]);
 
-  return useMemo(() => [...uploadedListings, ...listingCar], [uploadedListings]);
+  return useMemo(() => [...uploadedListings], [uploadedListings]);
 };
