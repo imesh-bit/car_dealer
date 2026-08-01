@@ -34,10 +34,26 @@ export default function ScrollToTop() {
         <>
           <div
             className="scrollToHome"
-            style={{ cursor: "pointer" }}
+            style={{
+              cursor: "pointer",
+              position: "fixed",
+              right: "1rem",
+              bottom: "5rem",
+              zIndex: 1200,
+              width: "58px",
+              height: "58px",
+              borderRadius: "999px",
+              background: "var(--primary-color)",
+              color: "#ffffff",
+              boxShadow: "0 10px 30px rgba(0, 0, 0, 0.18)",
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              fontSize: "1.1rem",
+            }}
             onClick={scrollToTop}
           >
-            <i className="fas fa-arrow-up"></i>
+            <i className="fas fa-arrow-up" aria-hidden="true" />
           </div>
         </>
       )}
