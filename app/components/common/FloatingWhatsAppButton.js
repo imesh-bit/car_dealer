@@ -13,7 +13,7 @@ const FloatingWhatsAppButton = () => {
       style={{
         position: "fixed",
         right: "1rem",
-        bottom: "1rem",
+        bottom: "calc(5.4rem + env(safe-area-inset-bottom))",
         zIndex: 1200,
         display: "inline-flex",
         alignItems: "center",
