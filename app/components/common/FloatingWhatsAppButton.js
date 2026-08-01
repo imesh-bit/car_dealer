@@ -1,7 +1,7 @@
 const FloatingWhatsAppButton = () => {
   const whatsappNumber = "819063609950";
   const whatsappMessage = encodeURIComponent(
-    "Hi RAICO GROUP, I'd like to inquire about your listings."
+    "Hi RAIKO GROUP, I'd like to inquire about your listings."
   );
 
   return (

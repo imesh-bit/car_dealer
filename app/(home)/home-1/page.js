@@ -26,9 +26,9 @@ import Address from "@/app/components/home/home-3/Address";
 import { createPageMetadata } from "@/lib/metadata";
 
 export const metadata = createPageMetadata({
-  title: "Automotive & Car Dealer",
+  title: "RAIKO GROUP | Japan Export & Wholesale Sourcing — Vehicles, Parts & Trade Goods",
   description:
-    "Browse featured cars, compare listings, and find the right vehicle at the best price with RAICO GROUP.",
+    "RAIKO GROUP exports quality vehicles, auto parts, and wholesale trade goods from Japan to buyers worldwide. Transparent pricing, verified suppliers, and fast quote turnaround.",
   path: "/",
 });
 

@@ -24,7 +24,7 @@ const Form = () => {
 
     const whatsappNumber = "819063609950";
     const text = [
-      "Hello RAICO GROUP,",
+      "Hello RAIKO GROUP,",
       `First Name: ${formData.firstName}`,
       `Last Name: ${formData.lastName}`,
       `Email: ${formData.email}`,

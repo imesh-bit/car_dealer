@@ -1,8 +1,8 @@
 import Home_1 from "../home-1/page";
 
 export const metadata = {
-  title: "RAICO GROUP - General",
-  description: "RAICO GROUP - General.",
+  title: "RAIKO GROUP - General",
+  description: "RAIKO GROUP - General.",
 };
 
 const HomeSpecies = async () => {

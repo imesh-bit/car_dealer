@@ -1,8 +1,8 @@
 import Home_1 from "../home-1/page";
 
 export const metadata = {
-  title: "RAICO GROUP - Auto Parts",
-  description: "RAICO GROUP - Auto Parts.",
+  title: "RAIKO GROUP - Auto Parts",
+  description: "RAIKO GROUP - Auto Parts.",
 };
 
 const HomeAutoPart = async () => {

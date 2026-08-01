@@ -15,7 +15,7 @@ const HomeSpecies = dynamic(() => import("./(home)/home-species/page"), {
 export const metadata = createPageMetadata({
   title: "Find Your New Vehicle",
   description:
-    "Browse featured cars, compare listings, and find the right vehicle at the best price with RAICO GROUP.",
+    "Browse featured cars, compare listings, and find the right vehicle at the best price with RAIKO GROUP.",
   path: "/",
 });
 

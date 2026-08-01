@@ -13,9 +13,9 @@ import LoginSignupModal from "@/app/components/common/login-signup";
 import { createPageMetadata } from "@/lib/metadata";
 
 export const metadata = createPageMetadata({
-  title: "About Us",
+  title: "RAIKO GROUP | Japan Export & Wholesale Sourcing — Vehicles, Parts & Trade Goods",
   description:
-    "Learn about RAICO GROUP, our team, values, and commitment to quality automotive sales and service.",
+    "Learn about RAIKO GROUP, our team, values, and commitment to quality automotive sales and service.",
   path: "/about-us",
 });
 

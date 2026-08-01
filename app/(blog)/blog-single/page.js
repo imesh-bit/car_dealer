@@ -20,7 +20,7 @@ import blogPosts from "@/data/blog";
 const defaultPost = blogPosts[0];
 
 export const metadata = {
-  title: "Young Jackfruit in Brine || Premium Sri Lankan Import | RAICO GROUP",
+  title: "Young Jackfruit in Brine || Premium Sri Lankan Import | RAIKO GROUP",
 };
 
 const BlogDynamicSingle = () => {

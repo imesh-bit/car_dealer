@@ -13,7 +13,7 @@ import { createPageMetadata } from "@/lib/metadata";
 export const metadata = createPageMetadata({
   title: "Contact Us",
   description:
-    "Get in touch with RAICO GROUP for vehicle inquiries, support, and dealership information.",
+    "Get in touch with RAIKO GROUP for vehicle inquiries, support, and dealership information.",
   path: "/contact",
 });
 

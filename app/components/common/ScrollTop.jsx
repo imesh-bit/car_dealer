@@ -38,7 +38,7 @@ export default function ScrollToTop() {
               cursor: "pointer",
               position: "fixed",
               right: "1rem",
-              bottom: "calc(1rem + env(safe-area-inset-bottom))",
+              bottom: "calc(10.8rem + env(safe-area-inset-bottom))",
               zIndex: 1200,
               width: "58px",
               height: "58px",
