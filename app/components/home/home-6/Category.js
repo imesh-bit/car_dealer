@@ -30,12 +30,17 @@ const categories = [
   },
 ];
 
+const getAutomobileCategoryMatch = (listing, categoryType) => {
+  if ((listing.category || "automobile") !== "automobile") return false;
+  return (listing.bodyType || "").toLowerCase() === categoryType.toLowerCase();
+};
+
 const Category = () => {
   const mergedListings = useMergedListings();
   const categoryCounts = categories.map((category) => ({
     ...category,
-    listing: mergedListings.filter(
-      (item) => item.bodyType?.toLowerCase() === category.type.toLowerCase()
+    listing: mergedListings.filter((item) =>
+      getAutomobileCategoryMatch(item, category.type)
     ).length,
   }));
 

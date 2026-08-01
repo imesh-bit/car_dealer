@@ -61,12 +61,12 @@ const categoryGroups = {
 };
 
 const getAutomobileHeroCategory = (listing) => {
-  const bodyType = (listing.bodyType || "").toLowerCase();
+  const bodyType = String(listing.bodyType || "").trim().toLowerCase();
   if (["sedan", "suv", "coupe", "compact", "convertible", "wagon"].includes(bodyType)) return "Cars";
   if (["bike", "motorcycle", "bikes"].includes(bodyType)) return "Bikes";
   if (["truck", "pickup", "lorry", "van", "trailer"].includes(bodyType)) return "Trucks";
   if (["backhoe loader", "machinery", "heavy-equipment"].includes(bodyType)) return "Machinery";
-  return "Cars";
+  return null;
 };
 
 const Category = ({ category = "automobile" }) => {
@@ -76,13 +76,18 @@ const Category = ({ category = "automobile" }) => {
   const categoryCounts = categories.map((item) => ({
     ...item,
     listing: mergedListings.filter((listing) => {
+      if (category === "automobile") {
+        if ((listing.category || "automobile") !== "automobile") return false;
+        const heroCategory = getAutomobileHeroCategory(listing);
+        return heroCategory && heroCategory.toLowerCase() === item.value.toLowerCase();
+      }
       if (category === "auto-part") {
         return (listing.partCategory || "").toLowerCase() === item.value.toLowerCase();
       }
       if (category === "species") {
         return (listing.productCategory || "").toLowerCase() === item.value.toLowerCase();
       }
-      return getAutomobileHeroCategory(listing).toLowerCase() === item.value.toLowerCase();
+      return false;
     }).length,
   }));
 
