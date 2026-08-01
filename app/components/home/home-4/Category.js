@@ -60,15 +60,6 @@ const categoryGroups = {
   ],
 };
 
-const getAutomobileHeroCategory = (listing) => {
-  const bodyType = String(listing.bodyType || "").trim().toLowerCase();
-  if (["sedan", "suv", "coupe", "compact", "convertible", "wagon"].includes(bodyType)) return "Cars";
-  if (["bike", "motorcycle", "bikes"].includes(bodyType)) return "Bikes";
-  if (["truck", "pickup", "lorry", "van", "trailer"].includes(bodyType)) return "Trucks";
-  if (["backhoe loader", "machinery", "heavy-equipment"].includes(bodyType)) return "Machinery";
-  return null;
-};
-
 const Category = ({ category = "automobile" }) => {
   const mergedListings = useMergedListings();
   const categories = categoryGroups[category] || categoryGroups.automobile;
@@ -78,8 +69,10 @@ const Category = ({ category = "automobile" }) => {
     listing: mergedListings.filter((listing) => {
       if (category === "automobile") {
         if ((listing.category || "automobile") !== "automobile") return false;
-        const heroCategory = getAutomobileHeroCategory(listing);
-        return heroCategory && heroCategory.toLowerCase() === item.value.toLowerCase();
+        return (
+          String(listing.bodyType || "").trim().toLowerCase() ===
+          item.value.toLowerCase()
+        );
       }
       if (category === "auto-part") {
         return (listing.partCategory || "").toLowerCase() === item.value.toLowerCase();
