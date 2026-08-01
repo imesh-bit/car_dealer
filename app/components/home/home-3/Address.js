@@ -6,8 +6,7 @@ const Address = () => {
       title: "Our Address",
       text: (
         <>
-          Germany —<br /> 329 Queensberry Street, <br /> North Melbourne VIC
-          3051
+          Japan —<br />924-1 Tenma,Fujii  <br /> Shizuoka, 419-0205
         </>
       ),
     },
@@ -16,7 +15,7 @@ const Address = () => {
       text: (
         <>
           Monday – Friday: 09:00AM – 09:00PM
-          <br /> Saturday: 09:00AM – 07:00PM
+          <br /> Saturday: Closed
           <br /> Sunday: Closed
         </>
       ),

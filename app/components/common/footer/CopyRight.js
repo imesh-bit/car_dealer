@@ -14,7 +14,7 @@ const CopyRight = () => {
           <div className="copyright-widget mt5 text-start mb20-sm">
             <p>
               <a href="" target="_blank" rel="noopener noreferrer">
-                RAICO GROUP
+                RAIKO GROUP
               </a>{" "}
               © {new Date().getFullYear()}. {t("footer.allRightsReserved")}
             </p>

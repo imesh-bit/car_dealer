@@ -24,7 +24,7 @@ const FooterItems = () => {
         <div className="footer_contact_widget">
           <h5 className="title">{t("footer.needHelp")}</h5>
           <div className="footer_phone">+81 90-63609950</div>
-          <p>hello@voiture.com</p>
+          <p>raikogroupjpn@gmail.com</p>
         </div>
       </div>
       {/* End .col */}
@@ -33,11 +33,11 @@ const FooterItems = () => {
         <div className="footer_contact_widget">
           <h5 className="title">{t("footer.openingHours")}</h5>
           <p>
-            {t("footer.mondayFriday")}
+            Mon - Fri: 09:00 AM - 06:00 PM
             <br />
-            {t("footer.saturday")}
+            Saturday: Closed
             <br />
-            {t("footer.sunday")}
+            Sunday: Closed
           </p>
         </div>
       </div>
