@@ -6,8 +6,15 @@ import Link from "next/link";
 import Image from "next/image";
 import { useMergedListings } from "@/hooks/useMergedListings";
 
-const ReleatedCar = () => {
+const ReleatedCar = ({ currentId }) => {
   const mergedListings = useMergedListings();
+  const relatedListings = mergedListings
+    .filter(
+      (listing) =>
+        listing.category === "automobile" &&
+        String(listing.id) !== String(currentId)
+    )
+    .slice(0, 6);
 
   return (
     <>
@@ -36,7 +43,7 @@ const ReleatedCar = () => {
           },
         }}
       >
-        {mergedListings.slice(0, 6).map((listing) => (
+        {relatedListings.map((listing) => (
           <SwiperSlide key={listing.id}>
             <div className="item">
               <div className="car-listing">
