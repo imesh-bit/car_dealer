@@ -35,10 +35,24 @@ const AddListingFormAutoPart = () => {
     description: "",
   });
   const [imageFiles, setImageFiles] = useState([]);
+  const [previewUrls, setPreviewUrls] = useState([]);
   const [featured, setFeatured] = useState(false);
   const [errors, setErrors] = useState({});
   const [submitting, setSubmitting] = useState(false);
   const [status, setStatus] = useState("");
+
+  const revokePreviewUrls = () => {
+    previewUrls.forEach((url) => URL.revokeObjectURL(url));
+    setPreviewUrls([]);
+  };
+
+  const updateImageSelection = (files) => {
+    const nextFiles = Array.from(files || []);
+    previewUrls.forEach((url) => URL.revokeObjectURL(url));
+    const nextPreviewUrls = nextFiles.map((file) => URL.createObjectURL(file));
+    setImageFiles(nextFiles);
+    setPreviewUrls(nextPreviewUrls);
+  };
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -52,7 +66,7 @@ const AddListingFormAutoPart = () => {
 
   const handleImageUpload = (e) => {
     const files = Array.from(e.target.files || []);
-    setImageFiles(files);
+    updateImageSelection(files);
   };
 
   const validate = () => {
@@ -66,6 +80,7 @@ const AddListingFormAutoPart = () => {
   };
 
   const clearForm = () => {
+    revokePreviewUrls();
     setFormData({ category: "auto-part", title: "", partCategory: "Engine", brand: "", price: "", description: "" });
     setImageFiles([]);
     setFeatured(false);
@@ -161,6 +176,21 @@ const AddListingFormAutoPart = () => {
         <div className="col-lg-12">
           <label className="form-label">Upload Images</label>
           <input type="file" accept="image/*" multiple onChange={handleImageUpload} className="form-control" />
+          {imageFiles.length > 0 && (
+            <div className="mt10">
+              <div className="small text-muted mb10">Selected: {imageFiles.map((f) => f.name).join(', ')}</div>
+              <div className="d-flex flex-wrap gap-2">
+                {previewUrls.map((url, index) => (
+                  <img
+                    key={`${url}-${index}`}
+                    src={url}
+                    alt={`Preview ${index + 1}`}
+                    style={{ width: 90, height: 90, objectFit: "cover", borderRadius: 8, border: "1px solid #ddd" }}
+                  />
+                ))}
+              </div>
+            </div>
+          )}
         </div>
 
         <div className="col-lg-12 mt15">

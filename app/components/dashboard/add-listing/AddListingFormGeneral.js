@@ -36,10 +36,24 @@ const AddListingFormGeneral = () => {
     description: "",
   });
   const [imageFiles, setImageFiles] = useState([]);
+  const [previewUrls, setPreviewUrls] = useState([]);
   const [featured, setFeatured] = useState(false);
   const [errors, setErrors] = useState({});
   const [submitting, setSubmitting] = useState(false);
   const [status, setStatus] = useState("");
+
+  const revokePreviewUrls = () => {
+    previewUrls.forEach((url) => URL.revokeObjectURL(url));
+    setPreviewUrls([]);
+  };
+
+  const updateImageSelection = (files) => {
+    const nextFiles = Array.from(files || []);
+    previewUrls.forEach((url) => URL.revokeObjectURL(url));
+    const nextPreviewUrls = nextFiles.map((file) => URL.createObjectURL(file));
+    setImageFiles(nextFiles);
+    setPreviewUrls(nextPreviewUrls);
+  };
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -51,7 +65,7 @@ const AddListingFormGeneral = () => {
     setErrors((p) => ({ ...p, [name]: undefined }));
   };
 
-  const handleImageUpload = (e) => setImageFiles(Array.from(e.target.files || []));
+  const handleImageUpload = (e) => updateImageSelection(e.target.files || []);
 
   const validate = () => {
     const v = {};
@@ -65,6 +79,7 @@ const AddListingFormGeneral = () => {
   };
 
   const clearForm = () => {
+    revokePreviewUrls();
     setFormData({ category: "species", title: "", productCategory: "Processed Food Items", packagingType: "", orderScale: "", minimumOrderQuantity: "", price: "", description: "" });
     setImageFiles([]);
     setFeatured(false);
@@ -176,6 +191,21 @@ const AddListingFormGeneral = () => {
         <div className="col-lg-12">
           <label className="form-label">Upload Images</label>
           <input type="file" accept="image/*" multiple onChange={handleImageUpload} className="form-control" />
+          {imageFiles.length > 0 && (
+            <div className="mt10">
+              <div className="small text-muted mb10">Selected: {imageFiles.map((f) => f.name).join(', ')}</div>
+              <div className="d-flex flex-wrap gap-2">
+                {previewUrls.map((url, index) => (
+                  <img
+                    key={`${url}-${index}`}
+                    src={url}
+                    alt={`Preview ${index + 1}`}
+                    style={{ width: 90, height: 90, objectFit: "cover", borderRadius: 8, border: "1px solid #ddd" }}
+                  />
+                ))}
+              </div>
+            </div>
+          )}
         </div>
 
         <div className="col-lg-12 mt15">

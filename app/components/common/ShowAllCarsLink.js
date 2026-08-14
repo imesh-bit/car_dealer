@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { useTranslation } from "@/hooks/useTranslation";
 
-const ShowAllCarsLink = ({ href = "/page-list-v1", className = "more_listing" }) => {
+const ShowAllCarsLink = ({ href = "/listing-v1", className = "more_listing" }) => {
   const { t } = useTranslation();
 
   return (

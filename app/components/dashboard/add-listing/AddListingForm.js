@@ -65,12 +65,26 @@ const AddListingForm = ({ initialCategory = "automobile", compact = false }) => 
     bodyType: categoryBodyTypeMap[initialCategory] || initialListingForm.bodyType,
   });
   const [imageFiles, setImageFiles] = useState([]);
+  const [previewUrls, setPreviewUrls] = useState([]);
   const [featured, setFeatured] = useState(false);
   const [showCategorySelector] = useState(true);
   const [errors, setErrors] = useState({});
   const [status, setStatus] = useState("");
   const [statusType, setStatusType] = useState("success");
   const [submitting, setSubmitting] = useState(false);
+
+  const revokePreviewUrls = () => {
+    previewUrls.forEach((url) => URL.revokeObjectURL(url));
+    setPreviewUrls([]);
+  };
+
+  const updateImageSelection = (files) => {
+    const nextFiles = Array.from(files || []);
+    previewUrls.forEach((url) => URL.revokeObjectURL(url));
+    const nextPreviewUrls = nextFiles.map((file) => URL.createObjectURL(file));
+    setImageFiles(nextFiles);
+    setPreviewUrls(nextPreviewUrls);
+  };
 
   const handleChange = (event) => {
     const { name, value } = event.target;
@@ -89,6 +103,7 @@ const AddListingForm = ({ initialCategory = "automobile", compact = false }) => 
   };
 
   const clearForm = () => {
+    revokePreviewUrls();
     setFormData({
       ...initialListingForm,
       category: initialCategory,
@@ -99,7 +114,7 @@ const AddListingForm = ({ initialCategory = "automobile", compact = false }) => 
 
   const handleImageUpload = (event) => {
     const files = Array.from(event.target.files || []);
-    setImageFiles(files);
+    updateImageSelection(files);
   };
 
   const addFeatureCategory = () => {
