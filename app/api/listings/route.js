@@ -1,7 +1,7 @@
 import { promises as fs } from "fs";
 import path from "path";
 import { NextResponse } from "next/server";
-import { getDataFile, getUploadDir, getUploadPublicUrl } from "@/lib/storage";
+import { getDataFile, saveUploadedFile } from "@/lib/storage";
 
 const readStoredListings = async () => {
   const DATA_FILE = await getDataFile();
@@ -28,32 +28,7 @@ const ensureDir = async (dirPath) => {
 };
 
 const saveImageBuffer = async (file, imageName, index) => {
-  if (!file || typeof file.arrayBuffer !== "function") {
-    return null;
-  }
-
-  const buffer = Buffer.from(await file.arrayBuffer());
-  const ext = path.extname(file.name || "") || ".png";
-  const extension = ext.replace(/^\./, "").toLowerCase();
-  const rawName = imageName || file.name || "listing";
-  let normalizedName = path.basename(rawName, path.extname(rawName));
-
-  if (normalizedName.toLowerCase().endsWith(`.${extension}`)) {
-    normalizedName = normalizedName.slice(0, -extension.length - 1);
-  }
-
-  const safeBaseName = `${Date.now()}-${index}-${(normalizedName || "listing")
-    .replace(/[^a-z0-9.-]+/gi, "-")
-    .replace(/-+/g, "-")
-    .replace(/^-|-$/g, "")
-    .toLowerCase()}`;
-  const filename = `${safeBaseName}.${extension}`;
-  const uploadDir = await getUploadDir();
-  const filePath = path.join(uploadDir, filename);
-
-  await ensureDir(uploadDir);
-  await fs.writeFile(filePath, buffer);
-  return getUploadPublicUrl(filename);
+  return saveUploadedFile(file, imageName, index);
 };
 
 export async function GET() {

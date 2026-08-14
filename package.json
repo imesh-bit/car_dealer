@@ -10,6 +10,7 @@
     "build:css": "sass public/scss/main.scss public/css/main.css"
   },
   "dependencies": {
+    "@aws-sdk/client-s3": "^3.1110.0",
     "@faker-js/faker": "^8.0.2",
     "@popperjs/core": "^2.11.7",
     "aos": "^2.3.4",

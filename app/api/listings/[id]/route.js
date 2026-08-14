@@ -1,7 +1,7 @@
 import { promises as fs } from "fs";
 import path from "path";
 import { NextResponse } from "next/server";
-import { getDataFile, getUploadDir } from "@/lib/storage";
+import { deleteUploadedFile, getDataFile, getUploadDir } from "@/lib/storage";
 
 const readStoredListings = async () => {
   const DATA_FILE = await getDataFile();
@@ -24,9 +24,6 @@ const writeStoredListings = async (listings) => {
 };
 
 const deleteListingImages = async (listing) => {
-  const uploadDir = await getUploadDir();
-  const prefix = "/api/uploads/listings/";
-
   const urls = new Set();
   if (listing?.image) urls.add(listing.image);
   if (Array.isArray(listing?.gallery)) {
@@ -37,19 +34,9 @@ const deleteListingImages = async (listing) => {
 
   await Promise.all(
     Array.from(urls).map(async (url) => {
-      if (!url.startsWith(prefix)) return;
-
-      const filename = path.basename(decodeURIComponent(url.slice(prefix.length)));
-      const filePath = path.join(uploadDir, filename);
-
-      try {
-        await fs.unlink(filePath);
-      } catch (error) {
-        if (error?.code !== "ENOENT") {
-          console.error("Failed to delete listing image", filePath, error);
-        }
-      }
-    })
+      if (!url) return;
+      await deleteUploadedFile(url);
+    }),
   );
 };
 
