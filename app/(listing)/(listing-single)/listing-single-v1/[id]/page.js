@@ -197,6 +197,14 @@ const ListingSingleV1 = async ({ params }) => {
               <ProductGallery car={car} />
               {/* End Car Gallery */}
 
+              <div className="opening_hour_widgets p30 mt30">
+                <div className="wrapper">
+                  <h4 className="title">General Info</h4>
+                  <Overview car={car} />
+                </div>
+              </div>
+              {/* End opening_hour_widgets */}
+
               <div className="d-block d-lg-none mt30 mb30">
                 <div className="opening_hour_widgets p25 shadow-sm rounded-4 border">
                   <div className="wrapper">
@@ -209,14 +217,6 @@ const ListingSingleV1 = async ({ params }) => {
                   </div>
                 </div>
               </div>
-
-              <div className="opening_hour_widgets p30 mt30">
-                <div className="wrapper">
-                  <h4 className="title">General Info</h4>
-                  <Overview car={car} />
-                </div>
-              </div>
-              {/* End opening_hour_widgets */}
 
               <div className="listing_single_description mt30">
                 <h4 className="mb30">
