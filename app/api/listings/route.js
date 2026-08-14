@@ -2,6 +2,7 @@ import { promises as fs } from "fs";
 import path from "path";
 import { NextResponse } from "next/server";
 import { getDataFile, saveUploadedFile } from "@/lib/storage";
+import { insertSupabaseListing, isSupabaseEnabled, normalizeListingRecord, getSupabaseListings } from "@/lib/supabase";
 
 const readStoredListings = async () => {
   const DATA_FILE = await getDataFile();
@@ -32,6 +33,11 @@ const saveImageBuffer = async (file, imageName, index) => {
 };
 
 export async function GET() {
+  if (isSupabaseEnabled()) {
+    const listings = await getSupabaseListings();
+    return NextResponse.json(listings);
+  }
+
   const listings = await readStoredListings();
   return NextResponse.json(listings);
 }
@@ -151,6 +157,54 @@ export async function POST(request) {
       minimumOrderQuantity: body.minimumOrderQuantity || "",
       auctionGrade: body.auctionGrade || "",
     };
+
+    if (isSupabaseEnabled()) {
+      const payload = {
+        category: listing.category,
+        body_type: listing.bodyType,
+        title: listing.title,
+        price: listing.price,
+        mileage: listing.mileage,
+        fuel_type: listing.fuelType,
+        transmission: listing.transmission,
+        condition: listing.condition,
+        auction_grade: listing.auctionGrade,
+        make: listing.make,
+        model: listing.model,
+        year: listing.year,
+        color: listing.color,
+        drive_type: listing.drivetrain,
+        interior_color: listing.interiorColor,
+        engine_size: listing.engineSize,
+        doors: listing.doors,
+        cylinders: listing.cylinders,
+        vin: listing.vin,
+        location: listing.location,
+        latitude: listing.latitude,
+        longitude: listing.longitude,
+        description: Array.isArray(listing.description) ? listing.description.join("\n\n") : String(listing.description || ""),
+        video_link: listing.videoLink,
+        image: listing.image,
+        gallery: listing.gallery,
+        part_category: listing.partCategory,
+        brand: listing.brand,
+        product_category: listing.productCategory,
+        packaging_type: listing.packagingType,
+        order_scale: listing.orderScale,
+        minimum_order_quantity: listing.minimumOrderQuantity,
+        featured: listing.featured,
+        tags: listing.tags,
+        views: listing.views,
+        features: listing.features,
+      };
+
+      const { data, error } = await insertSupabaseListing(payload);
+      if (error) {
+        throw error;
+      }
+
+      return NextResponse.json(normalizeListingRecord(data), { status: 201 });
+    }
 
     const listings = await readStoredListings();
     listings.unshift(listing);

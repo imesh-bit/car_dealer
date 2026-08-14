@@ -52,9 +52,15 @@ const Descriptions = ({ car }) => {
 
   const paragraphClasses = ["first-para", "mb25", "mt10 mb20"];
 
+  const descriptionValues = Array.isArray(car?.description)
+    ? car.description
+    : typeof car?.description === "string" && car.description.trim()
+      ? [car.description]
+      : [];
+
   const paragraphs =
-    car?.description && car.description.length > 0
-      ? car.description.map((content, index) => ({
+    descriptionValues.length > 0
+      ? descriptionValues.map((content, index) => ({
           className: paragraphClasses[index] || "mb25",
           content,
         }))

@@ -2,6 +2,7 @@ import { promises as fs } from "fs";
 import path from "path";
 import { NextResponse } from "next/server";
 import { deleteUploadedFile, getDataFile, getUploadDir } from "@/lib/storage";
+import { getSupabaseListingById, isSupabaseEnabled, supabaseAdmin } from "@/lib/supabase";
 
 const readStoredListings = async () => {
   const DATA_FILE = await getDataFile();
@@ -42,6 +43,15 @@ const deleteListingImages = async (listing) => {
 
 export async function GET(request, { params }) {
   const { id } = await params;
+
+  if (isSupabaseEnabled()) {
+    const listing = await getSupabaseListingById(id);
+    if (!listing) {
+      return NextResponse.json({ message: "Listing not found" }, { status: 404 });
+    }
+    return NextResponse.json(listing);
+  }
+
   const listings = await readStoredListings();
   const targetId = Number.isNaN(Number(id)) ? id : Number(id);
   const listing = listings.find((item) => item.id === targetId);
@@ -61,6 +71,30 @@ export async function DELETE(request, { params }) {
   }
 
   try {
+    if (isSupabaseEnabled()) {
+      const { data: existing, error: fetchError } = await supabaseAdmin
+        .from("listings")
+        .select("*")
+        .eq("id", Number(id))
+        .maybeSingle();
+
+      if (fetchError) {
+        throw fetchError;
+      }
+
+      if (!existing) {
+        return NextResponse.json({ message: "Listing not found" }, { status: 404 });
+      }
+
+      const { error: deleteError } = await supabaseAdmin.from("listings").delete().eq("id", Number(id));
+      if (deleteError) {
+        throw deleteError;
+      }
+
+      await deleteListingImages(existing);
+      return NextResponse.json({ message: "Listing deleted", id: Number(id) }, { status: 200 });
+    }
+
     const listings = await readStoredListings();
     const targetId = Number.isNaN(Number(id)) ? id : Number(id);
     const index = listings.findIndex((listing) => listing.id === targetId);

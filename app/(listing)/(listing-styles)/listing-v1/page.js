@@ -1,5 +1,6 @@
 import { promises as fs } from "fs";
 import { getDataFile } from "@/lib/storage";
+import { getSupabaseListings, isSupabaseEnabled } from "@/lib/supabase";
 import path from "path";
 import Footer from "@/app/components/common/Footer";
 import DefaultHeader from "@/app/components/common/DefaultHeader";
@@ -14,6 +15,10 @@ import CarItems from "@/app/components/listing/listing-styles/listing-v1/CarItem
 import { createPageMetadata } from "@/lib/metadata";
 
 const readUploadedListings = async () => {
+    if (isSupabaseEnabled()) {
+        return getSupabaseListings();
+    }
+
     try {
         const DATA_FILE = await getDataFile();
         const content = await fs.readFile(DATA_FILE, "utf8");

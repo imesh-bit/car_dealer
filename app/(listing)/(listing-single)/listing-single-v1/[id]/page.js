@@ -27,8 +27,13 @@ import { CarJsonLd } from "@/app/components/common/JsonLd";
 import { createListingMetadata } from "@/lib/metadata";
 
 import { getDataFile } from "@/lib/storage";
+import { getSupabaseListings, isSupabaseEnabled } from "@/lib/supabase";
 
 const readUploadedListings = async () => {
+  if (isSupabaseEnabled()) {
+    return getSupabaseListings();
+  }
+
   try {
     const DATA_FILE = await getDataFile();
     const content = await fs.readFile(DATA_FILE, "utf8");
