@@ -47,7 +47,18 @@ const readUploadedListings = async () => {
 export const dynamic = "force-dynamic";
 
 const getAllListings = async () => {
-  return readUploadedListings();
+  const listings = await readUploadedListings();
+
+  if (isSupabaseEnabled()) {
+    return listings;
+  }
+
+  const dataFile = await getDataFile();
+  const fileContent = await fs.readFile(dataFile, "utf8").catch(() => "[]");
+  const parsed = JSON.parse(fileContent || "[]");
+  const list = Array.isArray(parsed) ? parsed : [];
+
+  return list;
 };
 
 const resolveRouteId = async (params) => {
@@ -71,11 +82,27 @@ export async function generateMetadata({ params }) {
 const ListingSingleV1 = async ({ params }) => {
   const id = await resolveRouteId(params);
   const allListings = await getAllListings();
-  const car = allListings.find((item) => String(item.id) === id);
+  const carIndex = allListings.findIndex((item) => String(item.id) === id);
 
-  // No matching car for this id -> Next.js not-found page
-  if (!car) {
+  if (carIndex === -1) {
     notFound();
+  }
+
+  const car = allListings[carIndex];
+
+  if (!isSupabaseEnabled()) {
+    const updatedListings = [...allListings];
+    const currentViews = Number(updatedListings[carIndex].views || 0);
+    updatedListings[carIndex] = {
+      ...updatedListings[carIndex],
+      views: currentViews + 1,
+    };
+
+    const DATA_FILE = await getDataFile();
+    await fs.mkdir(path.dirname(DATA_FILE), { recursive: true });
+    await fs.writeFile(DATA_FILE, JSON.stringify(updatedListings, null, 2));
+
+    car.views = currentViews + 1;
   }
 
   const conditionLabel =

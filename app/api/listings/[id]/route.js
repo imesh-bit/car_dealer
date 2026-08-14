@@ -2,7 +2,12 @@ import { promises as fs } from "fs";
 import path from "path";
 import { NextResponse } from "next/server";
 import { deleteUploadedFile, getDataFile, getUploadDir } from "@/lib/storage";
-import { getSupabaseListingById, isSupabaseEnabled, supabaseAdmin } from "@/lib/supabase";
+import {
+  getSupabaseListingById,
+  incrementSupabaseListingViews,
+  isSupabaseEnabled,
+  supabaseAdmin,
+} from "@/lib/supabase";
 
 const readStoredListings = async () => {
   const DATA_FILE = await getDataFile();
@@ -49,16 +54,23 @@ export async function GET(request, { params }) {
     if (!listing) {
       return NextResponse.json({ message: "Listing not found" }, { status: 404 });
     }
-    return NextResponse.json(listing);
+
+    const updated = await incrementSupabaseListingViews(id);
+    return NextResponse.json(updated || listing);
   }
 
   const listings = await readStoredListings();
   const targetId = Number.isNaN(Number(id)) ? id : Number(id);
-  const listing = listings.find((item) => item.id === targetId);
+  const listingIndex = listings.findIndex((item) => item.id === targetId);
 
-  if (!listing) {
+  if (listingIndex === -1) {
     return NextResponse.json({ message: "Listing not found" }, { status: 404 });
   }
+
+  const listing = listings[listingIndex];
+  listing.views = Number(listing.views || 0) + 1;
+  listings[listingIndex] = listing;
+  await writeStoredListings(listings);
 
   return NextResponse.json(listing);
 }
