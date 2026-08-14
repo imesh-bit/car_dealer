@@ -70,7 +70,7 @@ const Home_1 = async ({ searchParams }) => {
       {/* End Hero */}
 
       {/* Car Category */}
-      <section className="car-category mobile_space bgc-f9 pb100 pt0 pt120-md">
+      <section className="car-category mobile_space bgc-f9 pb40 pt0 pt80-md">
         <div className="container">
           <div className="row d-md-none">
             <div className="col-lg-8 m-auto">
@@ -80,7 +80,7 @@ const Home_1 = async ({ searchParams }) => {
             </div>
           </div>
 
-          <div className="row mb90">
+          <div className="row mb20">
             <div className="col-xl-9 m-auto">
               <div className="row">
                 <Category category={activeCategory} />
@@ -93,7 +93,7 @@ const Home_1 = async ({ searchParams }) => {
       {/* End Car Cartegory */}
 
       {/* Featured Product  */}
-      <section className="featured-product">
+      <section className="featured-product pt0 pb0">
         <div className="container" >
           <div className="row justify-content-center">
             <div className="col-lg-8">

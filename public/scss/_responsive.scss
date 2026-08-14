@@ -3974,7 +3974,12 @@
 		padding: 88px 0 0;
 	}
 	.car-category.mobile_space {
-		margin-top: 400px;
+		margin-top: 0;
+		padding-top: 30px;
+		padding-bottom: 20px;
+	}
+	.car-category .row.mb90 {
+		margin-bottom: 10px;
 	}
 	.why_chose_us .icon {
 		margin: 0 auto 20px;
