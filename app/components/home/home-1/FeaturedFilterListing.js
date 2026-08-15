@@ -315,7 +315,7 @@ const FeaturedFilterListing = ({ category = "automobile" }) => {
                       </ul>
                       <Link
                         href={`/listing-single-v1/${listing.id}`}
-                        className="btn btn-thm mt15 w-100"
+                        className="btn btn-thm mt15 w-100 home1-request-quote-btn"
                       >
                         Request Quote
                       </Link>
@@ -353,7 +353,7 @@ const FeaturedFilterListing = ({ category = "automobile" }) => {
                       </ul>
                       <Link
                         href={`/listing-single-v1/${listing.id}`}
-                        className="btn btn-thm mt15 w-100"
+                        className="btn btn-thm mt15 w-100 home1-request-quote-btn"
                       >
                         Request Quote
                       </Link>

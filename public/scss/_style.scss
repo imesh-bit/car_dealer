@@ -4296,6 +4296,38 @@ form.listing_page_v9 {
   float: right;
 }
 /* ==== Home 2 Main Sliders === */
+
+/* Mobile override: reduce height of car intro section and image */
+@media (max-width: 576px) {
+  .home1_car_intro_section {
+    padding-top: 16px;
+    padding-bottom: 16px;
+    min-height: 0;
+  }
+
+  /* force a smaller fixed image height on small screens while keeping cover behavior */
+  .home1_car_intro_section .home1_car_intro_image,
+  .home1_car_intro_image.object-cover {
+    height: 160px !important;
+    max-height: 160px !important;
+    width: 100% !important;
+    object-fit: cover !important;
+    display: block;
+  }
+
+  .home1_car_intro_section .home1_car_intro_overlay {
+    /* ensure overlay covers the smaller image area */
+    height: 160px !important;
+    max-height: 160px !important;
+    top: 0;
+  }
+
+  .home1_car_intro_section .container {
+    padding-top: 8px;
+    padding-bottom: 8px;
+  }
+}
+
 .main-banner-wrapper {
   position: relative;
 }
