@@ -216,8 +216,18 @@ const styles = {
         ? "0 10px 28px rgba(10,35,87,0.10)"
         : "0 2px 8px rgba(10,35,87,0.04)",
     outline: "none",
-    transition: "opacity 0.35s ease, transform 0.25s ease, box-shadow 0.18s ease, border-color 0.18s ease",
+    transition:
+      "opacity 0.35s ease, transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.18s ease, border-color 0.18s ease",
   }),
+
+  cardContent: {
+    position: "relative",
+    zIndex: 1,
+    display: "flex",
+    flexDirection: "column",
+    flex: 1,
+    width: "100%",
+  },
 
   iconBadgeWrap: { position: "relative", marginBottom: 0, display: "inline-flex" },
   iconGlow: (hovered, bg) => ({
@@ -287,7 +297,7 @@ const styles = {
     display: "flex",
     alignItems: "center",
     justifyContent: "center",
-    transition: "background 0.18s ease, color 0.18s ease",
+    transition: "background 0.18s ease, color 0.18s ease, transform 0.18s ease",
   }),
 };
 
@@ -500,6 +510,7 @@ const Category = ({
                 key={`${item.title}-${index}`}
                 href={href}
                 role="listitem"
+                className={`category-card${isPopular ? " category-card--popular" : ""}`}
                 aria-label={`${item.title}, ${item.listing} listings${isPopular ? ", most listings in this group" : ""}`}
                 style={styles.card(isHovered, isPressed, isMobile, isEntered, isFocused)}
                 onMouseEnter={() => setHoveredCard(index)}
@@ -514,33 +525,35 @@ const Category = ({
                 onFocus={() => setFocusedCard(index)}
                 onBlur={() => setFocusedCard((cur) => (cur === index ? null : cur))}
               >
-                {isPopular && (
-                  <span style={styles.popularBadge}>
-                    <svg width="9" height="9" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2L14.5 9H21L15.5 13L17.5 20L12 16L6.5 20L8.5 13L3 9H9.5L12 2Z" /></svg>
-                    Popular
-                  </span>
-                )}
+                <div className="category-card__content" style={styles.cardContent}>
+                  {isPopular && (
+                    <span className="category-card__badge-pop" style={styles.popularBadge}>
+                      <svg width="9" height="9" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2L14.5 9H21L15.5 13L17.5 20L12 16L6.5 20L8.5 13L3 9H9.5L12 2Z" /></svg>
+                      Popular
+                    </span>
+                  )}
 
-                <div style={styles.iconBadgeOuter(isMobile)}>
-                  <div style={styles.iconBadgeWrap}>
-                    <div style={styles.iconGlow(isHovered, bg)} />
-                    <div style={{ ...styles.iconBadge(isHovered, isMobile), background: bg }}>
-                      <Icons8Icon iconName={item.icon8} alt={item.title} color={accent} size={isMobile ? 22 : 24} />
+                  <div style={styles.iconBadgeOuter(isMobile)}>
+                    <div style={styles.iconBadgeWrap}>
+                      <div style={styles.iconGlow(isHovered, bg)} />
+                      <div style={{ ...styles.iconBadge(isHovered, isMobile), background: bg }}>
+                        <Icons8Icon iconName={item.icon8} alt={item.title} color={accent} size={isMobile ? 22 : 24} />
+                      </div>
                     </div>
                   </div>
-                </div>
 
-                <p style={styles.title(isMobile)}>{item.title}</p>
+                  <p style={styles.title(isMobile)}>{item.title}</p>
 
-                <div style={styles.foot}>
-                  <span style={{ ...styles.count(isMobile), color: accent }}>
-                    <AnimatedCount value={item.listing} reducedMotion={reducedMotion} /> {item.listing === 1 ? "Listing" : "Listings"}
-                  </span>
-                  <span style={styles.chevron(isHovered, accent, isMobile)} aria-hidden="true">
-                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none">
-                      <path d="M9 6L15 12L9 18" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
-                    </svg>
-                  </span>
+                  <div style={styles.foot}>
+                    <span style={{ ...styles.count(isMobile), color: accent }}>
+                      <AnimatedCount value={item.listing} reducedMotion={reducedMotion} /> {item.listing === 1 ? "Listing" : "Listings"}
+                    </span>
+                    <span className="category-card__chevron" style={styles.chevron(isHovered, accent, isMobile)} aria-hidden="true">
+                      <svg width="12" height="12" viewBox="0 0 24 24" fill="none">
+                        <path d="M9 6L15 12L9 18" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+                      </svg>
+                    </span>
+                  </div>
                 </div>
               </Link>
             );
@@ -598,6 +611,67 @@ const Category = ({
         :global(.category-grid-pulse) {
           border-radius: 18px;
           animation: categoryGridPulse 0.9s ease-out;
+        }
+
+        /* A light sweep that crosses the card on hover — cheap, common
+           "premium" cue that draws the eye without any layout cost. */
+        :global(.category-card::before) {
+          content: "";
+          position: absolute;
+          inset: 0;
+          left: -75%;
+          width: 45%;
+          background: linear-gradient(
+            115deg,
+            rgba(255, 255, 255, 0) 0%,
+            rgba(255, 255, 255, 0.5) 50%,
+            rgba(255, 255, 255, 0) 100%
+          );
+          transform: skewX(-18deg);
+          pointer-events: none;
+          z-index: 0;
+          transition: left 0.7s ease;
+        }
+        :global(.category-card:hover::before) {
+          left: 130%;
+        }
+
+        /* Genuinely-earned attention: only the card(s) actually tied for
+           the most listings get a soft radar-style ping ring, reinforcing
+           that this one is worth a look. */
+        @keyframes categoryPopularRing {
+          0% {
+            opacity: 0.55;
+            transform: scale(1);
+          }
+          100% {
+            opacity: 0;
+            transform: scale(1.055);
+          }
+        }
+        :global(.category-card--popular::after) {
+          content: "";
+          position: absolute;
+          inset: -2px;
+          border-radius: 16px;
+          border: 2px solid rgba(245, 158, 11, 0.5);
+          pointer-events: none;
+          z-index: 0;
+          animation: categoryPopularRing 2.2s ease-out infinite;
+        }
+
+        :global(.category-card:hover .category-card__chevron) {
+          transform: translateX(2px);
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+          :global(.category-card::before) {
+            display: none;
+          }
+          :global(.category-card--popular::after) {
+            animation: none;
+            opacity: 0.45;
+          }
         }
       `}</style>
     </div>
