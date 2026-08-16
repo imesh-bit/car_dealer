@@ -865,7 +865,7 @@
 
 "use client";
 import { useRouter } from "next/navigation";
-import { useMemo, useState } from "react";
+import { useMemo, useState, useTransition } from "react";
 import { useMergedListings } from "@/hooks/useMergedListings";
 
 const tabs = ["Automobiles", "Auto Parts", "General"];
@@ -886,6 +886,7 @@ const buildConditionOptions = (sourceListings) => {
 
 const HeroFilter = () => {
   const router = useRouter();
+  const [isPending, startTransition] = useTransition();
 
   const [selectedTab, setSelectedTab] = useState("Automobiles");
   const [selectedMake, setSelectedMake] = useState("Select Makes");
@@ -1125,7 +1126,9 @@ const HeroFilter = () => {
     setSelectedPackagingType("Select Packaging Type");
     setSelectedOrderScale("Select Order Scale (MOQ)");
 
-    router.push(`/?category=${encodeURIComponent(nextCategory)}`);
+    startTransition(() => {
+      router.push(`/?category=${encodeURIComponent(nextCategory)}`);
+    });
   };
 
   const handleSearch = () => {
@@ -1164,27 +1167,45 @@ const HeroFilter = () => {
 
   return (
     <div className="col-lg-12" suppressHydrationWarning>
-      <ul className="nav nav-pills justify-content-center" suppressHydrationWarning>
-        {tabs.map((tab) => (
-          <li className="nav-item" role="presentation" key={tab}>
-            <button
-              className={`nav-link ${selectedTab === tab && "active"}`}
-              onClick={() => handleTabClick(tab)}
-            >
-              {tab}
-            </button>
-          </li>
-        ))}
+      {isPending && (
+        <div className="hero_filter_progress" aria-hidden="true">
+          <span className="hero_filter_progress_bar" />
+        </div>
+      )}
+
+      <ul
+        className="nav nav-pills justify-content-center"
+        suppressHydrationWarning
+        aria-busy={isPending}
+      >
+        {tabs.map((tab) => {
+          const isActive = selectedTab === tab;
+          return (
+            <li className="nav-item" role="presentation" key={tab}>
+              <button
+                className={`nav-link ${isActive && "active"}`}
+                onClick={() => handleTabClick(tab)}
+                disabled={isPending && !isActive}
+              >
+                {tab}
+                {isPending && isActive && (
+                  <span className="hero_filter_tab_spinner" aria-hidden="true" />
+                )}
+              </button>
+            </li>
+          );
+        })}
       </ul>
 
       {/* filter tabs */}
       <div className="adss_bg_stylehome1">
         <div className="home1_advance_search_wrapper">
-          <ul className="mb0 text-center">
-            {tabsConfig.map((filter) => (
+          <ul className="mb0 text-center" key={selectedTab}>
+            {tabsConfig.map((filter, index) => (
               <li
                 className="list-inline-item hero_filter_item"
                 key={filter.label}
+                style={{ animationDelay: `${index * 60}ms` }}
               >
                 <div className="select-boxes">
                   <div className="car_brand">
@@ -1206,7 +1227,10 @@ const HeroFilter = () => {
             ))}
 
             {/* Search button */}
-            <li className="list-inline-item hero_filter_item hero_filter_search">
+            <li
+              className="list-inline-item hero_filter_item hero_filter_search"
+              style={{ animationDelay: `${tabsConfig.length * 60}ms` }}
+            >
               <div className="d-block">
                 <button
                   onClick={handleSearch}
@@ -1222,6 +1246,96 @@ const HeroFilter = () => {
       </div>
 
       <style jsx>{`
+        .hero_filter_progress {
+          position: fixed;
+          top: 0;
+          left: 0;
+          right: 0;
+          height: 3px;
+          background: rgba(13, 110, 253, 0.12);
+          z-index: 9999;
+          overflow: hidden;
+        }
+        .hero_filter_progress_bar {
+          display: block;
+          height: 100%;
+          width: 40%;
+          background: var(--primary-color, #0d6efd);
+          border-radius: 0 4px 4px 0;
+          animation: heroFilterProgress 1s ease-in-out infinite;
+        }
+        @keyframes heroFilterProgress {
+          0% {
+            transform: translateX(-100%);
+          }
+          100% {
+            transform: translateX(350%);
+          }
+        }
+
+        :global(.advance_search_panel .nav-pills .nav-link) {
+          position: relative;
+          transition: background-color 0.25s ease, color 0.25s ease,
+            box-shadow 0.25s ease, transform 0.15s ease, opacity 0.2s ease;
+        }
+        :global(.advance_search_panel .nav-pills .nav-link:disabled) {
+          opacity: 0.55;
+          cursor: not-allowed;
+        }
+        .hero_filter_tab_spinner {
+          display: inline-block;
+          width: 10px;
+          height: 10px;
+          margin-left: 6px;
+          border: 1.5px solid rgba(26, 55, 96, 0.25);
+          border-top-color: #1a3760;
+          border-radius: 50%;
+          vertical-align: middle;
+          animation: heroFilterSpin 0.6s linear infinite;
+        }
+        @keyframes heroFilterSpin {
+          to {
+            transform: rotate(360deg);
+          }
+        }
+        :global(.advance_search_panel .nav-pills .nav-link.active) {
+          box-shadow: 0 -2px 10px rgba(23, 26, 33, 0.06);
+        }
+        :global(.advance_search_panel .nav-pills .nav-link:not(.active):hover) {
+          filter: brightness(1.04);
+        }
+        :global(.advance_search_panel .nav-pills .nav-link:active) {
+          transform: scale(0.97);
+        }
+
+        @keyframes heroFilterFadeIn {
+          from {
+            opacity: 0;
+            transform: translateY(8px);
+          }
+          to {
+            opacity: 1;
+            transform: translateY(0);
+          }
+        }
+
+        .hero_filter_item {
+          animation: heroFilterFadeIn 0.32s ease both;
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+          .hero_filter_item {
+            animation: none;
+          }
+          :global(.advance_search_panel .nav-pills .nav-link) {
+            transition: none;
+          }
+          .hero_filter_progress_bar,
+          .hero_filter_tab_spinner {
+            animation-duration: 1.6s;
+          }
+        }
+
         @media (max-width: 991px) {
           .home1_advance_search_wrapper {
             padding: 20px;
