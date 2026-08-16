@@ -70,8 +70,8 @@ const Home_1 = async ({ searchParams }) => {
       {/* End Hero */}
 
       {/* Car Category */}
-      <section className="car-category mobile_space bgc-f9 pb40 pt40 pt80-md">
-        <div className="container">
+      <section className="car-category mobile_space bgc-f9 pb30 pt10 pt80-md">
+        <div className="container" style={{ paddingTop: 0 }}>
           <div className="row">
             <div className="col-lg-8 m-auto">
               <div className="main-title text-center">

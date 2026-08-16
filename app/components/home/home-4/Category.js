@@ -322,19 +322,8 @@ const Category = ({ category = "automobile", title = "", viewAllHref }) => {
 
   return (
     <div style={styles.root}>
-      <div style={{ ...styles.headerRow, justifyContent: title ? "space-between" : "flex-end" }}>
+      <div style={{ ...styles.headerRow, justifyContent: title ? "flex-start" : "flex-end" }}>
         {title && <h3 style={styles.heading}>{title}</h3>}
-        <Link
-          href={viewAllHref || `/listing-v1?category=${encodeURIComponent(category)}`}
-          style={styles.viewAll(viewAllHovered)}
-          onMouseEnter={() => setViewAllHovered(true)}
-          onMouseLeave={() => setViewAllHovered(false)}
-        >
-          View All
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none">
-            <path d="M9 6L15 12L9 18" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" />
-          </svg>
-        </Link>
       </div>
 
       <div
