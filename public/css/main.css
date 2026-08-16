@@ -39873,6 +39873,16 @@ input.quantity-num[type=number]::-webkit-outer-spin-button {
   margin-bottom: 1.5rem;
 }
 
+.car-category .main-title {
+  margin-bottom: 24px;
+}
+
+@media (max-width: 767px) {
+  .car-category .main-title {
+    margin-bottom: 16px;
+  }
+}
+
 .trending-listings-section .home1_popular_listing.home4_style {
   padding-top: 16px;
 }

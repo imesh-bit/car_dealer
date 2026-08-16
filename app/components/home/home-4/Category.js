@@ -131,6 +131,7 @@ const styles = {
   trustStrip: {
     display: "flex",
     flexWrap: "wrap",
+    justifyContent: "center",
     gap: "6px 16px",
     marginBottom: 16,
     fontSize: 12,
