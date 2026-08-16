@@ -1163,8 +1163,8 @@ const HeroFilter = () => {
   };
 
   return (
-    <div className="col-lg-12">
-      <ul className="nav nav-pills justify-content-center">
+    <div className="col-lg-12" suppressHydrationWarning>
+      <ul className="nav nav-pills justify-content-center" suppressHydrationWarning>
         {tabs.map((tab) => (
           <li className="nav-item" role="presentation" key={tab}>
             <button

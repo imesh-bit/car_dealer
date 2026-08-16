@@ -109,9 +109,6 @@ const PopularListings = ({ category = "automobile" }) => {
                 </div>
                 <div className="details">
                   <div className="wrapper">
-                    <h5 className="price">
-                      ¥{Number(listing.price).toLocaleString()}
-                    </h5>
                     <h6 className="title">
                       <Link href={`/listing-single-v1/${listing.id}`}>
                         {listing.title}
