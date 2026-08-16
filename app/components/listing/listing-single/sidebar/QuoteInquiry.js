@@ -227,9 +227,9 @@ const QuoteInquiry = ({ hideTitle, baseFobPrice = 10000, requestsToday }) => {
   const [touched, setTouched] = useState({});
   const [currency, setCurrency] = useState(settings.defaultCurrency || DEFAULT_CURRENCY);
   const [formData, setFormData] = useState({
-    country: countries[0],
-    port: ratesSource[countries[0]][0].name,
-    portPrice: ratesSource[countries[0]][0].price,
+    country: "",
+    port: "",
+    portPrice: 0,
     inspection: true,
     insurance: false,
     fullName: "",
@@ -245,23 +245,25 @@ const QuoteInquiry = ({ hideTitle, baseFobPrice = 10000, requestsToday }) => {
 
   useEffect(() => {
     setFormData((prev) => {
-      const validCountry = ratesSource[prev.country] ? prev.country : (countries[0] || "Japan");
-      const validPortList = ratesSource[validCountry] || [];
-      const selectedPort = validPortList.find((item) => item.name === prev.port) || validPortList[0];
-      const nextPortPrice = selectedPort?.price ?? prev.portPrice ?? 0;
+      if (!prev.country) {
+        return {
+          ...prev,
+          port: "",
+          portPrice: 0,
+        };
+      }
 
-      if (
-        prev.country === validCountry &&
-        prev.port === selectedPort?.name &&
-        Number(prev.portPrice || 0) === Number(nextPortPrice)
-      ) {
+      const validPortList = ratesSource[prev.country] || [];
+      const selectedPort = validPortList.find((item) => item.name === prev.port) || validPortList[0];
+      const nextPortPrice = selectedPort?.price ?? 0;
+
+      if (prev.port && prev.port === selectedPort?.name && Number(prev.portPrice || 0) === Number(nextPortPrice)) {
         return prev;
       }
 
       return {
         ...prev,
-        country: validCountry,
-        port: selectedPort?.name || "",
+        port: prev.port && validPortList.some((item) => item.name === prev.port) ? prev.port : (selectedPort?.name || ""),
         portPrice: nextPortPrice,
       };
     });
@@ -279,13 +281,13 @@ const QuoteInquiry = ({ hideTitle, baseFobPrice = 10000, requestsToday }) => {
       if (name === "country") {
         const nextCountry = value;
         const nextPortList = ratesSource[nextCountry] || [];
-        const nextPort = nextPortList[0]?.name || "";
-        const nextPortPrice = nextPortList[0]?.price || 0;
+        const nextPort = "";
+        const nextPortPrice = 0;
         return { ...prev, country: nextCountry, port: nextPort, portPrice: nextPortPrice };
       }
       if (name === "port") {
         const selectedPort = (ratesSource[prev.country] || []).find((item) => item.name === value);
-        return { ...prev, port: value, portPrice: selectedPort ? selectedPort.price : prev.portPrice };
+        return { ...prev, port: value, portPrice: selectedPort ? selectedPort.price : 0 };
       }
       return { ...prev, [name]: type === "checkbox" ? checked : value };
     });
@@ -482,13 +484,15 @@ const QuoteInquiry = ({ hideTitle, baseFobPrice = 10000, requestsToday }) => {
           <div style={styles.fieldRow(twoCol ? 2 : 1)}>
             <Field label="Select your country">
               <select className="form-control form-control-sm" name="country" value={formData.country} onChange={handleChange} required>
+                <option value="">Select country</option>
                 {countries.map((country) => (
                   <option key={country} value={country}>{country}</option>
                 ))}
               </select>
             </Field>
             <Field label="Select the Port">
-              <select className="form-control form-control-sm" name="port" value={formData.port} onChange={handleChange} required>
+              <select className="form-control form-control-sm" name="port" value={formData.port} onChange={handleChange} required disabled={!formData.country}>
+                <option value="">Select port</option>
                 {currentPorts.map((port) => (
                   <option key={port.name} value={port.name}>{port.name}</option>
                 ))}

@@ -122,7 +122,7 @@ const ListingV1 = async ({ searchParams }) => {
                                 <h1 className="breadcrumb_title" style={{ color: "#1a3760" }}>
                                     {categoryTitleMap[activeCategory] || "Automobiles"}
                                 </h1>
-                                <p className="subtitle">Listing-v1</p>
+                                <p className="subtitle d-none d-md-block">Listing-v1</p>
                                 <ol className="breadcrumb fn-sm mt15-sm">
                                     <li className="breadcrumb-item">
                                         <a href="/">Home</a>

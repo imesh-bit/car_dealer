@@ -285,24 +285,19 @@ const CarItems = ({
                       </li>
                     </ul>
                   </div>
-                ) : (
+                ) : listing.category === "auto-part" ? (
                   <div className="listign_review">
                     <ul className="mb0">
-                      {[...Array(5)].map((_, index) => (
-                        <li key={index} className="list-inline-item">
-                          <a href="#">
-                            <i className="fa fa-star" />
-                          </a>
-                        </li>
-                      ))}
-                      <li className="list-inline-item">
-                        <a href="#">{listing.rating}</a>
-                      </li>
-                      <li className="list-inline-item">
-                        ({listing.reviewsCount} reviews)
+                      <li className="list-inline-item text-muted">
+                        <i className="fa fa-tag me-2" />
+                        {listing.partCategory || "Auto Part"}
                       </li>
                     </ul>
                   </div>
+                ) : (
+                  <p style={{ margin: "4px 0", fontSize: "13px", color: "#666" }}>
+                    Auction Grade: <strong>{listing.auctionGrade || "N/A"}</strong>
+                  </p>
                 )}
               </div>
               {/* End wrapper */}

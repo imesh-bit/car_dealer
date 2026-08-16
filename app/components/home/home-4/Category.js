@@ -94,7 +94,7 @@ const palette = [
 // Only enable trust-strip items that are literally true for your business —
 // an icon implying a guarantee or certification you don't actually have
 // does more damage than showing nothing. Customize freely via props.
-const DEFAULT_TRUST_ITEMS = [
+const TRUST_ITEMS = [
   { icon: "lock", label: "Secure inquiries" },
   { icon: "check", label: "Verified listings" },
   { icon: "ship", label: "Ships from Japan" },
@@ -317,7 +317,7 @@ const Category = ({
   title = "",
   viewAllHref,
   showTrustStrip = true,
-  trustItems = DEFAULT_TRUST_ITEMS,
+  trustItems = TRUST_ITEMS,
 }) => {
   const mergedListings = useMergedListings();
   const categories = categoryGroups[category] || categoryGroups.automobile;
