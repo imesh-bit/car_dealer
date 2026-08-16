@@ -5,6 +5,7 @@ import ScrollToTop from "./components/common/ScrollTop";
 import ClientInitializer from "./components/common/ClientInitializer";
 import Providers from "./components/common/Providers";
 import FloatingWhatsAppButton from "./components/common/FloatingWhatsAppButton";
+import CookieConsent from "./components/common/CookieConsent";
 import { OrganizationJsonLd } from "./components/common/JsonLd";
 import {
   defaultLocale,
@@ -73,6 +74,7 @@ export default async function RootLayout({ children }) {
           {children}
           <ScrollToTop />
           <FloatingWhatsAppButton />
+          <CookieConsent />
         </Providers>
       </body>
     </html>

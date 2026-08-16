@@ -1,6 +1,7 @@
 "use client";
 
 import React from "react";
+import Link from "next/link";
 import Social from "./Social";
 import { useTranslation } from "@/hooks/useTranslation";
 
@@ -16,7 +17,10 @@ const CopyRight = () => {
               <a href="" target="_blank" rel="noopener noreferrer">
                 RAIKO GROUP
               </a>{" "}
-              © {new Date().getFullYear()}. {t("footer.allRightsReserved")}
+              © {new Date().getFullYear()}. {t("footer.allRightsReserved")}{" "}
+              <Link href="/privacy-policy">{t("nav.privacyPolicy")}</Link>
+              {" · "}
+              <Link href="/terms-conditions">{t("nav.termsConditions")}</Link>
             </p>
           </div>
         </div>
