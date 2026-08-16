@@ -40190,7 +40190,10 @@ input.quantity-num[type=number]::-webkit-outer-spin-button {
 }
 
 .home4-popular-showcase .swiper-slide:not(.swiper-slide-active) {
-  opacity: 0.48;
+  /* Was 0.48 — combined with the already-translucent glass card panel,
+     price/title on the side cards became nearly unreadable. Still visibly
+     de-emphasized vs. the active card, just not illegible. */
+  opacity: 0.68;
 }
 
 .home4-popular-showcase .swiper-slide-active {
@@ -40420,13 +40423,23 @@ input.quantity-num[type=number]::-webkit-outer-spin-button {
 
 .home4-popular-showcase .js-pagination-pag2,
 .home4-popular-showcase .p1-pagination {
+  /* Swiper stamps its own .swiper-pagination onto this element, which
+     ships position:absolute; left:0; width:100% — that pins the dots to
+     the bottom-left of the whole carousel instead of letting the
+     surrounding .text-center wrapper center them. Reclaim normal flow. */
+  position: static !important;
+  width: auto !important;
+  left: auto !important;
   display: inline-flex;
+  align-items: center;
+  justify-content: center;
   gap: 8px;
 }
 
 .home4-popular-showcase .swiper-pagination-bullet {
   width: 7px;
   height: 7px;
+  margin: 0 !important;
   background: #64748b;
   opacity: 1;
 }
