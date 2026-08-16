@@ -6,9 +6,12 @@ import { localeLabels, locales } from "@/lib/i18n/config";
 
 const MobileAnnouncementBar = () => {
   const [japanTime, setJapanTime] = useState("--:--");
+  const [isMounted, setIsMounted] = useState(false);
   const { locale, setLocale } = useTranslation();
 
   useEffect(() => {
+    setIsMounted(true);
+
     const updateTime = () => {
       const now = new Date();
       const formatter = new Intl.DateTimeFormat("en-US", {
@@ -27,6 +30,8 @@ const MobileAnnouncementBar = () => {
     return () => window.clearInterval(timer);
   }, []);
 
+  const selectedLocale = isMounted ? locale : "en";
+
   return (
     <div className="mobile-announcement-bar" aria-label="Utility announcement bar">
       <div className="mobile-announcement-bar__content">
@@ -43,9 +48,10 @@ const MobileAnnouncementBar = () => {
           </span>
           <select
             id="mobile-announcement-language"
-            value={locale}
+            value={selectedLocale}
             onChange={(event) => setLocale(event.target.value)}
             aria-label="Select language"
+            suppressHydrationWarning
           >
             {locales.map((item) => (
               <option key={item} value={item}>

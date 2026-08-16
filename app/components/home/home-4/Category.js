@@ -35,6 +35,32 @@ const Icons8Icon = ({ iconName, alt, color, size = 22 }) => {
   );
 };
 
+// counts up from 0 to the real value instead of just appearing — skipped
+// entirely for reduced-motion users, who see the final number immediately
+const AnimatedCount = ({ value, reducedMotion }) => {
+  const [display, setDisplay] = useState(reducedMotion ? value : 0);
+
+  useEffect(() => {
+    if (reducedMotion) {
+      setDisplay(value);
+      return undefined;
+    }
+    let raf;
+    const duration = 550;
+    const start = performance.now();
+
+    const tick = (now) => {
+      const progress = Math.min((now - start) / duration, 1);
+      setDisplay(Math.round(value * progress));
+      if (progress < 1) raf = requestAnimationFrame(tick);
+    };
+    raf = requestAnimationFrame(tick);
+    return () => raf && cancelAnimationFrame(raf);
+  }, [value, reducedMotion]);
+
+  return display;
+};
+
 const categoryGroups = {
   automobile: [
     { icon8: "car--v1", title: "Cars", value: "Cars", queryKey: "type" },
@@ -65,13 +91,31 @@ const palette = [
   { bg: "#FDE9EC", accent: "#D9436A" },
 ];
 
+// Only enable trust-strip items that are literally true for your business —
+// an icon implying a guarantee or certification you don't actually have
+// does more damage than showing nothing. Customize freely via props.
+const DEFAULT_TRUST_ITEMS = [
+  { icon: "lock", label: "Secure inquiries" },
+  { icon: "check", label: "Verified listings" },
+  { icon: "ship", label: "Ships from Japan" },
+];
+
+const TrustIcon = ({ name }) => {
+  const common = { width: 13, height: 13, viewBox: "0 0 24 24", fill: "none", stroke: "currentColor", strokeWidth: 2, strokeLinecap: "round", strokeLinejoin: "round" };
+  if (name === "lock") return <svg {...common}><rect x="4" y="10" width="16" height="10" rx="2" /><path d="M8 10V7a4 4 0 0 1 8 0v3" /></svg>;
+  if (name === "check") return <svg {...common}><path d="M20 6L9 17L4 12" /></svg>;
+  if (name === "ship") return <svg {...common}><path d="M3 14L5 20H19L21 14" /><path d="M6 14V6H14L18 10V14" /></svg>;
+  return null;
+};
+
 const MOBILE_BREAKPOINT = 768;
 const AUTO_SLIDE_MS = 3200;
 const RESUME_AFTER_INTERACTION_MS = 4000;
+const ENTRANCE_STAGGER_MS = 55;
 
 const styles = {
   root: { boxSizing: "border-box", width: "100%" },
-  headerRow: { display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: 16 },
+  headerRow: { display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: 10 },
   heading: { margin: 0, fontSize: 18, lineHeight: 1.3, fontWeight: 700, color: "#173B68", fontFamily: "Inter, sans-serif" },
   viewAll: (hovered) => ({
     display: "flex",
@@ -84,12 +128,19 @@ const styles = {
     flexShrink: 0,
     transition: "color 0.15s ease",
   }),
+  trustStrip: {
+    display: "flex",
+    flexWrap: "wrap",
+    gap: "6px 16px",
+    marginBottom: 16,
+    fontSize: 12,
+    color: "#64748b",
+  },
+  trustItem: { display: "flex", alignItems: "center", gap: 5 },
   scrollOuter: { position: "relative", width: "100%" },
 
-  // desktop: unchanged 4-equal-column grid, no scrolling
   desktopRow: { display: "grid", gridTemplateColumns: "repeat(4, minmax(0, 1fr))", gap: 16, width: "100%", paddingBottom: 4 },
 
-  // mobile: compact horizontal-scroll row, sized to match the reference screenshot
   mobileRow: {
     display: "flex",
     gap: 10,
@@ -133,7 +184,7 @@ const styles = {
     zIndex: 2,
   }),
 
-  card: (hovered, pressed, mobile) => ({
+  card: (hovered, pressed, mobile, entered, focused) => ({
     boxSizing: "border-box",
     position: "relative",
     display: "flex",
@@ -150,13 +201,37 @@ const styles = {
     padding: mobile ? 14 : 18,
     textDecoration: "none",
     cursor: "pointer",
-    transform: pressed ? "scale(0.985)" : hovered ? "translateY(-3px)" : "translateY(0)",
-    boxShadow: hovered ? "0 10px 28px rgba(10,35,87,0.10)" : "0 2px 8px rgba(10,35,87,0.04)",
-    transition: "transform 0.18s ease, box-shadow 0.18s ease, border-color 0.18s ease",
+    opacity: entered ? 1 : 0,
+    transform: !entered
+      ? "translateY(10px)"
+      : pressed
+        ? "scale(0.985)"
+        : hovered
+          ? "translateY(-3px)"
+          : "translateY(0)",
+    boxShadow: focused
+      ? "0 0 0 3px rgba(37,99,235,0.35), 0 10px 28px rgba(10,35,87,0.10)"
+      : hovered
+        ? "0 10px 28px rgba(10,35,87,0.10)"
+        : "0 2px 8px rgba(10,35,87,0.04)",
+    outline: "none",
+    transition: "opacity 0.35s ease, transform 0.25s ease, box-shadow 0.18s ease, border-color 0.18s ease",
   }),
 
+  iconBadgeWrap: { position: "relative", marginBottom: 0, display: "inline-flex" },
+  iconGlow: (hovered, bg) => ({
+    position: "absolute",
+    inset: -6,
+    borderRadius: "50%",
+    background: bg,
+    opacity: hovered ? 0.55 : 0,
+    transform: hovered ? "scale(1)" : "scale(0.6)",
+    transition: "opacity 0.25s ease, transform 0.25s ease",
+    pointerEvents: "none",
+  }),
   iconBadge: (hovered, mobile) => ({
     boxSizing: "border-box",
+    position: "relative",
     width: mobile ? 40 : 48,
     height: mobile ? 40 : 48,
     flexShrink: 0,
@@ -164,10 +239,26 @@ const styles = {
     display: "flex",
     alignItems: "center",
     justifyContent: "center",
-    marginBottom: mobile ? 10 : 14,
     transform: hovered ? "scale(1.06)" : "scale(1)",
     transition: "transform 0.18s ease",
   }),
+  iconBadgeOuter: (mobile) => ({ marginBottom: mobile ? 10 : 14 }),
+
+  popularBadge: {
+    position: "absolute",
+    top: 10,
+    right: 10,
+    display: "flex",
+    alignItems: "center",
+    gap: 3,
+    background: "#FFF4E5",
+    color: "#B45309",
+    fontSize: 10,
+    fontWeight: 700,
+    letterSpacing: 0.2,
+    padding: "3px 7px",
+    borderRadius: 999,
+  },
 
   title: (mobile) => ({
     boxSizing: "border-box",
@@ -199,10 +290,6 @@ const styles = {
   }),
 };
 
-// single source of truth for mobile vs desktop — replaces the earlier
-// styled-jsx @media approach, which isn't confirmed to reliably apply in
-// this project's build (same class of issue that dropped the card styling
-// entirely a few fixes back)
 const useIsMobile = () => {
   const [isMobile, setIsMobile] = useState(false);
   useEffect(() => {
@@ -214,7 +301,13 @@ const useIsMobile = () => {
   return isMobile;
 };
 
-const Category = ({ category = "automobile", title = "", viewAllHref }) => {
+const Category = ({
+  category = "automobile",
+  title = "",
+  viewAllHref,
+  showTrustStrip = true,
+  trustItems = DEFAULT_TRUST_ITEMS,
+}) => {
   const mergedListings = useMergedListings();
   const categories = categoryGroups[category] || categoryGroups.automobile;
   const isMobile = useIsMobile();
@@ -228,8 +321,10 @@ const Category = ({ category = "automobile", title = "", viewAllHref }) => {
   const [canScrollRight, setCanScrollRight] = useState(false);
   const [hoveredCard, setHoveredCard] = useState(null);
   const [pressedCard, setPressedCard] = useState(null);
+  const [focusedCard, setFocusedCard] = useState(null);
   const [hoveredArrow, setHoveredArrow] = useState(null);
   const [viewAllHovered, setViewAllHovered] = useState(false);
+  const [enteredCards, setEnteredCards] = useState(() => new Set());
 
   const categoryCounts = categories.map((item) => ({
     ...item,
@@ -248,6 +343,11 @@ const Category = ({ category = "automobile", title = "", viewAllHref }) => {
     }).length,
   }));
 
+  // "Popular" is computed from real counts, not fabricated — only the
+  // category(ies) genuinely tied for the highest listing count qualify,
+  // and nothing is shown while everything is still at zero
+  const maxCount = Math.max(0, ...categoryCounts.map((c) => c.listing));
+
   useEffect(() => {
     const mq = window.matchMedia("(prefers-reduced-motion: reduce)");
     setReducedMotion(mq.matches);
@@ -255,6 +355,22 @@ const Category = ({ category = "automobile", title = "", viewAllHref }) => {
     mq.addEventListener?.("change", onChange);
     return () => mq.removeEventListener?.("change", onChange);
   }, []);
+
+  // staggered entrance — skipped for reduced-motion users, who see
+  // everything already in place
+  useEffect(() => {
+    if (reducedMotion) {
+      setEnteredCards(new Set(categoryCounts.map((_, i) => i)));
+      return undefined;
+    }
+    const timers = categoryCounts.map((_, i) =>
+      setTimeout(() => {
+        setEnteredCards((prev) => new Set(prev).add(i));
+      }, i * ENTRANCE_STAGGER_MS)
+    );
+    return () => timers.forEach(clearTimeout);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [reducedMotion, category]);
 
   const updateEdgeFades = () => {
     if (!isMobile) {
@@ -288,8 +404,6 @@ const Category = ({ category = "automobile", title = "", viewAllHref }) => {
     resumeTimeoutRef.current = setTimeout(() => setPaused(false), RESUME_AFTER_INTERACTION_MS);
   };
 
-  // auto-slide — mobile only; desktop already shows every category at once
-  // so automatic movement there would have nothing meaningful to do
   useEffect(() => {
     if (reducedMotion || !isMobile) return undefined;
 
@@ -322,9 +436,21 @@ const Category = ({ category = "automobile", title = "", viewAllHref }) => {
 
   return (
     <div style={styles.root}>
-      <div style={{ ...styles.headerRow, justifyContent: title ? "flex-start" : "flex-end" }}>
-        {title && <h3 style={styles.heading}>{title}</h3>}
-      </div>
+      {title && (
+        <div style={styles.headerRow}>
+          <h3 style={styles.heading}>{title}</h3>
+        </div>
+      )}
+
+      {showTrustStrip && trustItems?.length > 0 && (
+        <div style={styles.trustStrip}>
+          {trustItems.map((t) => (
+            <span key={t.label} style={styles.trustItem}>
+              <TrustIcon name={t.icon} /> {t.label}
+            </span>
+          ))}
+        </div>
+      )}
 
       <div
         style={styles.scrollOuter}
@@ -349,14 +475,17 @@ const Category = ({ category = "automobile", title = "", viewAllHref }) => {
             const { bg, accent } = palette[index % palette.length];
             const isHovered = hoveredCard === index;
             const isPressed = pressedCard === index;
+            const isFocused = focusedCard === index;
+            const isEntered = enteredCards.has(index);
+            const isPopular = maxCount > 0 && item.listing === maxCount;
 
             return (
               <Link
                 key={`${item.title}-${index}`}
                 href={href}
                 role="listitem"
-                aria-label={`${item.title}, ${item.listing} listings`}
-                style={styles.card(isHovered, isPressed, isMobile)}
+                aria-label={`${item.title}, ${item.listing} listings${isPopular ? ", most listings in this group" : ""}`}
+                style={styles.card(isHovered, isPressed, isMobile, isEntered, isFocused)}
                 onMouseEnter={() => setHoveredCard(index)}
                 onMouseLeave={() => {
                   setHoveredCard((cur) => (cur === index ? null : cur));
@@ -366,16 +495,30 @@ const Category = ({ category = "automobile", title = "", viewAllHref }) => {
                 onMouseUp={() => setPressedCard((cur) => (cur === index ? null : cur))}
                 onTouchStart={() => setPressedCard(index)}
                 onTouchEnd={() => setPressedCard((cur) => (cur === index ? null : cur))}
+                onFocus={() => setFocusedCard(index)}
+                onBlur={() => setFocusedCard((cur) => (cur === index ? null : cur))}
               >
-                <div style={{ ...styles.iconBadge(isHovered, isMobile), background: bg }}>
-                  <Icons8Icon iconName={item.icon8} alt={item.title} color={accent} size={isMobile ? 20 : 24} />
+                {isPopular && (
+                  <span style={styles.popularBadge}>
+                    <svg width="9" height="9" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2L14.5 9H21L15.5 13L17.5 20L12 16L6.5 20L8.5 13L3 9H9.5L12 2Z" /></svg>
+                    Popular
+                  </span>
+                )}
+
+                <div style={styles.iconBadgeOuter(isMobile)}>
+                  <div style={styles.iconBadgeWrap}>
+                    <div style={styles.iconGlow(isHovered, bg)} />
+                    <div style={{ ...styles.iconBadge(isHovered, isMobile), background: bg }}>
+                      <Icons8Icon iconName={item.icon8} alt={item.title} color={accent} size={isMobile ? 20 : 24} />
+                    </div>
+                  </div>
                 </div>
 
                 <p style={styles.title(isMobile)}>{item.title}</p>
 
                 <div style={styles.foot}>
                   <span style={{ ...styles.count(isMobile), color: accent }}>
-                    {item.listing} {item.listing === 1 ? "Listing" : "Listings"}
+                    <AnimatedCount value={item.listing} reducedMotion={reducedMotion} /> {item.listing === 1 ? "Listing" : "Listings"}
                   </span>
                   <span style={styles.chevron(isHovered, accent, isMobile)} aria-hidden="true">
                     <svg width="12" height="12" viewBox="0 0 24 24" fill="none">
