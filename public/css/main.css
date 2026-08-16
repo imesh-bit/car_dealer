@@ -39883,6 +39883,29 @@ input.quantity-num[type=number]::-webkit-outer-spin-button {
   }
 }
 
+.active-category-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  margin-bottom: 12px;
+  padding: 5px 14px;
+  background: #eef4ff;
+  color: #2b5fd9;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+  border-radius: 999px;
+}
+
+.active-category-chip__dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #2b7fed;
+  flex-shrink: 0;
+}
+
 .trending-listings-section .home1_popular_listing.home4_style {
   padding-top: 16px;
 }

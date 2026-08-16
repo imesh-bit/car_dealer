@@ -326,6 +326,8 @@ const Category = ({
   const [hoveredArrow, setHoveredArrow] = useState(null);
   const [viewAllHovered, setViewAllHovered] = useState(false);
   const [enteredCards, setEnteredCards] = useState(() => new Set());
+  const [justUpdated, setJustUpdated] = useState(false);
+  const prevCategoryRef = useRef(category);
 
   const categoryCounts = categories.map((item) => ({
     ...item,
@@ -372,6 +374,18 @@ const Category = ({
     return () => timers.forEach(clearTimeout);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [reducedMotion, category]);
+
+  // briefly rings the grid when the category actually changes (not on first
+  // mount) so it's obvious this section just updated to match the new tab
+  useEffect(() => {
+    if (prevCategoryRef.current === category) return undefined;
+    prevCategoryRef.current = category;
+    if (reducedMotion) return undefined;
+
+    setJustUpdated(true);
+    const timer = setTimeout(() => setJustUpdated(false), 900);
+    return () => clearTimeout(timer);
+  }, [category, reducedMotion]);
 
   const updateEdgeFades = () => {
     if (!isMobile) {
@@ -454,6 +468,7 @@ const Category = ({
       )}
 
       <div
+        className={justUpdated ? "category-grid-pulse" : undefined}
         style={styles.scrollOuter}
         onMouseEnter={() => isMobile && setPaused(true)}
         onMouseLeave={() => isMobile && !resumeTimeoutRef.current && setPaused(false)}
@@ -570,6 +585,21 @@ const Category = ({
           </button>
         )}
       </div>
+
+      <style jsx>{`
+        @keyframes categoryGridPulse {
+          0% {
+            box-shadow: 0 0 0 0 rgba(37, 99, 235, 0.28);
+          }
+          100% {
+            box-shadow: 0 0 0 14px rgba(37, 99, 235, 0);
+          }
+        }
+        :global(.category-grid-pulse) {
+          border-radius: 18px;
+          animation: categoryGridPulse 0.9s ease-out;
+        }
+      `}</style>
     </div>
   );
 };

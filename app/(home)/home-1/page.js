@@ -32,9 +32,16 @@ export const metadata = createPageMetadata({
   path: "/",
 });
 
+const CATEGORY_LABELS = {
+  automobile: "Automobiles",
+  "auto-part": "Auto Parts",
+  species: "General",
+};
+
 const Home_1 = async ({ searchParams }) => {
   const resolvedSearchParams = await searchParams;
   const activeCategory = resolvedSearchParams?.category || "automobile";
+  const activeCategoryLabel = CATEGORY_LABELS[activeCategory] || CATEGORY_LABELS.automobile;
 
   return (
     <div className="wrapper ovh" suppressHydrationWarning>
@@ -66,7 +73,7 @@ const Home_1 = async ({ searchParams }) => {
       {/* End Main Header Nav For Mobile */}
 
       {/* Hero */}
-      <Hero />
+      <Hero activeCategory={activeCategory} />
       {/* End Hero */}
 
       {/* Car Category */}
@@ -75,6 +82,10 @@ const Home_1 = async ({ searchParams }) => {
           <div className="row">
             <div className="col-lg-8 m-auto">
               <div className="main-title text-center">
+                <span className="active-category-chip">
+                  <span className="active-category-chip__dot" aria-hidden="true" />
+                  Showing: {activeCategoryLabel}
+                </span>
                 <h2>Top Categories</h2>
               </div>
             </div>

@@ -865,7 +865,7 @@
 
 "use client";
 import { useRouter } from "next/navigation";
-import { useMemo, useState, useTransition } from "react";
+import { useEffect, useMemo, useState, useTransition } from "react";
 import { useMergedListings } from "@/hooks/useMergedListings";
 
 const tabs = ["Automobiles", "Auto Parts", "General"];
@@ -876,6 +876,12 @@ const tabCategoryMap = {
   "General": "species",
 };
 
+const categoryTabMap = {
+  automobile: "Automobiles",
+  "auto-part": "Auto Parts",
+  species: "General",
+};
+
 const buildConditionOptions = (sourceListings) => {
   const conditions = [
     ...new Set(sourceListings.map((item) => item.condition).filter(Boolean)),
@@ -884,11 +890,13 @@ const buildConditionOptions = (sourceListings) => {
   return ["All Conditions", ...conditions];
 };
 
-const HeroFilter = () => {
+const HeroFilter = ({ activeCategory }) => {
   const router = useRouter();
   const [isPending, startTransition] = useTransition();
 
-  const [selectedTab, setSelectedTab] = useState("Automobiles");
+  const [selectedTab, setSelectedTab] = useState(
+    () => categoryTabMap[activeCategory] || "Automobiles"
+  );
   const [selectedMake, setSelectedMake] = useState("Select Makes");
   const [selectedModel, setSelectedModel] = useState("Select Models");
   const [selectedCondition, setSelectedCondition] = useState("All Conditions");
@@ -1006,6 +1014,13 @@ const HeroFilter = () => {
     () => buildConditionOptions(activeListings),
     [activeListings]
   );
+
+  // Keeps the tab in sync when the category changes from outside this
+  // component (sticky bar quick-switch, browser back/forward, a shared link)
+  useEffect(() => {
+    const tabForCategory = categoryTabMap[activeCategory] || "Automobiles";
+    setSelectedTab((current) => (current === tabForCategory ? current : tabForCategory));
+  }, [activeCategory]);
 
   const handleMakeChange = (value) => {
     setSelectedMake(value);

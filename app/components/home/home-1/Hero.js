@@ -4,7 +4,7 @@ import Image from "next/image";
 import HeroFilter from "../../common/HeroFilter";
 import { useTranslation } from "@/hooks/useTranslation";
 
-const Hero = () => {
+const Hero = ({ activeCategory }) => {
   const { t } = useTranslation();
 
   return (
@@ -35,7 +35,7 @@ const Hero = () => {
               </div>
               <div className="advance_search_panel">
                 <div className="row">
-                  <HeroFilter />
+                  <HeroFilter activeCategory={activeCategory} />
                 </div>
               </div>
             </div>
