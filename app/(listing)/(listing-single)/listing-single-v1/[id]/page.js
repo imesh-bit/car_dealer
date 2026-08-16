@@ -176,7 +176,7 @@ const ListingSingleV1 = async ({ params }) => {
             </div>
             {/* End .col-lg-7 */}
 
-            <div className="col-lg-5 col-xl-4">
+            {/* <div className="col-lg-5 col-xl-4">
               <div className="single_page_heading_content text-start text-lg-end">
                 <div className="share_content d-none d-lg-block">
                   <ShareMeta />
@@ -187,7 +187,7 @@ const ListingSingleV1 = async ({ params }) => {
                   </div>
                 </div>
               </div>
-            </div>
+            </div> */}
             {/* End col-lg-5 */}
           </div>
           {/* End .row */}
