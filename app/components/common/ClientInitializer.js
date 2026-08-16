@@ -1,11 +1,34 @@
 "use client";
 
 import { useEffect } from "react";
+import { usePathname, useSearchParams } from "next/navigation";
 
 export default function ClientInitializer() {
+  const pathname = usePathname();
+  const searchParams = useSearchParams();
+
+  // Authoritative "navigation finished" signal. next/navigation's router
+  // (router.push/replace) does its own internal History API calls that
+  // bypass the window.history monkey-patch below entirely — usePathname/
+  // useSearchParams are the one thing guaranteed to update once any
+  // client-side navigation actually completes, regardless of how it was
+  // triggered (Link click, router.push from a form submit handler, etc).
+  useEffect(() => {
+    const preloader = document.getElementById("global-preloader");
+    if (!preloader) return;
+    preloader.style.opacity = "0";
+    preloader.style.transition = "opacity 180ms ease-in-out";
+    const hideTimeout = window.setTimeout(() => {
+      preloader.style.display = "none";
+    }, 180);
+    return () => window.clearTimeout(hideTimeout);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [pathname, searchParams?.toString()]);
+
   useEffect(() => {
     let cancelled = false;
     let hideTimeout = null;
+    let safetyTimeout = null;
     let originalPushState = null;
     let originalReplaceState = null;
 
@@ -19,10 +42,22 @@ export default function ClientInitializer() {
       preloader.style.display = "block";
       preloader.style.opacity = "1";
       preloader.style.transition = "opacity 180ms ease-in-out";
+
+      // Belt-and-suspenders: if nothing else ever hides it (a failed fetch
+      // that never navigates, an unforeseen code path), don't leave the
+      // whole page stuck behind the overlay forever.
+      if (safetyTimeout) {
+        window.clearTimeout(safetyTimeout);
+      }
+      safetyTimeout = window.setTimeout(hidePreloader, 8000);
     };
 
     const hidePreloader = () => {
       if (!preloader) return;
+      if (safetyTimeout) {
+        window.clearTimeout(safetyTimeout);
+        safetyTimeout = null;
+      }
       preloader.style.opacity = "0";
       preloader.style.transition = "opacity 180ms ease-in-out";
       if (hideTimeout) {
@@ -131,6 +166,9 @@ export default function ClientInitializer() {
       cancelled = true;
       if (hideTimeout) {
         window.clearTimeout(hideTimeout);
+      }
+      if (safetyTimeout) {
+        window.clearTimeout(safetyTimeout);
       }
       window.removeEventListener("click", handleClick, true);
       window.removeEventListener("submit", handleSubmit, true);
