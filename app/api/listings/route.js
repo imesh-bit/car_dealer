@@ -1,13 +1,14 @@
 import { promises as fs } from "fs";
 import path from "path";
 import { NextResponse } from "next/server";
+import { revalidatePath } from "next/cache";
 import { getDataFile, saveUploadedFile } from "@/lib/storage";
 import { insertSupabaseListing, isSupabaseEnabled, normalizeListingRecord, getSupabaseListings } from "@/lib/supabase";
 
 // Short server-side cache so concurrent visitors share one Supabase query
-// instead of each request hitting the DB live. New/edited listings still
-// show up within this window, and the client force-refreshes immediately
-// after a save (see "voiture:listings-updated" in useMergedListings.js).
+// instead of each request hitting the DB live. POST busts this immediately
+// via revalidatePath below, so a freshly-added listing is never held back
+// by the cache window — only unrelated readers benefit from it.
 export const revalidate = 20;
 
 const readStoredListings = async () => {
@@ -209,6 +210,7 @@ export async function POST(request) {
         throw error;
       }
 
+      revalidatePath("/api/listings");
       return NextResponse.json(normalizeListingRecord(data), { status: 201 });
     }
 
@@ -216,6 +218,7 @@ export async function POST(request) {
     listings.unshift(listing);
     await writeStoredListings(listings);
 
+    revalidatePath("/api/listings");
     return NextResponse.json(listing, { status: 201 });
   } catch (error) {
     console.error("Failed to save listing", error);

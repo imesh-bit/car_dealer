@@ -1,6 +1,7 @@
 import { promises as fs } from "fs";
 import path from "path";
 import { NextResponse } from "next/server";
+import { revalidatePath } from "next/cache";
 import { deleteUploadedFile, getDataFile, getUploadDir } from "@/lib/storage";
 import {
   getSupabaseListingById,
@@ -104,6 +105,7 @@ export async function DELETE(request, { params }) {
       }
 
       await deleteListingImages(existing);
+      revalidatePath("/api/listings");
       return NextResponse.json({ message: "Listing deleted", id: Number(id) }, { status: 200 });
     }
 
@@ -119,6 +121,7 @@ export async function DELETE(request, { params }) {
     await writeStoredListings(listings);
     await deleteListingImages(removed);
 
+    revalidatePath("/api/listings");
     return NextResponse.json({ message: "Listing deleted", id: targetId }, { status: 200 });
   } catch (error) {
     console.error("Failed to delete listing", error);
