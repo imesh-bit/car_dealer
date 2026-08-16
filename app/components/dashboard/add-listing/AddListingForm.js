@@ -625,6 +625,7 @@ const AddListingForm = ({ initialCategory = "automobile", compact = false }) => 
                     value={formData.type}
                     onChange={handleChange}
                   >
+                    <option value="">N/A</option>
                     {automobileTypeOptions.map((option) => (
                       <option key={option.value} value={option.value}>
                         {option.label}
@@ -663,8 +664,9 @@ const AddListingForm = ({ initialCategory = "automobile", compact = false }) => 
                   value={formData.condition}
                   onChange={handleChange}
                 >
-                  <option>Used</option>
-                  <option>New</option>
+                  <option value="">N/A</option>
+                  <option value="Used">Used</option>
+                  <option value="New">New</option>
                 </select>
               </div>
             </div>
@@ -678,6 +680,7 @@ const AddListingForm = ({ initialCategory = "automobile", compact = false }) => 
                   value={formData.auctionGrade}
                   onChange={handleChange}
                 >
+                  <option value="">N/A</option>
                   <option value="A+">A+</option>
                   <option value="A">A</option>
                   <option value="A-">A-</option>
@@ -868,10 +871,11 @@ const AddListingForm = ({ initialCategory = "automobile", compact = false }) => 
                   value={formData.fuelType}
                   onChange={handleChange}
                 >
-                  <option>Petrol</option>
-                  <option>Diesel</option>
-                  <option>Hybrid</option>
-                  <option>Electric</option>
+                  <option value="">N/A</option>
+                  <option value="Petrol">Petrol</option>
+                  <option value="Diesel">Diesel</option>
+                  <option value="Hybrid">Hybrid</option>
+                  <option value="Electric">Electric</option>
                 </select>
               </div>
             </div>
@@ -885,9 +889,10 @@ const AddListingForm = ({ initialCategory = "automobile", compact = false }) => 
                   value={formData.transmission}
                   onChange={handleChange}
                 >
-                  <option>Automatic</option>
-                  <option>Manual</option>
-                  <option>Semi-Automatic</option>
+                  <option value="">N/A</option>
+                  <option value="Automatic">Automatic</option>
+                  <option value="Manual">Manual</option>
+                  <option value="Semi-Automatic">Semi-Automatic</option>
                 </select>
               </div>
             </div>
@@ -915,10 +920,11 @@ const AddListingForm = ({ initialCategory = "automobile", compact = false }) => 
                   value={formData.doors}
                   onChange={handleChange}
                 >
-                  <option>2 Doors</option>
-                  <option>3 Doors</option>
-                  <option>4 Doors</option>
-                  <option>5 Doors</option>
+                  <option value="">N/A</option>
+                  <option value="2 Doors">2 Doors</option>
+                  <option value="3 Doors">3 Doors</option>
+                  <option value="4 Doors">4 Doors</option>
+                  <option value="5 Doors">5 Doors</option>
                 </select>
               </div>
             </div>

@@ -4,6 +4,12 @@ import { NextResponse } from "next/server";
 import { getDataFile, saveUploadedFile } from "@/lib/storage";
 import { insertSupabaseListing, isSupabaseEnabled, normalizeListingRecord, getSupabaseListings } from "@/lib/supabase";
 
+// Short server-side cache so concurrent visitors share one Supabase query
+// instead of each request hitting the DB live. New/edited listings still
+// show up within this window, and the client force-refreshes immediately
+// after a save (see "voiture:listings-updated" in useMergedListings.js).
+export const revalidate = 20;
+
 const readStoredListings = async () => {
   const DATA_FILE = await getDataFile();
   try {
