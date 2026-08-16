@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { CONTACT, SITE_NAME } from "@/lib/site-config";
+import ManageCookiePreferencesButton from "./ManageCookiePreferencesButton";
 
 const LAST_UPDATED = "August 16, 2026";
 
@@ -106,13 +107,13 @@ const PrivacyPolicy = () => {
                 inquiries, such as quote requests and WhatsApp conversations.
               </li>
             </ul>
-            <p className="mb0">
+            <p className="mb25">
               You can accept all cookies, reject non-essential cookies, or
-              choose exactly which categories to allow at any time using the
-              cookie banner shown when you first visit, or by reopening it
-              from the &quot;Cookie Settings&quot; button in the corner of the
-              screen.
+              choose exactly which categories to allow. Your choice is asked
+              once, the first time you visit — to change it later, use the
+              button below.
             </p>
+            <ManageCookiePreferencesButton />
           </div>
 
           <div id="third-parties" className="grids mb60">
@@ -165,9 +166,10 @@ const PrivacyPolicy = () => {
               below — we will respond within a reasonable timeframe.
             </p>
             <p className="mb0">
-              You can also withdraw cookie consent at any time via the
-              &quot;Cookie Settings&quot; button, and you can control cookies
-              through your browser settings.
+              You can also withdraw cookie consent at any time using the
+              &quot;Manage Cookie Preferences&quot; button in the Cookies
+              section above, and you can control cookies through your browser
+              settings.
             </p>
           </div>
 

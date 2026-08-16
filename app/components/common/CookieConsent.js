@@ -6,6 +6,7 @@ import { useTranslation } from "@/hooks/useTranslation";
 
 const STORAGE_KEY = "voiture:cookie-consent";
 const CONSENT_EVENT = "voiture:cookie-consent-updated";
+export const OPEN_SETTINGS_EVENT = "voiture:open-cookie-settings";
 
 const DEFAULT_PREFERENCES = { necessary: true, analytics: false, marketing: false };
 
@@ -48,6 +49,18 @@ const CookieConsent = () => {
     } else {
       setView("banner");
     }
+
+    // Reopen when the user asks to manage their preferences from elsewhere
+    // (e.g. a "Manage Cookie Preferences" link on the Privacy Policy page) —
+    // there's no persistent floating icon anymore, so this is the only way
+    // back in after the initial choice.
+    const handleOpenSettings = () => {
+      const current = readStoredConsent();
+      if (current) setPreferences(current);
+      setView("settings");
+    };
+    window.addEventListener(OPEN_SETTINGS_EVENT, handleOpenSettings);
+    return () => window.removeEventListener(OPEN_SETTINGS_EVENT, handleOpenSettings);
   }, []);
 
   const acceptAll = () => {
@@ -68,8 +81,6 @@ const CookieConsent = () => {
     persistConsent(preferences);
     setView("hidden");
   };
-
-  const reopen = () => setView("settings");
 
   const togglePreference = (key) => {
     setPreferences((previous) => ({ ...previous, [key]: !previous[key] }));
@@ -156,18 +167,6 @@ const CookieConsent = () => {
             </div>
           </div>
         </div>
-      )}
-
-      {view === "hidden" && (
-        <button
-          type="button"
-          className="cookie-consent__reopen"
-          onClick={reopen}
-          aria-label={t("cookieConsent.settingsButton")}
-          title={t("cookieConsent.settingsButton")}
-        >
-          <span className="fas fa-cookie-bite" aria-hidden="true" />
-        </button>
       )}
 
       <style jsx>{`
@@ -294,31 +293,6 @@ const CookieConsent = () => {
 
         .cookie-consent__btn--primary:hover {
           filter: brightness(0.96);
-        }
-
-        .cookie-consent__reopen {
-          position: fixed;
-          left: 1rem;
-          bottom: calc(1rem + env(safe-area-inset-bottom));
-          z-index: 1200;
-          width: 46px;
-          height: 46px;
-          border-radius: 999px;
-          border: none;
-          background: #173b68;
-          color: #ffffff;
-          display: inline-flex;
-          align-items: center;
-          justify-content: center;
-          font-size: 1.05rem;
-          box-shadow: 0 10px 24px rgba(10, 35, 87, 0.28);
-          cursor: pointer;
-          transition: transform 0.18s ease, box-shadow 0.18s ease;
-        }
-
-        .cookie-consent__reopen:hover {
-          transform: translateY(-2px);
-          box-shadow: 0 14px 30px rgba(10, 35, 87, 0.32);
         }
 
         @media (max-width: 575px) {

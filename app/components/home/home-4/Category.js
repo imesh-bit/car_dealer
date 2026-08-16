@@ -144,7 +144,7 @@ const styles = {
 
   mobileRow: {
     display: "flex",
-    gap: 10,
+    gap: 12,
     overflowX: "auto",
     overflowY: "hidden",
     WebkitOverflowScrolling: "touch",
@@ -190,16 +190,16 @@ const styles = {
     position: "relative",
     display: "flex",
     flexDirection: "column",
-    width: mobile ? 155 : "100%",
-    minWidth: mobile ? 155 : 0,
+    width: mobile ? 168 : "100%",
+    minWidth: mobile ? 168 : 0,
     flexShrink: mobile ? 0 : undefined,
-    minHeight: mobile ? 140 : 155,
+    minHeight: mobile ? 172 : 155,
     scrollSnapAlign: mobile ? "start" : undefined,
     overflow: "hidden",
     background: "#ffffff",
     border: hovered ? "1px solid #d5e0ef" : "1px solid #e8edf4",
     borderRadius: 16,
-    padding: mobile ? 14 : 18,
+    padding: mobile ? 16 : 18,
     textDecoration: "none",
     cursor: "pointer",
     opacity: entered ? 1 : 0,
@@ -233,8 +233,8 @@ const styles = {
   iconBadge: (hovered, mobile) => ({
     boxSizing: "border-box",
     position: "relative",
-    width: mobile ? 40 : 48,
-    height: mobile ? 40 : 48,
+    width: mobile ? 46 : 48,
+    height: mobile ? 46 : 48,
     flexShrink: 0,
     borderRadius: "50%",
     display: "flex",
@@ -243,7 +243,7 @@ const styles = {
     transform: hovered ? "scale(1.06)" : "scale(1)",
     transition: "transform 0.18s ease",
   }),
-  iconBadgeOuter: (mobile) => ({ marginBottom: mobile ? 10 : 14 }),
+  iconBadgeOuter: (mobile) => ({ marginBottom: mobile ? 12 : 14 }),
 
   popularBadge: {
     position: "absolute",
@@ -265,7 +265,7 @@ const styles = {
     boxSizing: "border-box",
     margin: "0 0 6px",
     fontWeight: 700,
-    fontSize: mobile ? 14 : 15,
+    fontSize: mobile ? 15.5 : 15,
     lineHeight: 1.3,
     color: "#173B68",
     fontFamily: "Inter, sans-serif",
@@ -275,11 +275,11 @@ const styles = {
   }),
 
   foot: { boxSizing: "border-box", display: "flex", alignItems: "center", justifyContent: "space-between", gap: 8, width: "100%", marginTop: "auto" },
-  count: (mobile) => ({ boxSizing: "border-box", fontSize: mobile ? 12 : 13, fontWeight: 600, whiteSpace: "nowrap" }),
+  count: (mobile) => ({ boxSizing: "border-box", fontSize: mobile ? 13 : 13, fontWeight: 600, whiteSpace: "nowrap" }),
   chevron: (hovered, accent, mobile) => ({
     boxSizing: "border-box",
-    width: mobile ? 24 : 28,
-    height: mobile ? 24 : 28,
+    width: mobile ? 26 : 28,
+    height: mobile ? 26 : 28,
     flexShrink: 0,
     borderRadius: "50%",
     background: hovered ? accent : "#f4f6f9",
@@ -409,7 +409,7 @@ const Category = ({
     const el = scrollRef.current;
     if (!el) return;
     const firstCard = el.firstElementChild;
-    const step = firstCard ? firstCard.getBoundingClientRect().width + 10 : 165;
+    const step = firstCard ? firstCard.getBoundingClientRect().width + 12 : 180;
     el.scrollBy({ left: direction * step, behavior: "smooth" });
   };
 
@@ -525,7 +525,7 @@ const Category = ({
                   <div style={styles.iconBadgeWrap}>
                     <div style={styles.iconGlow(isHovered, bg)} />
                     <div style={{ ...styles.iconBadge(isHovered, isMobile), background: bg }}>
-                      <Icons8Icon iconName={item.icon8} alt={item.title} color={accent} size={isMobile ? 20 : 24} />
+                      <Icons8Icon iconName={item.icon8} alt={item.title} color={accent} size={isMobile ? 22 : 24} />
                     </div>
                   </div>
                 </div>
