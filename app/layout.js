@@ -4,6 +4,7 @@ import "../public/css/main.css";
 import ScrollToTop from "./components/common/ScrollTop";
 import ClientInitializer from "./components/common/ClientInitializer";
 import Providers from "./components/common/Providers";
+import FloatingWhatsAppButton from "./components/common/FloatingWhatsAppButton";
 import { OrganizationJsonLd } from "./components/common/JsonLd";
 import {
   defaultLocale,
@@ -71,6 +72,7 @@ export default async function RootLayout({ children }) {
           <div id="global-preloader" className="preloader" aria-hidden="true" />
           {children}
           <ScrollToTop />
+          <FloatingWhatsAppButton />
         </Providers>
       </body>
     </html>

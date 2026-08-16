@@ -209,7 +209,7 @@ const AdvanceFilter = ({ category = "automobile" }) => {
       <div className="row">
         <MainFilter filters={filters} updateFilter={updateFilter} category={category} />
 
-        <div className="col col-sm-4 col-lg-2">
+        <div className="col col-sm-4 col-lg-2 advance_filter_advanced_col">
           <div className="advance_search_style">
             <a
               className="advance_dd_btn d-inline-flex"
@@ -225,7 +225,7 @@ const AdvanceFilter = ({ category = "automobile" }) => {
         </div>
         {/* End .col */}
 
-        <div className="col col-sm-4 col-lg-2">
+        <div className="col col-sm-4 col-lg-2 advance_filter_search_col">
           <div className="advance_search_style">
             <button
               type="button"

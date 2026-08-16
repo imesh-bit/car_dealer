@@ -16,7 +16,6 @@ import Footer from "@/app/components/common/Footer";
 import Testimonial from "@/app/components/common/Testimonial";
 import Partner from "@/app/components/common/Partner";
 import Counter from "@/app/components/home/home-1/Counter";
-import PopularVehicles from "@/app/components/home/home-4/PopularVehicles";
 import Category from "@/app/components/home/home-4/Category";
 import TranslatedHeading from "@/app/components/common/TranslatedHeading";
 import ShowAllCarsLink from "@/app/components/common/ShowAllCarsLink";
@@ -38,10 +37,18 @@ const CATEGORY_LABELS = {
   species: "General",
 };
 
+const POPULAR_LISTING_TRUST_COPY = {
+  automobile: "Verified & Auction-Graded",
+  "auto-part": "Verified & Quality-Checked",
+  species: "Verified Suppliers & Quality-Checked",
+};
+
 const Home_1 = async ({ searchParams }) => {
   const resolvedSearchParams = await searchParams;
   const activeCategory = resolvedSearchParams?.category || "automobile";
   const activeCategoryLabel = CATEGORY_LABELS[activeCategory] || CATEGORY_LABELS.automobile;
+  const popularListingTrustCopy =
+    POPULAR_LISTING_TRUST_COPY[activeCategory] || POPULAR_LISTING_TRUST_COPY.automobile;
 
   return (
     <div className="wrapper ovh" suppressHydrationWarning>
@@ -189,11 +196,14 @@ const Home_1 = async ({ searchParams }) => {
       {/* End Delivery Divider */}
 
       {/* Our Popular Listing */}
-      <section className="popular-listing pb80 bg-ptrn1 bgc-heading-color">
+      <section className="popular-listing pb80 home4-popular-showcase">
         <div className="container">
           <div className="row">
             <div className="col-lg-6 offset-lg-3">
               <div className="main-title text-center">
+                <span className="popular-listing-eyebrow">
+                  <i className="fas fa-check-circle" aria-hidden="true" /> {popularListingTrustCopy}
+                </span>
                 <TranslatedHeading
                   messageKey="home.popularListings"
                   className="text-white"
@@ -205,7 +215,7 @@ const Home_1 = async ({ searchParams }) => {
 
           <div className="col-lg-12">
             <div className="home1_popular_listing">
-              <div className="listing_item_4grid_slider dots_none">
+              <div className="listing_item_car_grid_slider listing_item_4grid_slider dots_none">
                 <PopularListings category={activeCategory} />
               </div>
             </div>
