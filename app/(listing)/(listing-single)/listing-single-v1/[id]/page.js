@@ -242,6 +242,12 @@ const ListingSingleV1 = async ({ params }) => {
               </div>
               {/* End user profile service */}
 
+              <div className="sidebar_seller_contact mt30 mb30 d-block d-lg-block">
+                <SellerDetail car={car} />
+                <h4 className="mb30">Contact Seller</h4>
+                <ContactSeller car={car} />
+              </div>
+
               <div className="user_profile_location">
                 <h4 className="title">Location</h4>
                 <div className="property_sp_map mb40">
@@ -269,15 +275,14 @@ const ListingSingleV1 = async ({ params }) => {
 
             <div className="col-lg-4 col-xl-4">
               <div className="sidebar_seller_wrapper sticky">
-                <div className="sidebar_seller_contact d-none d-lg-block opening_hour_widgets p25 shadow-sm rounded-4 border">
+                <div className="sidebar_seller_contact d-none d-lg-block opening_hour_widgets p25 shadow-sm rounded-4 border mt30">
                   <div className="wrapper">
-                    <QuoteInquiry baseFobPrice={car.price} />
+                    {car.category === "species" ? (
+                      <OrderInquiryGeneral hideTitle car={car} />
+                    ) : (
+                      <QuoteInquiry baseFobPrice={car.price} />
+                    )}
                   </div>
-                </div>
-                <div className="sidebar_seller_contact mt30">
-                  <SellerDetail car={car} />
-                  <h4 className="mb30">Contact Seller</h4>
-                  <ContactSeller car={car} />
                 </div>
               </div>
 

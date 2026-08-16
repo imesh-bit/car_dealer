@@ -4,29 +4,19 @@ import Link from "next/link";
 import { useMergedListings } from "@/hooks/useMergedListings";
 
 // icons8 URL format: https://img.icons8.com/{style}/{size}/{hexColorNoHash}/{icon-name}.png
-// "ios" is a thin outline style that reads well at small sizes; color is set
-// per category below instead of the old hardcoded FFFFFF (which was invisible
-// on the light pastel circles).
 const ICONS8_STYLE = "ios";
 const ICONS8_SIZE = 100;
 
-const Icons8Icon = ({ iconName, alt, color, size = 28 }) => {
+const Icons8Icon = ({ iconName, alt, color, size = 22 }) => {
   const [failed, setFailed] = useState(false);
   const hex = color.replace("#", "");
   const src = `https://img.icons8.com/${ICONS8_STYLE}/${ICONS8_SIZE}/${hex}/${iconName}.png`;
 
   if (failed) {
-    // graceful fallback if the CDN request is blocked (CSP, ad-blocker, offline)
-    // instead of leaving a blank, confusing gap in the circle
     return (
       <div
         aria-hidden="true"
-        style={{
-          width: size,
-          height: size,
-          borderRadius: "50%",
-          border: `1.5px solid ${color}`,
-        }}
+        style={{ width: size, height: size, borderRadius: "50%", border: `1.5px solid ${color}` }}
       />
     );
   }
@@ -67,8 +57,6 @@ const categoryGroups = {
   ],
 };
 
-// pastel background + matching solid accent, paired so the icon/count are
-// always readable against their own circle
 const palette = [
   { bg: "#E6F0FF", accent: "#2B7FED" },
   { bg: "#E8FBF0", accent: "#23B48A" },
@@ -77,67 +65,91 @@ const palette = [
   { bg: "#FDE9EC", accent: "#D9436A" },
 ];
 
-// every value below is applied inline — nothing here depends on styled-jsx,
-// CSS Modules, or a global stylesheet loading in a particular order
 const styles = {
-  root: { boxSizing: "border-box" },
-  subtitle: { margin: "0 0 16px", fontSize: 14, color: "#94a3b8" },
-  grid: {
-    boxSizing: "border-box",
-    display: "grid",
-    gridTemplateColumns: "1fr 1fr",
-    gap: 16,
-    width: "100%",
+  root: { boxSizing: "border-box", width: "100%" },
+  headerRow: {
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "space-between",
+    marginBottom: 14,
+  },
+  heading: { margin: 0, fontSize: 13, fontWeight: 600, color: "#1A3760", fontFamily: "Inter, sans-serif", letterSpacing: 0 },
+  viewAll: {
+    display: "flex",
+    alignItems: "center",
+    gap: 4,
+    fontSize: 13.5,
+    fontWeight: 600,
+    color: "#2563EB",
+    textDecoration: "none",
+    flexShrink: 0,
+  },
+  // horizontally scrollable row — always fits any viewport: shows all 4
+  // cards in view when there's room, and lets people swipe when there isn't,
+  // instead of squeezing into a fixed grid that could wrap awkwardly
+  scrollRow: {
+    display: "flex",
+    gap: 12,
+    overflowX: "auto",
+    overflowY: "hidden",
+    WebkitOverflowScrolling: "touch",
+    scrollSnapType: "x proximity",
+    paddingBottom: 4,
+    // hide scrollbar visually while staying scrollable
+    scrollbarWidth: "none",
   },
   card: {
     boxSizing: "border-box",
     position: "relative",
     display: "flex",
     flexDirection: "column",
-    width: "100%",
+    flex: "1 1 0",
+    minWidth: 128,
+    maxWidth: 168,
+    scrollSnapAlign: "start",
     overflow: "visible",
     background: "#ffffff",
-    borderRadius: 20,
-    padding: 20,
-    boxShadow: "0 6px 20px rgba(10,35,87,0.06)",
+    border: "1px solid #eef1f6",
+    borderRadius: 16,
+    padding: 14,
     textDecoration: "none",
   },
   iconBadge: {
     boxSizing: "border-box",
-    width: 56,
-    height: 56,
+    width: 44,
+    height: 44,
     flexShrink: 0,
     borderRadius: "50%",
     display: "flex",
     alignItems: "center",
     justifyContent: "center",
-    marginBottom: 16,
+    marginBottom: 12,
   },
   title: {
     boxSizing: "border-box",
-    margin: "0 0 6px",
-    fontWeight: 500,
+    margin: "0 0 4px",
+    fontWeight: 600,
     fontSize: 13,
     lineHeight: 1.3,
     color: "#1A3760",
+    fontFamily: "Inter, sans-serif",
     whiteSpace: "nowrap",
     overflow: "hidden",
     textOverflow: "ellipsis",
-    fontFamily: '"Inter", sans-serif',
   },
   foot: {
     boxSizing: "border-box",
     display: "flex",
     alignItems: "center",
     justifyContent: "space-between",
-    gap: 8,
+    gap: 6,
     width: "100%",
   },
-  count: { boxSizing: "border-box", fontSize: 14, fontWeight: 500 },
+  count: { boxSizing: "border-box", fontSize: 12.5, fontWeight: 600, whiteSpace: "nowrap" },
   chevron: {
     boxSizing: "border-box",
-    width: 32,
-    height: 32,
+    width: 24,
+    height: 24,
     flexShrink: 0,
     borderRadius: "50%",
     background: "#f2f4f8",
@@ -148,7 +160,7 @@ const styles = {
   },
 };
 
-const Category = ({ category = "automobile", subtitle }) => {
+const Category = ({ category = "automobile", title = "Browse Categories", viewAllHref }) => {
   const mergedListings = useMergedListings();
   const categories = categoryGroups[category] || categoryGroups.automobile;
 
@@ -171,9 +183,17 @@ const Category = ({ category = "automobile", subtitle }) => {
 
   return (
     <div style={styles.root}>
-      {subtitle && <p style={styles.subtitle}>{subtitle}</p>}
+      <div style={styles.headerRow}>
+        <h3 style={styles.heading}>{title}</h3>
+        <Link href={viewAllHref || `/listing-v1?category=${encodeURIComponent(category)}`} style={styles.viewAll}>
+          View All
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none">
+            <path d="M9 6L15 12L9 18" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" />
+          </svg>
+        </Link>
+      </div>
 
-      <div style={styles.grid}>
+      <div style={styles.scrollRow}>
         {categoryCounts.map((item, index) => {
           const href =
             item.queryKey === "type"
@@ -200,7 +220,7 @@ const Category = ({ category = "automobile", subtitle }) => {
                   {item.listing} {item.listing === 1 ? "Listing" : "Listings"}
                 </span>
                 <span style={styles.chevron} aria-hidden="true">
-                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none">
+                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none">
                     <path d="M9 6L15 12L9 18" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
                   </svg>
                 </span>

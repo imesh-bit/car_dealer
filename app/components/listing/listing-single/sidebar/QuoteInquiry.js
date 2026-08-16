@@ -369,16 +369,33 @@ const QuoteInquiry = ({ hideTitle, baseFobPrice = 10000, requestsToday }) => {
     setDone(true);
   };
 
+  const validateTerms = () => {
+    if (!formData.agreeTerms) {
+      markTouched("agreeTerms");
+      const checkbox = document.getElementById("agreeTerms");
+      if (checkbox) {
+        checkbox.setCustomValidity("Please accept the Terms & Conditions before submitting.");
+        checkbox.reportValidity();
+      }
+      return false;
+    }
+
+    const checkbox = document.getElementById("agreeTerms");
+    if (checkbox) checkbox.setCustomValidity("");
+    return true;
+  };
+
   const handleFormSubmit = (e) => {
     e.preventDefault();
     if (stepIndex < STEPS.length - 1) {
       goNext();
       return;
     }
-    if (!formData.agreeTerms) {
-      markTouched("agreeTerms");
+
+    if (!validateTerms()) {
       return;
     }
+
     sendToWhatsapp();
   };
 
@@ -619,8 +636,20 @@ const QuoteInquiry = ({ hideTitle, baseFobPrice = 10000, requestsToday }) => {
                 id="agreeTerms"
                 name="agreeTerms"
                 checked={formData.agreeTerms}
-                onChange={handleChange}
+                required
+                aria-invalid={touched.agreeTerms && !formData.agreeTerms}
+                onChange={(e) => {
+                  handleChange(e);
+                  if (e.target.checked) {
+                    e.target.setCustomValidity("");
+                  }
+                }}
                 onBlur={() => markTouched("agreeTerms")}
+                onInvalid={(e) => {
+                  e.target.setCustomValidity("Please accept the Terms & Conditions before submitting.");
+                  markTouched("agreeTerms");
+                }}
+                onInput={(e) => e.target.setCustomValidity("")}
               />
               <label className="form-check-label fz13" htmlFor="agreeTerms">
                 I agree to Reiko group.com&apos;s <a href="#">Terms of Service</a>
@@ -645,8 +674,12 @@ const QuoteInquiry = ({ hideTitle, baseFobPrice = 10000, requestsToday }) => {
             <button
               type="submit"
               className="btn btn-thm btn-lg"
-              style={{ flex: 1, opacity: submitting ? 0.75 : 1, cursor: submitting ? "not-allowed" : "pointer" }}
-              disabled={submitting}
+              style={{
+                flex: 1,
+                opacity: submitting || !formData.agreeTerms ? 0.6 : 1,
+                cursor: submitting || !formData.agreeTerms ? "not-allowed" : "pointer",
+              }}
+              disabled={submitting || !formData.agreeTerms}
             >
               {submitting ? "Opening WhatsApp…" : "Request Quote"}
             </button>
