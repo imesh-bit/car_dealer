@@ -1,15 +1,55 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import rates from "@/data/orderInquiryRates.json";
 
+const DEFAULT_SETTINGS = {
+  defaultCurrency: "JPY",
+  currencies: {
+    JPY: { symbol: "¥", label: "Japanese Yen (JPY)", rate: 1, decimals: 0 },
+    USD: { symbol: "$", label: "US Dollar (USD)", rate: 0.0067, decimals: 2 },
+    EUR: { symbol: "€", label: "Euro (EUR)", rate: 0.0062, decimals: 2 },
+    GBP: { symbol: "£", label: "British Pound (GBP)", rate: 0.0053, decimals: 2 },
+    LKR: { symbol: "Rs.", label: "Sri Lankan Rupee (LKR)", rate: 2.05, decimals: 0 },
+    INR: { symbol: "₹", label: "Indian Rupee (INR)", rate: 0.56, decimals: 0 },
+  },
+  portRates: rates,
+};
+
 const OrderInquiryGeneral = ({ hideTitle, car, baseFobPrice = 10000 }) => {
-  const countries = Object.keys(rates);
+  const [settings, setSettings] = useState(DEFAULT_SETTINGS);
+
+  useEffect(() => {
+    const loadSettings = async () => {
+      try {
+        const response = await fetch("/api/inquiry-settings", { cache: "no-store" });
+        if (!response.ok) return;
+        const data = await response.json();
+        const nextSettings = {
+          ...DEFAULT_SETTINGS,
+          ...data,
+          currencies: {
+            ...DEFAULT_SETTINGS.currencies,
+            ...(data.currencies || {}),
+          },
+          portRates: data.portRates || DEFAULT_SETTINGS.portRates,
+        };
+        setSettings(nextSettings);
+      } catch (error) {
+        console.error("Failed to load inquiry settings", error);
+      }
+    };
+
+    loadSettings();
+  }, []);
+
+  const ratesSource = settings.portRates || DEFAULT_SETTINGS.portRates;
+  const countries = Object.keys(ratesSource);
   const defaultCountry = countries[0];
   const [formData, setFormData] = useState({
     country: defaultCountry,
-    port: rates[defaultCountry][0].name,
-    portPrice: rates[defaultCountry][0].price,
+    port: ratesSource[defaultCountry][0].name,
+    portPrice: ratesSource[defaultCountry][0].price,
     inspection: true,
     insurance: false,
     orderQuantity: "",
@@ -20,9 +60,24 @@ const OrderInquiryGeneral = ({ hideTitle, car, baseFobPrice = 10000 }) => {
     phone2: "",
   });
 
+  useEffect(() => {
+    setFormData((prev) => {
+      const validCountry = ratesSource[prev.country] ? prev.country : defaultCountry;
+      const validPortList = ratesSource[validCountry] || [];
+      const selectedPort = validPortList.find((item) => item.name === prev.port) || validPortList[0];
+
+      return {
+        ...prev,
+        country: validCountry,
+        port: selectedPort?.name || "",
+        portPrice: selectedPort?.price ?? prev.portPrice ?? 0,
+      };
+    });
+  }, [defaultCountry, ratesSource]);
+
   const currentPorts = useMemo(
-    () => rates[formData.country] || [],
-    [formData.country]
+    () => ratesSource[formData.country] || [],
+    [formData.country, ratesSource]
   );
 
   const handleChange = (e) => {
@@ -30,8 +85,9 @@ const OrderInquiryGeneral = ({ hideTitle, car, baseFobPrice = 10000 }) => {
     setFormData((prev) => {
       if (name === "country") {
         const nextCountry = value;
-        const nextPort = rates[nextCountry][0].name;
-        const nextPortPrice = rates[nextCountry][0].price;
+        const nextPortList = ratesSource[nextCountry] || [];
+        const nextPort = nextPortList[0]?.name || "";
+        const nextPortPrice = nextPortList[0]?.price || 0;
         return {
           ...prev,
           country: nextCountry,
@@ -41,7 +97,7 @@ const OrderInquiryGeneral = ({ hideTitle, car, baseFobPrice = 10000 }) => {
       }
 
       if (name === "port") {
-        const selectedPort = rates[prev.country].find(
+        const selectedPort = (ratesSource[prev.country] || []).find(
           (item) => item.name === value
         );
         return {

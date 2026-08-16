@@ -3,6 +3,8 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import rates from "@/data/orderInquiryRates.json";
 
+const areSettingsEqual = (a, b) => JSON.stringify(a) === JSON.stringify(b);
+
 /* ---------- small inline icons ---------- */
 const ClockIcon = () => (
   <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
@@ -50,6 +52,11 @@ const CURRENCIES = {
   INR: { symbol: "₹", label: "Indian Rupee (INR)", rate: 0.56, decimals: 0 },
 };
 const DEFAULT_CURRENCY = "JPY";
+const DEFAULT_SETTINGS = {
+  defaultCurrency: DEFAULT_CURRENCY,
+  currencies: CURRENCIES,
+  portRates: rates,
+};
 
 // how wide the widget's own container needs to be before pairing fields
 // side by side. Based on the container's real measured width, not the
@@ -179,19 +186,50 @@ const Field = ({ label, error, valid, children }) => (
 );
 
 const QuoteInquiry = ({ hideTitle, baseFobPrice = 10000, requestsToday }) => {
-  const countries = Object.keys(rates);
+  const [settings, setSettings] = useState(DEFAULT_SETTINGS);
+  const hasLoadedSettingsRef = useRef(false);
+  const ratesSource = settings.portRates || DEFAULT_SETTINGS.portRates;
+  const countries = Object.keys(ratesSource);
   const [containerRef, containerWidth] = useContainerWidth();
   const isMobileViewport = useIsMobileViewport();
   const twoCol = containerWidth >= TWO_COL_MIN_WIDTH;
 
+  useEffect(() => {
+    if (hasLoadedSettingsRef.current) return;
+    hasLoadedSettingsRef.current = true;
+
+    const loadSettings = async () => {
+      try {
+        const response = await fetch("/api/inquiry-settings", { cache: "no-store" });
+        if (!response.ok) return;
+        const data = await response.json();
+        const merged = {
+          ...DEFAULT_SETTINGS,
+          ...data,
+          currencies: {
+            ...DEFAULT_SETTINGS.currencies,
+            ...(data.currencies || {}),
+          },
+          portRates: data.portRates || DEFAULT_SETTINGS.portRates,
+        };
+
+        setSettings((prev) => (areSettingsEqual(prev, merged) ? prev : merged));
+      } catch (error) {
+        console.error("Failed to load inquiry settings", error);
+      }
+    };
+
+    loadSettings();
+  }, []);
+
   const [stepIndex, setStepIndex] = useState(0);
   const [done, setDone] = useState(false);
   const [touched, setTouched] = useState({});
-  const [currency, setCurrency] = useState(DEFAULT_CURRENCY);
+  const [currency, setCurrency] = useState(settings.defaultCurrency || DEFAULT_CURRENCY);
   const [formData, setFormData] = useState({
     country: countries[0],
-    port: rates[countries[0]][0].name,
-    portPrice: rates[countries[0]][0].price,
+    port: ratesSource[countries[0]][0].name,
+    portPrice: ratesSource[countries[0]][0].price,
     inspection: true,
     insurance: false,
     fullName: "",
@@ -200,24 +238,53 @@ const QuoteInquiry = ({ hideTitle, baseFobPrice = 10000, requestsToday }) => {
     phone2: "",
     agreeTerms: false,
   });
+
+  useEffect(() => {
+    setCurrency(settings.defaultCurrency || DEFAULT_CURRENCY);
+  }, [settings.defaultCurrency]);
+
+  useEffect(() => {
+    setFormData((prev) => {
+      const validCountry = ratesSource[prev.country] ? prev.country : (countries[0] || "Japan");
+      const validPortList = ratesSource[validCountry] || [];
+      const selectedPort = validPortList.find((item) => item.name === prev.port) || validPortList[0];
+      const nextPortPrice = selectedPort?.price ?? prev.portPrice ?? 0;
+
+      if (
+        prev.country === validCountry &&
+        prev.port === selectedPort?.name &&
+        Number(prev.portPrice || 0) === Number(nextPortPrice)
+      ) {
+        return prev;
+      }
+
+      return {
+        ...prev,
+        country: validCountry,
+        port: selectedPort?.name || "",
+        portPrice: nextPortPrice,
+      };
+    });
+  }, [ratesSource]);
   const [submitting, setSubmitting] = useState(false);
   const [popupBlocked, setPopupBlocked] = useState(false);
   const [lastWhatsappUrl, setLastWhatsappUrl] = useState(null);
 
   const safeBaseFobPrice = Number.isFinite(Number(baseFobPrice)) ? Number(baseFobPrice) : 10000;
-  const currentPorts = useMemo(() => rates[formData.country] || [], [formData.country]);
+  const currentPorts = useMemo(() => ratesSource[formData.country] || [], [formData.country, ratesSource]);
 
   const handleChange = (e) => {
     const { name, type, value, checked } = e.target;
     setFormData((prev) => {
       if (name === "country") {
         const nextCountry = value;
-        const nextPort = rates[nextCountry][0].name;
-        const nextPortPrice = rates[nextCountry][0].price;
+        const nextPortList = ratesSource[nextCountry] || [];
+        const nextPort = nextPortList[0]?.name || "";
+        const nextPortPrice = nextPortList[0]?.price || 0;
         return { ...prev, country: nextCountry, port: nextPort, portPrice: nextPortPrice };
       }
       if (name === "port") {
-        const selectedPort = rates[prev.country].find((item) => item.name === value);
+        const selectedPort = (ratesSource[prev.country] || []).find((item) => item.name === value);
         return { ...prev, port: value, portPrice: selectedPort ? selectedPort.price : prev.portPrice };
       }
       return { ...prev, [name]: type === "checkbox" ? checked : value };
@@ -234,7 +301,7 @@ const QuoteInquiry = ({ hideTitle, baseFobPrice = 10000, requestsToday }) => {
   };
 
   const formatCurrency = (valueInJPY, currencyCode = currency) => {
-    const c = CURRENCIES[currencyCode] || CURRENCIES[DEFAULT_CURRENCY];
+    const c = (settings.currencies && settings.currencies[currencyCode]) || CURRENCIES[currencyCode] || CURRENCIES[DEFAULT_CURRENCY];
     const converted = Number(valueInJPY) * c.rate;
     return `${c.symbol} ${converted.toLocaleString(undefined, {
       minimumFractionDigits: c.decimals,
@@ -351,7 +418,7 @@ const QuoteInquiry = ({ hideTitle, baseFobPrice = 10000, requestsToday }) => {
       {!hideTitle && (
         <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 20 }}>
           <h4 style={{ margin: 0, fontSize: 14, fontWeight: 600 }}>Free Quote / Inquiry</h4>
-          <span style={{ fontSize: 12, color: "#dc2626" }}>*Required fields</span>
+          {/* <span style={{ fontSize: 12, color: "#dc2626" }}>*Required fields</span> */}
         </div>
       )}
 
@@ -367,7 +434,7 @@ const QuoteInquiry = ({ hideTitle, baseFobPrice = 10000, requestsToday }) => {
           value={currency}
           onChange={(e) => setCurrency(e.target.value)}
         >
-          {Object.entries(CURRENCIES).map(([code, c]) => (
+          {Object.entries(settings.currencies || CURRENCIES).map(([code, c]) => (
             <option key={code} value={code}>{c.label}</option>
           ))}
         </select>
@@ -396,14 +463,14 @@ const QuoteInquiry = ({ hideTitle, baseFobPrice = 10000, requestsToday }) => {
       {stepIndex === 0 && (
         <>
           <div style={styles.fieldRow(twoCol ? 2 : 1)}>
-            <Field label="Country">
+            <Field label="Select your country">
               <select className="form-control form-control-sm" name="country" value={formData.country} onChange={handleChange} required>
                 {countries.map((country) => (
                   <option key={country} value={country}>{country}</option>
                 ))}
               </select>
             </Field>
-            <Field label="Port">
+            <Field label="Select the Port">
               <select className="form-control form-control-sm" name="port" value={formData.port} onChange={handleChange} required>
                 {currentPorts.map((port) => (
                   <option key={port.name} value={port.name}>{port.name}</option>
@@ -537,11 +604,11 @@ const QuoteInquiry = ({ hideTitle, baseFobPrice = 10000, requestsToday }) => {
             <p className="quote_total_subtext">
               FOB Base: {formatCurrency(safeBaseFobPrice)}, Port: {formatCurrency(formData.portPrice)}
             </p>
-            <p style={{ fontSize: 12, color: "#94a3b8", marginTop: 4 }}>
+            {/* <p style={{ fontSize: 12, color: "#94a3b8", marginTop: 4 }}>
               {currency === "JPY"
                 ? "This is the full landed cost shown above — no hidden fees added later."
                 : "Estimated in your selected currency — the invoice will be issued in Japanese Yen (¥)."}
-            </p>
+            </p> */}
           </div>
 
           <div style={{ marginBottom: 15 }}>

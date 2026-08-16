@@ -271,7 +271,7 @@ const ListingSingleV1 = async ({ params }) => {
               <div className="sidebar_seller_wrapper sticky">
                 <div className="sidebar_seller_contact d-none d-lg-block opening_hour_widgets p25 shadow-sm rounded-4 border">
                   <div className="wrapper">
-                    <QuoteInquiry hideTitle baseFobPrice={car.price} />
+                    <QuoteInquiry baseFobPrice={car.price} />
                   </div>
                 </div>
                 <div className="sidebar_seller_contact mt30">

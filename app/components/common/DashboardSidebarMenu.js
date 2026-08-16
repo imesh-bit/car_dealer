@@ -43,6 +43,11 @@ const DashboardSidebarMenu = () => {
             path: "/add-listings/general",
         },
         {
+            icon: "flaticon-money",
+            label: "Inquiry Settings",
+            path: "/inquiry-settings",
+        },
+        {
             icon: "flaticon-message",
             label: "Messages",
             path: "/messages",

@@ -6,6 +6,7 @@ import HeaderSidebar from "@/app/components/common/HeaderSidebar";
 import MobileMenu from "@/app/components/common/MobileMenu";
 import LoginSignupModal from "@/app/components/common/login-signup";
 import AddListingForm from "@/app/components/dashboard/add-listing/AddListingForm";
+import InquirySettingsPanel from "@/app/components/dashboard/dash-board/InquirySettingsPanel";
 
 export const metadata = {
   title: "Add Listing || Voiture - Automotive & Car Dealer NextJS Template",
@@ -77,6 +78,9 @@ const AddListings = () => {
                 </div>
                 {/* End col-12 AddListingForm */}
 
+                <div className="col-lg-12 mt30">
+                  <InquirySettingsPanel />
+                </div>
               </div>
               {/* End .row */}
             </div>

@@ -1,0 +1,85 @@
+{
+  "defaultCurrency": "JPY",
+  "currencies": {
+    "JPY": {
+      "symbol": "¥",
+      "label": "Japanese Yen (JPY)",
+      "rate": 1,
+      "decimals": 0
+    },
+    "USD": {
+      "symbol": "$",
+      "label": "US Dollar (USD)",
+      "rate": 0.0067,
+      "decimals": 2
+    },
+    "EUR": {
+      "symbol": "€",
+      "label": "Euro (EUR)",
+      "rate": 0.0062,
+      "decimals": 2
+    },
+    "GBP": {
+      "symbol": "£",
+      "label": "British Pound (GBP)",
+      "rate": 0.0053,
+      "decimals": 2
+    },
+    "LKR": {
+      "symbol": "Rs.",
+      "label": "Sri Lankan Rupee (LKR)",
+      "rate": 2.05,
+      "decimals": 0
+    },
+    "INR": {
+      "symbol": "₹",
+      "label": "Indian Rupee (INR)",
+      "rate": 0.56,
+      "decimals": 0
+    }
+  },
+  "portRates": {
+    "Sri Lanka": [
+      {
+        "name": "Colombo",
+        "price": 100000
+      },
+      {
+        "name": "Hambantota",
+        "price": 4799
+      },
+      {
+        "name": "Galle",
+        "price": 4599
+      }
+    ],
+    "South Africa": [
+      {
+        "name": "Durban",
+        "price": 6850
+      },
+      {
+        "name": "Cape Town",
+        "price": 7200
+      },
+      {
+        "name": "Port Elizabeth",
+        "price": 6980
+      }
+    ],
+    "Japan": [
+      {
+        "name": "Yokohama",
+        "price": 9050
+      },
+      {
+        "name": "Kobe",
+        "price": 9200
+      },
+      {
+        "name": "Nagoya",
+        "price": 9400
+      }
+    ]
+  }
+}
