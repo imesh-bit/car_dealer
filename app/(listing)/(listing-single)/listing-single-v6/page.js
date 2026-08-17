@@ -251,7 +251,7 @@ const ListingSingleV5 = () => {
                       <div className="upl_content d-block d-md-flex">
                         <p className="float-start fn-sm mb20-sm">
                           <span className="fas fa-map-marker-alt pr10 vam" />
-                          3891 Ranchview Dr. Richardson, California 62639
+                          924-1 Tenma, Fuji, Shizuoka, Japan 419-0205
                         </p>
                         <button className="btn location_btn">
                           Get Direction

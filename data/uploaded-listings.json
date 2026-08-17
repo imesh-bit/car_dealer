@@ -1,1 +1,58 @@
-[]
+[
+  {
+    "id": 1786945687286,
+    "featured": false,
+    "category": "automobile",
+    "image": "/api/uploads/listings/1786945687252-0-image.png-2k-202607291052.jpeg",
+    "gallery": [
+      {
+        "imageSrc": "/api/uploads/listings/1786945687252-0-image.png-2k-202607291052.jpeg",
+        "videoId": null
+      }
+    ],
+    "photosCount": 1,
+    "videosCount": 1,
+    "title": "s",
+    "price": 1,
+    "originalPrice": 1,
+    "rating": 0,
+    "reviewsCount": 0,
+    "mileage": "",
+    "fuelType": "Petrol",
+    "transmission": "Automatic",
+    "tags": [
+      "automobile",
+      "used"
+    ],
+    "make": "s",
+    "model": "s",
+    "year": 2023,
+    "color": "",
+    "drivetrain": "",
+    "condition": "Used",
+    "engineSize": "",
+    "doors": 4,
+    "cylinders": 4,
+    "vin": "",
+    "bodyType": "Cars",
+    "interiorColor": "",
+    "tagline": "s",
+    "postedAgo": "Just now",
+    "views": 5,
+    "description": [
+      "s"
+    ],
+    "features": [],
+    "location": "s",
+    "latitude": "",
+    "longitude": "",
+    "videoLink": "s",
+    "partCategory": "",
+    "brand": "",
+    "productCategory": "",
+    "packagingType": "",
+    "orderScale": "",
+    "minimumOrderQuantity": "",
+    "auctionGrade": "A+"
+  }
+]

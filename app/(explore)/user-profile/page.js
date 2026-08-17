@@ -80,7 +80,7 @@ const UserProfile = () => {
                       <li className="list-inline-item">
                         <a className="mr10" href="#">
                           <span className="fas fa-map-marker-alt pr5 vam" />{" "}
-                          3891 Ranchview Dr. Richardson, California 62639
+                          924-1 Tenma, Fuji, Shizuoka, Japan 419-0205
                         </a>
                       </li>
                       <li className="list-inline-item">
