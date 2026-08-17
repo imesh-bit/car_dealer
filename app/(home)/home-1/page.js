@@ -94,7 +94,7 @@ const Home_1 = async ({ searchParams }) => {
                   Showing: {activeCategoryLabel}
                 </span>
                 <h2>Top Categories</h2>
-              </div>You
+              </div>
             </div>
           </div>
 

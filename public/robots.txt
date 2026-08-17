@@ -1,0 +1,23 @@
+# Robots.txt for RAIKO GROUP - Japan Import & Export
+# Allow all search engines to crawl public pages
+
+User-agent: *
+Allow: /
+Disallow: /dashboard
+Disallow: /login
+Disallow: /signup
+Disallow: /add-listings
+Disallow: /profile
+Disallow: /messages
+Disallow: /favourites
+Disallow: /my-listing
+Disallow: /*.json$
+Disallow: /*?*sort=
+Disallow: /*?*filter=
+
+# Allow Googlebot extra crawling
+User-agent: Googlebot
+Allow: /
+
+# Sitemap location
+Sitemap: https://www.raikogroup.com/sitemap.xml

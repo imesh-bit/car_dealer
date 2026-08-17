@@ -3,18 +3,27 @@ import { CONTACT, SITE_NAME, SITE_URL } from "@/lib/site-config";
 export function OrganizationJsonLd() {
   const data = {
     "@context": "https://schema.org",
-    "@type": "AutoDealer",
+    "@type": "LocalBusiness",
+    "@id": SITE_URL,
     name: SITE_NAME,
     url: SITE_URL,
-    logo: `${SITE_URL}/images/header-logo2.svg`,
-    description:
-      "Trusted automotive dealer offering quality vehicles, auto parts, and professional service.",
+    logo: `${SITE_URL}/images/header-logo-icon.png`,
+    image: `${SITE_URL}/images/header-logo-icon.png`,
+    description: "Japan's most trusted import and export business group. Premium quality vehicles, auto parts & industrial goods. Certified, reliable, secure trading. International shipping available.",
     telephone: CONTACT.phone,
     email: CONTACT.email,
     address: {
       "@type": "PostalAddress",
       streetAddress: CONTACT.address,
+      addressCountry: "JP",
     },
+    sameAs: [
+      "https://www.facebook.com/raikogroup",
+      "https://www.instagram.com/raikogroup",
+    ],
+    areaServed: "Worldwide",
+    priceRange: "Varies",
+    knowsAbout: ["Import/Export", "Vehicle Trading", "Auto Parts", "International Shipping"],
   };
 
   return (

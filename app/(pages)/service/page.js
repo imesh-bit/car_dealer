@@ -9,9 +9,13 @@ import ServiceBlock from "@/app/components/pages/service/ServiceBlock";
 import ScheduleService from "@/app/components/pages/service/ScheduleService";
 import ServiceHours from "@/app/components/pages/service/ServiceHours";
 
-export const metadata = {
-  title: "Service || Voiture - Automotive & Car Dealer NextJS Template",
-};
+import { createPageMetadata } from "@/lib/metadata";
+
+export const metadata = createPageMetadata({
+  title: "Import & Export Services — RAIKO GROUP Japan Sourcing Solutions",
+  description: "RAIKO GROUP provides comprehensive import/export services including vehicle sourcing, customs clearance, logistics, inspections, and international shipping for 150+ countries.",
+  path: "/service",
+});
 
 const Service = () => {
   return (
@@ -44,8 +48,8 @@ const Service = () => {
           <div className="row">
             <div className="col-xl-12">
               <div className="breadcrumb_content style2">
-                <h2 className="breadcrumb_title">Service</h2>
-                <p className="subtitle">Service</p>
+                <h2 className="breadcrumb_title">Import & Export Services</h2>
+                <p className="subtitle">Comprehensive Global Trade Solutions</p>
                 <ol className="breadcrumb">
                   <li className="breadcrumb-item">
                     <a href="#">Home</a>
@@ -77,13 +81,14 @@ const Service = () => {
       </section>
       {/* Service Section Area */}
 
-      {/* Service Forms Section Area */}
+      {/* Import Inquiry Section Area */}
       <section className="service-forms bgc-f9">
         <div className="container">
           <div className="row">
             <div className="col-md-7 col-xl-8">
               <div className="service_form mb30-sm">
-                <h5 className="title">Schedule Service</h5>
+                <h5 className="title">Request an Import Quote</h5>
+                <p style={{ marginBottom: "20px", color: "#666" }}>Fill out the form below and our import specialists will contact you within 24 hours with a customized quote and recommendations for your sourcing needs.</p>
                 <ScheduleService />
               </div>
             </div>
@@ -92,7 +97,7 @@ const Service = () => {
             <div className="col-md-5 col-xl-4">
               <div className="opening_hour_widgets">
                 <div className="wrapper">
-                  <h4 className="title">Opening hours</h4>
+                  <h4 className="title">Business Hours</h4>
                   <ServiceHours />
                 </div>
               </div>

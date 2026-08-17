@@ -5,17 +5,16 @@ import HeaderTop from "../../components/common/HeaderTop";
 import MobileMenu from "../../components/common/MobileMenu";
 import AboutTextBlock from "@/app/components/pages/about-us/AboutTextBlock";
 import WhyChoose from "@/app/components/common/WhyChoose";
-import Team from "@/app/components/common/Team";
-import Testimonial from "@/app/components/common/Testimonial";
-import Partner from "@/app/components/common/Partner";
+// import Team from "@/app/components/common/Team"; // Disabled
+// import Partner from "@/app/components/common/Partner"; // Disabled
 import LoginSignupModal from "@/app/components/common/login-signup";
 
 import { createPageMetadata } from "@/lib/metadata";
 
 export const metadata = createPageMetadata({
-  title: "RAIKO GROUP | Japan Export & Wholesale Sourcing — Vehicles, Parts & Trade Goods",
+  title: "About RAIKO GROUP — Japan's Certified Import & Export Leader Since 2005",
   description:
-    "Learn about RAIKO GROUP, our team, values, and commitment to quality automotive sales and service.",
+    "Discover why 5,000+ businesses trust RAIKO GROUP for importing from Japan. ISO-certified, 20+ years of expertise, transparent sourcing, and expert customs support for 150+ countries.",
   path: "/about-us",
 });
 
@@ -94,8 +93,8 @@ const AboutUs = () => {
       </section>
       {/* End Why Chose Us */}
 
-      {/* Our Team */}
-      <section className="our-team pb90 pt0">
+      {/* Our Team - DISABLED */}
+      {/* <section className="our-team pb90 pt0">
         <div className="container">
           <div className="row">
             <div className="col-lg-6 offset-lg-3">
@@ -104,7 +103,6 @@ const AboutUs = () => {
               </div>
             </div>
           </div>
-          {/* End .row */}
 
           <div className="row">
             <div className="col-lg-12">
@@ -119,11 +117,9 @@ const AboutUs = () => {
               </div>
             </div>
           </div>
-          {/* End .row */}
         </div>
-        {/* End .container */}
-      </section>
-      {/* End Our Team */}
+      </section> */}
+      {/* End Our Team - DISABLED */}
 
       {/* Testimonials  */}
       {/* <section className="our-testimonials-home1 pt120 pb120">
@@ -146,8 +142,8 @@ const AboutUs = () => {
       </section> */}
       {/* End Testimonials  */}
 
-      {/* Our Partners */}
-      <section className="our-partner pb100">
+      {/* Our Partners - DISABLED */}
+      {/* <section className="our-partner pb100">
         <div className="container">
           <div className="row">
             <div className="col-lg-6 offset-lg-3">
@@ -156,17 +152,15 @@ const AboutUs = () => {
               </div>
             </div>
           </div>
-          {/* End .row */}
 
           <div className="partner_divider">
             <div className="row">
               <Partner />
             </div>
-            {/* End .row */}
           </div>
         </div>
-      </section>
-      {/* End  Our Partners */}
+      </section> */}
+      {/* End Our Partners - DISABLED */}
 
       {/* Our Footer */}
       <Footer />

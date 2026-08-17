@@ -2,27 +2,25 @@ import Image from "next/image";
 
 const ListWithImage = () => {
     const serviceItems = [
-        { text: "General Automotive Repair", link: "#" },
-        { text: "Preventative Car Maintenance", link: "#" },
-        { text: "Air Conditioning and Heater Service", link: "#" },
-        { text: "Cooling System and Radiator Repair", link: "#" },
-        { text: "Synthetic Motor Oil Replacement", link: "#" },
-        { text: "Oil Filter Replacement", link: "#" },
-        { text: "Brake Repair", link: "#" },
-        { text: "Engine Diagnostic", link: "#" },
-        { text: "Belts, Hoses, Fluids", link: "#" },
-        { text: "Transmission Services", link: "#" },
+        { text: "Vehicle Sourcing & Selection", link: "#" },
+        { text: "Quality Inspections (200+ checkpoints)", link: "#" },
+        { text: "Customs Documentation & Clearance", link: "#" },
+        { text: "International Shipping & Logistics", link: "#" },
+        { text: "Marine Insurance Coverage", link: "#" },
+        { text: "Certificate of Origin Preparation", link: "#" },
+        { text: "Import Compliance Support", link: "#" },
+        { text: "Real-Time Shipment Tracking", link: "#" },
+        { text: "Port-to-Destination Delivery", link: "#" },
+        { text: "Post-Delivery Registration Support", link: "#" },
     ];
 
     return (
         <div className="row">
             <div className="col-lg-6 col-xl-5">
                 <div className="service_include">
-                    <h3 className="title">Our Service Include</h3>
+                    <h3 className="title">Our Import/Export Services</h3>
                     <p className="para">
-                        Our CarSure experts inspect the car on over 200
-                        checkpoints so you get complete satisfaction and peace
-                        of mind before buying.
+                        RAIKO GROUP provides end-to-end import/export solutions with rigorous quality inspections on every vehicle, expert customs navigation for 150+ countries, and secure worldwide shipping with full insurance coverage.
                     </p>
                     <div className="row">
                         <div className="col-lg-7">
