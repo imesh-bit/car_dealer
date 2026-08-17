@@ -24,17 +24,18 @@ const inter = Inter({ subsets: ["latin"], display: "swap" });
 export const metadata = {
   metadataBase: new URL(SITE_URL),
   title: {
-    default: `${SITE_NAME} - Automotive & Car Dealer`,
+    default: `${SITE_NAME} | Trusted Japan Import & Export Experts`,
     template: `%s | ${SITE_NAME}`,
   },
   description: SITE_DESCRIPTION,
   applicationName: SITE_NAME,
+  keywords: "import export Japan, Japanese vehicles, auto parts export, trusted import business, quality vehicles Japan, international shipping",
   openGraph: {
     type: "website",
     locale: "en_US",
     url: SITE_URL,
     siteName: SITE_NAME,
-    title: `${SITE_NAME} - Automotive & Car Dealer`,
+    title: `${SITE_NAME} | Trusted Japan Import & Export Experts`,
     description: SITE_DESCRIPTION,
     images: [
       {
@@ -47,7 +48,7 @@ export const metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: `${SITE_NAME} - Automotive & Car Dealer`,
+    title: `${SITE_NAME} | Trusted Japan Import & Export Experts`,
     description: SITE_DESCRIPTION,
     images: [DEFAULT_OG_IMAGE],
   },
