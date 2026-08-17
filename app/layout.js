@@ -30,6 +30,9 @@ export const metadata = {
   description: SITE_DESCRIPTION,
   applicationName: SITE_NAME,
   keywords: "import export Japan, Japanese vehicles, auto parts export, trusted import business, quality vehicles Japan, international shipping",
+  icons: {
+    icon: "data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'><rect width='16' height='16' fill='none'/></svg>",
+  },
   openGraph: {
     type: "website",
     locale: "en_US",
