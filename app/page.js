@@ -13,9 +13,9 @@ const HomeSpecies = dynamic(() => import("./(home)/home-species/page"), {
 });
 
 export const metadata = createPageMetadata({
-  title: "Find Your New Vehicle",
+  title: "Japan Import & Export - Premium Quality Products | RAIKO GROUP",
   description:
-    "Browse featured cars, compare listings, and find the right vehicle at the best price with RAIKO GROUP.",
+    "Discover premium quality vehicles, auto parts, and industrial goods from Japan. Trusted import/export solutions with certified products and secure international shipping by RAIKO GROUP.",
   path: "/",
 });
 
